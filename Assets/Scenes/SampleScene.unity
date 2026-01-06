@@ -647,7 +647,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 731010729}
   look: {fileID: 4891278584969314732, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
-  sensitivity: 0.3
+  sensitivity: 1
   cameraMovementSmoothingSpeed: 0.05
 --- !u!1001 &407839235
 PrefabInstance:
@@ -1305,8 +1305,8 @@ MonoBehaviour:
   moveLeftInputLockLength: 0.2
   moveRightInputLockLength: 2
   jumpForce: 12
-  wallVerticalJumpForce: 9
-  wallSideJumpForce: 8
+  wallVerticalJumpForce: 7
+  wallSideJumpForce: 7
   slideJumpHorizontalForce: 100
   groundedJumpBufferLength: 0.2
   slideSlowdownSpeed: 0
@@ -1336,7 +1336,7 @@ MonoBehaviour:
   playerGravity: 30
   usePlayerGravity: 0
   useWallJumpGravity: 0
-  wallJumpGravity: 14
+  wallJumpGravity: 10
   wallInSomeDirection: 0
 --- !u!1 &832575517
 GameObject:
