@@ -1,11 +1,11 @@
 using UnityEngine;
+
 public class GroundedMovingState : IState
 {
     private readonly StateMachine controller;
     private readonly Rigidbody rb;
     private Vector3 stairUpPosition;
-    private Vector3 stairDownPosition;
-    private float forwardNudge = 0.01f; // when you movePosition up a stair, Unity pushes back since you slightly collide 
+    private readonly float forwardNudge = 0.01f; // when you movePosition up a stair, Unity pushes back since you slightly collide 
                                         // with the corner of the stair this allows you to counter that push, staying put
                                         // on the edge of the stair
     private readonly float howFarInFrontToCheck = 0.05f;
@@ -20,19 +20,31 @@ public class GroundedMovingState : IState
 
     public void Apply()
     {
+        float speed = controller.isSprinting ? controller.sprintSpeed : controller.normalSpeed;
         if (UpwardsStep())
         {
-            controller.inAirBufferTime = controller.inAirBufferTimeLength;
             rb.MovePosition(stairUpPosition);
-            // so grounded stays true even when you are still trying to clear the step edge, this way you can treat it like a slope
+            controller.justSteppedUp = true;
         }
-        else if (DownwardsStep())
+        
+
+        if (OnSlope())
         {
-            controller.inAirBufferTime = controller.inAirBufferTimeLength;
-            rb.MovePosition(stairDownPosition);
-        }    
-        float speed = controller.isSprinting ? controller.sprintSpeed : controller.normalSpeed;
+            controller.moveDirection = Vector3.ProjectOnPlane(controller.moveDirection, controller.groundHit.normal);
+            // controller.usePlayerGravity = false; // why did the tutorial want this?
+            if (rb.linearVelocity.y > 0) rb.AddForce(Vector3.down * controller.stickToSlopeForce); // if going up slopes
+            rb.AddForce(10f * speed * controller.moveDirection);
+        }
+        Debug.DrawRay(controller.transform.position, controller.moveDirection, Color.blue);
         rb.AddForce(10f * speed * controller.moveDirection);
+    }
+
+
+    bool OnSlope()
+    {
+        Physics.Raycast(controller.feet.position, Vector3.down, out RaycastHit groundHit, 0.1f);
+        float slopeAngle = Vector3.Angle(Vector3.up, groundHit.normal);
+        return slopeAngle <= controller.maxSlopeAngle && slopeAngle != 0; // what happens if it's greater?
     }
 
 
@@ -64,37 +76,6 @@ public class GroundedMovingState : IState
     bool IsMovingTowardsStair()
     {
         return Vector3.Dot(controller.wallDirection, controller.moveDirection) > 0;
-    }
-
-
-    bool DownwardsStep()
-    {
-        if (!ValidDownwardStep(out RaycastHit downHit)) return false; // a step vs a drop below you (like walking off a cliff)
-        if (StepIsGround(downHit)) return false;
-        if (!ValidStepSlopeClearance(downHit)) return false;
-        Debug.Log("down");
-
-        // Success! You can move down a step
-        Vector3 amountToMoveVertically = Vector3.down * (controller.feet.position.y - downHit.point.y);
-        Vector3 amountToMoveHorizontally = controller.moveDirection * howFarInFrontToCheck;
-        stairDownPosition = controller.transform.position + amountToMoveVertically + amountToMoveHorizontally;
-        return true;
-    }
-
-
-    bool ValidDownwardStep(out RaycastHit downHit)
-    {
-        // feet are slightly elevated above capsule, so this is slightly off of maxStepHeight
-        Vector3 howFarInFrontToCheckDirection = controller.moveDirection * howFarInFrontToCheck;
-        // Raycast a tiny bit ahead to see if theres an upcoming step
-        Debug.DrawRay(controller.feet.position + howFarInFrontToCheckDirection, Vector3.down * controller.maxStepHeight, Color.orange);
-        return Physics.Raycast(controller.feet.position + howFarInFrontToCheckDirection, Vector3.down, out downHit, controller.maxStepHeight);
-    }
-
-
-    bool StepIsGround(RaycastHit downHit)
-    {
-        return Mathf.Round(downHit.point.y) == (controller.transform.position.y - 0.5 * controller.playerHeight);
     }
 
     

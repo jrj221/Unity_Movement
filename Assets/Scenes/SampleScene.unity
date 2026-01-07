@@ -1318,8 +1318,8 @@ MonoBehaviour:
   minStepLength: 0.2
   maxStepHeight: 0.5
   maxStepSlope: 0.95
-  maxSlopeAngle: 0
-  stickToSlopeForce: 0
+  maxSlopeAngle: 45
+  stickToSlopeForce: 5
   wallDirection: {x: 0, y: 0, z: 0}
   isSprinting: 0
   pressedJump: 0

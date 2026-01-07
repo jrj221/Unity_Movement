@@ -77,8 +77,6 @@ public class StateMachine : MonoBehaviour
     private float slideSlowdownFactor;
     private float slideSlowdownLockTime = 0;
     private bool slideSlowdownLocked;
-    private Vector3 stairUpPosition;
-    private Vector3 stairDownPosition;
     public readonly float playerRadius = 0.5f;
     public readonly float playerHeight = 2f;
     [HideInInspector]
@@ -91,15 +89,16 @@ public class StateMachine : MonoBehaviour
     public bool usePlayerGravity;
     public bool useWallJumpGravity;
     public float wallJumpGravity;
+    public bool justSteppedUp;
 
     // Raycast Info
     private bool grounded;
-    private readonly float verticalRaycastDist = 1.1f;
-    private readonly float horizontalRaycastDist = .51f;
+    public readonly float verticalRaycastDist = 1.1f;
+    public readonly float horizontalRaycastDist = .51f;
     private bool wallToLeft;
     private bool wallToRight;
     public bool wallInSomeDirection;
-    private RaycastHit groundHit;
+    public RaycastHit groundHit;
     public RaycastHit leftWallHit;
     public RaycastHit rightWallHit;
     private IState currentState;
@@ -199,6 +198,7 @@ public class StateMachine : MonoBehaviour
         if (!isRightWallRunning && pressedRightWallrun && wallToRight && inAir) isRightWallRunning = true;
         if (!(pressedRightWallrun && wallToRight)) isRightWallRunning = false;
 
+        Debug.Log(currentState);
         nextState = DetermineNextState();
         if (nextState != currentState) ChangeState(nextState);
     }
@@ -217,7 +217,6 @@ public class StateMachine : MonoBehaviour
     {
         DrawRaycasts();
 
-        Debug.Log(currentState);
         currentState.Apply();
 
         ApplyPhysicsActions();
@@ -284,7 +283,7 @@ public class StateMachine : MonoBehaviour
                 else return idleState;
             case GroundedMovingState:
                 if (jumpTriggered) return jumpState;
-                else if (!grounded) return airborneState;
+                else if (inAir) return airborneState;
                 else if (isMoving) return groundedMovingState;
                 else return idleState;
             case JumpState:
@@ -370,10 +369,12 @@ public class StateMachine : MonoBehaviour
         }
 
         // grounded raycasts
-        if (grounded) {
-            if (!inAirBuffered) inAir = false;
+        if (!inAirBuffered) inAir = !grounded;
+        if (grounded)
+        {
             Debug.DrawRay(rb.transform.position, Vector3.down * verticalRaycastDist, Color.green);
-        } else
+        }
+        else
         {
             Debug.DrawRay(rb.transform.position, Vector3.down * verticalRaycastDist, Color.red);
         }
