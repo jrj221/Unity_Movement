@@ -25,6 +25,7 @@ public class GroundedMovingState : IState
         {
             rb.MovePosition(stairUpPosition);
             controller.justSteppedUp = true;
+            controller.cameraSmoothingEnableTime = controller.cameraSmoothingEnableTimeLength;
         }
         
 

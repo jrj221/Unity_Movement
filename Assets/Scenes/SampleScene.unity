@@ -646,9 +646,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 731010729}
+  controller: {fileID: 731010738}
   look: {fileID: 4891278584969314732, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
   sensitivity: 1
-  cameraMovementSmoothingSpeed: 0.05
+  cameraMovementSmoothingSpeed: 0.15
 --- !u!1001 &407839235
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1329,6 +1330,9 @@ MonoBehaviour:
   inAirBuffered: 0
   inAirBufferTime: 0
   inAirBufferTimeLength: 0.2
+  cameraSmoothingEnabled: 0
+  cameraSmoothingEnableTime: 0
+  cameraSmoothingEnableTimeLength: 0
   forceMeshSnap: 0
   moveDirection: {x: 0, y: 0, z: 0}
   isMoving: 0
@@ -1337,6 +1341,7 @@ MonoBehaviour:
   usePlayerGravity: 0
   useWallJumpGravity: 0
   wallJumpGravity: 10
+  justSteppedUp: 0
   wallInSomeDirection: 0
 --- !u!1 &832575517
 GameObject:

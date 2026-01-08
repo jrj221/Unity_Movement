@@ -23,6 +23,7 @@ public class AirborneState : IState
             {
                 rb.MovePosition(stairDownPosition);
                 stepDownScheduled = false;
+                controller.cameraSmoothingEnableTime = controller.cameraSmoothingEnableTimeLength;
             }
 
             float speed = controller.isSprinting ? controller.sprintSpeed : controller.normalSpeed;

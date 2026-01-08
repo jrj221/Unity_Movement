@@ -72,6 +72,9 @@ public class StateMachine : MonoBehaviour
     public bool inAirBuffered;
     public float inAirBufferTime;
     public float inAirBufferTimeLength;
+    public bool cameraSmoothingEnabled;
+    public float cameraSmoothingEnableTime;
+    public float cameraSmoothingEnableTimeLength;
     private bool pressedSlide;
     private bool isSliding;
     private float slideSlowdownFactor;
@@ -236,6 +239,7 @@ public class StateMachine : MonoBehaviour
         moveLeftLocked = TickTimer(ref moveLeftInputLockTime);
         slideSlowdownLocked = TickTimer(ref slideSlowdownLockTime);
         inAirBuffered = TickTimer(ref inAirBufferTime);
+        cameraSmoothingEnabled = TickTimer(ref cameraSmoothingEnableTime);
     }
 
 
