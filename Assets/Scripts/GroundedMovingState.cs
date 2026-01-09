@@ -27,7 +27,6 @@ public class GroundedMovingState : IState
             controller.justSteppedUp = true;
             controller.cameraSmoothingEnableTime = controller.cameraSmoothingEnableTimeLength;
         }
-        
 
         if (OnSlope())
         {
@@ -36,6 +35,7 @@ public class GroundedMovingState : IState
             if (rb.linearVelocity.y > 0) rb.AddForce(Vector3.down * controller.stickToSlopeForce); // if going up slopes
             rb.AddForce(10f * speed * controller.moveDirection);
         }
+
         Debug.DrawRay(controller.transform.position, controller.moveDirection, Color.blue);
         rb.AddForce(10f * speed * controller.moveDirection);
     }

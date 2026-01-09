@@ -1313,8 +1313,8 @@ MonoBehaviour:
   slideSlowdownSpeed: 0
   baseSlideSlowdownFactor: 0
   minSlideSlowdownFactor: 0
-  slideRotationSpeed: 0
-  slideAngle: 0
+  slideRotationSpeed: 200
+  slideAngle: 60
   slideSlowdownLockLength: 0
   minStepLength: 0.2
   maxStepHeight: 0.5
@@ -1332,7 +1332,9 @@ MonoBehaviour:
   inAirBufferTimeLength: 0.2
   cameraSmoothingEnabled: 0
   cameraSmoothingEnableTime: 0
-  cameraSmoothingEnableTimeLength: 0
+  cameraSmoothingEnableTimeLength: 0.2
+  pressedSlide: 0
+  isSliding: 0
   forceMeshSnap: 0
   moveDirection: {x: 0, y: 0, z: 0}
   isMoving: 0
@@ -1342,6 +1344,11 @@ MonoBehaviour:
   useWallJumpGravity: 0
   wallJumpGravity: 10
   justSteppedUp: 0
+  maxSlideTime: 1
+  slideTime: 0
+  slideSpeed: 16
+  slideTimerOngoing: 0
+  slideStarted: 0
   wallInSomeDirection: 0
 --- !u!1 &832575517
 GameObject:

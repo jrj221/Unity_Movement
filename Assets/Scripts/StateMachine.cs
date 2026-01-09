@@ -34,7 +34,7 @@ public class StateMachine : MonoBehaviour
     public float wallSideJumpForce;
     public float slideJumpHorizontalForce;
     public float groundedJumpBufferLength;
-    
+
     [Header("Sliding")]
     public float slideSlowdownSpeed;
     public float baseSlideSlowdownFactor;
@@ -75,8 +75,8 @@ public class StateMachine : MonoBehaviour
     public bool cameraSmoothingEnabled;
     public float cameraSmoothingEnableTime;
     public float cameraSmoothingEnableTimeLength;
-    private bool pressedSlide;
-    private bool isSliding;
+    public bool pressedSlide;
+    public bool isSliding;
     private float slideSlowdownFactor;
     private float slideSlowdownLockTime = 0;
     private bool slideSlowdownLocked;
@@ -93,6 +93,11 @@ public class StateMachine : MonoBehaviour
     public bool useWallJumpGravity;
     public float wallJumpGravity;
     public bool justSteppedUp;
+    public float maxSlideTime;
+    public float slideTime;
+    public float slideSpeed;
+    public bool slideTimerOngoing;
+    public bool slideStopTriggered;
 
     // Raycast Info
     private bool grounded;
@@ -115,11 +120,12 @@ public class StateMachine : MonoBehaviour
     public JumpState jumpState;
     public LeftWallrunState leftWallrunState;
     public RightWallrunState rightWallrunState;
+    public SlideState slideState;
 
 
     void Awake()
     {
-        actionReferences = new() {move, sprint, jump, leftWallrun, rightWallrun, slide};
+        actionReferences = new() { move, sprint, jump, leftWallrun, rightWallrun, slide };
 
         // Create all state instances once, then swap between them
         idleState = new IdleState(this);
@@ -128,6 +134,7 @@ public class StateMachine : MonoBehaviour
         jumpState = new JumpState(this);
         leftWallrunState = new LeftWallrunState(this);
         rightWallrunState = new RightWallrunState(this);
+        slideState = new SlideState(this);
     }
 
 
@@ -153,11 +160,11 @@ public class StateMachine : MonoBehaviour
         jump.action.canceled += CancelJump;
         // technically using an event approach for jumping isn't any better than just using .triggered, but I kept it for consistency across all actions
         rightWallrun.action.started += StartRightWallrun;
-        rightWallrun.action.canceled += CancelRightWallrun; 
+        rightWallrun.action.canceled += CancelRightWallrun;
         leftWallrun.action.started += StartLeftWallrun;
-        leftWallrun.action.canceled += CancelLeftWallrun; 
-        // slide.action.started += StartSlide;
-        // slide.action.canceled += CancelSlide;
+        leftWallrun.action.canceled += CancelLeftWallrun;
+        slide.action.started += StartSlide;
+        slide.action.canceled += CancelSlide;
     }
 
 
@@ -173,17 +180,17 @@ public class StateMachine : MonoBehaviour
         jump.action.started -= StartJump;
         jump.action.canceled -= CancelJump;
         rightWallrun.action.started -= StartRightWallrun;
-        rightWallrun.action.canceled -= CancelRightWallrun; 
+        rightWallrun.action.canceled -= CancelRightWallrun;
         leftWallrun.action.started -= StartLeftWallrun;
-        leftWallrun.action.canceled -= CancelLeftWallrun; 
-        // slide.action.started -= StartSlide;
-        // slide.action.canceled -= CancelSlide;
+        leftWallrun.action.canceled -= CancelLeftWallrun;
+        slide.action.started -= StartSlide;
+        slide.action.canceled -= CancelSlide;
     }
 
 
     // Update is called once per frame
     void Update()
-    {   
+    {
         ApplyGeneralActions();
 
         // Moving
@@ -192,9 +199,13 @@ public class StateMachine : MonoBehaviour
         if (pressedSprint && grounded) isSprinting = true;
         if (!pressedSprint) isSprinting = false;
 
+        // Sliding
+        if (isSliding && (!slideTimerOngoing || !pressedSlide)) slideStopTriggered = true;
+        
+
         // Jumping
         jumpTriggered = (grounded || isLeftWallRunning || isRightWallRunning) && pressedJump;
-        
+
         // Wallrunning
         if (!isLeftWallRunning && pressedLeftWallrun && wallToLeft && inAir) isLeftWallRunning = true;
         if (!(pressedLeftWallrun && wallToLeft)) isLeftWallRunning = false;
@@ -240,6 +251,7 @@ public class StateMachine : MonoBehaviour
         slideSlowdownLocked = TickTimer(ref slideSlowdownLockTime);
         inAirBuffered = TickTimer(ref inAirBufferTime);
         cameraSmoothingEnabled = TickTimer(ref cameraSmoothingEnableTime);
+        slideTimerOngoing = TickTimer(ref slideTime);
     }
 
 
@@ -256,6 +268,7 @@ public class StateMachine : MonoBehaviour
     {
         ApplyExtraGravity();
         ApplyWallrunRotation();
+        ApplySlideRotation();
         CapSpeed();
     }
 
@@ -264,6 +277,46 @@ public class StateMachine : MonoBehaviour
     {
         float gravity = useWallJumpGravity ? wallJumpGravity : playerGravity;
         if (usePlayerGravity) rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
+    }
+
+
+    void ApplyWallrunRotation()
+    {
+        Quaternion targetRotation;
+        if (isLeftWallRunning)
+        {
+            targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, -wallrunAngle);
+
+        }
+        else if (isRightWallRunning)
+        {
+            targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, wallrunAngle);
+        }
+        else
+        {
+            targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0);
+        }
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, wallrunRotationSpeed * Time.deltaTime);
+    }
+
+
+    void ApplySlideRotation()
+    {
+        Quaternion targetRotation;
+        // Rotate back to normal
+        if (!isSliding)
+        {
+            targetRotation = Quaternion.Euler(0, transform.eulerAngles.y, transform.eulerAngles.z);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, slideRotationSpeed * Time.deltaTime);
+            return;
+        }
+
+        // Rotate slideAngle degrees when sliding
+        else
+        {
+            targetRotation = Quaternion.Euler(-slideAngle, transform.eulerAngles.y, transform.eulerAngles.z);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, slideRotationSpeed * Time.deltaTime);
+        }
     }
 
 
@@ -288,11 +341,17 @@ public class StateMachine : MonoBehaviour
             case GroundedMovingState:
                 if (jumpTriggered) return jumpState;
                 else if (inAir) return airborneState;
+                else if (pressedSlide) return slideState;
                 else if (isMoving) return groundedMovingState;
                 else return idleState;
+            case SlideState:
+                if (jumpTriggered) return jumpState;
+                else if (slideStopTriggered && isMoving) return groundedMovingState;
+                else if (slideStopTriggered) return idleState;
+                else return slideState;
             case JumpState:
                 // jumpState MUST transition into airborneState
-                if (jumpApplied) return airborneState; 
+                if (jumpApplied) return airborneState;
                 else return jumpState;
             case AirborneState:
                 if (isLeftWallRunning) return leftWallrunState;
@@ -310,24 +369,6 @@ public class StateMachine : MonoBehaviour
                 else return rightWallrunState;
         }
         return null; // won't logically happen but it wanted a return path
-    }
-
-    void ApplyWallrunRotation()
-    {
-        Quaternion targetRotation;
-        if (isLeftWallRunning)
-        {
-            targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, -wallrunAngle);
-            
-        } else if (isRightWallRunning)
-        {
-            targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, wallrunAngle);
-        }
-        else
-        {
-            targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0);
-        }
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, wallrunRotationSpeed * Time.deltaTime);
     }
 
 
@@ -362,14 +403,15 @@ public class StateMachine : MonoBehaviour
                     wallToLeft = true;
                     leftWallHit = wallHit;
                     leftRay = ray;
-                } else if (isRightSlice)
+                }
+                else if (isRightSlice)
                 {
                     wallToRight = true;
                     rightWallHit = wallHit;
                     rightRay = ray;
                 }
                 // break;
-            } 
+            }
         }
 
         // grounded raycasts
@@ -384,17 +426,21 @@ public class StateMachine : MonoBehaviour
         }
 
         // left wall raycasts
-        if (wallToLeft) {  
+        if (wallToLeft)
+        {
             Debug.DrawRay(leftRay.origin, leftRay.direction, Color.green);
-        } else
+        }
+        else
         {
             Debug.DrawRay(leftRay.origin, leftRay.direction, Color.red);
         }
 
         // right wall raycasts
-        if (wallToRight) {  
+        if (wallToRight)
+        {
             Debug.DrawRay(rightRay.origin, rightRay.direction, Color.green);
-        } else
+        }
+        else
         {
             Debug.DrawRay(rightRay.origin, rightRay.direction, Color.red);
         }
@@ -424,7 +470,7 @@ public class StateMachine : MonoBehaviour
         pressedJump = true;
     }
 
-    
+
     void CancelJump(InputAction.CallbackContext ctx)
     {
         pressedJump = false;
@@ -452,5 +498,17 @@ public class StateMachine : MonoBehaviour
     void CancelLeftWallrun(InputAction.CallbackContext ctx)
     {
         pressedLeftWallrun = false;
+    }
+    
+
+    void StartSlide(InputAction.CallbackContext ctx)
+    {
+        pressedSlide = true;
+    }
+
+
+    void CancelSlide(InputAction.CallbackContext ctx)
+    {
+        pressedSlide = false;
     }
 }
