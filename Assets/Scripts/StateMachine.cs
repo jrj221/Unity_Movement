@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,105 +16,121 @@ public class StateMachine : MonoBehaviour
     public InputActionReference leftWallrun;
     public InputActionReference slide;
 
+    #region Movement
     [Header("Movement")]
     public float sprintSpeed;
     public float normalSpeed;
     public float groundDrag;
     public float airMovementMultiplier;
-    public float inAirGravityMultiplier;
+    private Vector2 inputMoveDirection;
+    [NonSerialized] public Vector3 moveDirection;
+    private bool pressedSprint;
+    [NonSerialized] public bool isSprinting;
+    [NonSerialized] public bool isMoving;
+    #endregion
 
+    #region Wallrunning
     [Header("Wallrunning")]
     public float wallrunRotationSpeed;
     public float wallrunAngle;
     public float moveLeftInputLockLength;
     public float moveRightInputLockLength;
+    private bool pressedLeftWallrun;
+    private bool pressedRightWallrun;
+    private bool isLeftWallRunning;
+    private bool isRightWallRunning;
+    [NonSerialized] public float moveRightInputLockTime = 0;
+    [NonSerialized] public float moveLeftInputLockTime = 0;
+    private bool moveRightLocked;
+    private bool moveLeftLocked;
+    #endregion
 
+    #region Jumping
     [Header("Jumping")]
     public float jumpForce;
     public float wallVerticalJumpForce;
     public float wallSideJumpForce;
     public float slideJumpHorizontalForce;
-    public float groundedJumpBufferLength;
+    // public float groundedJumpBufferLength;
+    [NonSerialized] public bool pressedJump;
+    private bool jumpTriggered;
+    [NonSerialized] public bool jumpApplied;
+    #endregion
 
+    #region Air
+    [Header("Air")]
+    public float inAirBufferTimeLength;
+    [NonSerialized] public bool inAir;
+    [NonSerialized] public bool inAirBuffered;
+    [NonSerialized] public float inAirBufferTime;
+    #endregion
+
+    #region Sliding
     [Header("Sliding")]
-    public float slideSlowdownSpeed;
-    public float baseSlideSlowdownFactor;
-    public float minSlideSlowdownFactor;
     public float slideRotationSpeed;
     public float slideAngle;
-    public float slideSlowdownLockLength;
+    public float slideSpeed;
+    public float maxSlideTime;
+    [NonSerialized] public float slideTime;
+    [NonSerialized] public bool slideTimerOngoing;
+    [NonSerialized] public bool slideStopTriggered;
+    [NonSerialized] public bool pressedSlide;
+    [NonSerialized] public bool isSliding;
+    #endregion
 
+    #region Stairs
     [Header("Stairs")]
     public float minStepLength;
     public float maxStepHeight;
     public float maxStepSlope;
+    [NonSerialized] public bool justSteppedUp;
+    #endregion
 
+    #region Slopes
     [Header("Slopes")]
     public float maxSlopeAngle;
     public float stickToSlopeForce;
+    #endregion
 
-    // Action Values
-    private List<InputActionReference> actionReferences;
-    private Vector2 inputMoveDirection;
-    public Vector3 wallDirection;
-    private bool pressedSprint;
-    public bool isSprinting;
-    public bool pressedJump;
-    private bool canJump;
-    private bool pressedLeftWallrun;
-    private bool pressedRightWallrun;
-    private bool isLeftWallRunning;
-    private bool isRightWallRunning;
-    public float moveRightInputLockTime = 0;
-    private bool moveRightLocked;
-    public float moveLeftInputLockTime = 0;
-    private bool moveLeftLocked;
-    public bool inAir;
-    public bool inAirBuffered;
-    public float inAirBufferTime;
-    public float inAirBufferTimeLength;
-    public bool cameraSmoothingEnabled;
-    public float cameraSmoothingEnableTime;
-    public float cameraSmoothingEnableTimeLength;
-    public bool pressedSlide;
-    public bool isSliding;
-    private float slideSlowdownFactor;
-    private float slideSlowdownLockTime = 0;
-    private bool slideSlowdownLocked;
-    public readonly float playerRadius = 0.5f;
-    public readonly float playerHeight = 2f;
-    [HideInInspector]
-    public bool forceMeshSnap;
-    public Vector3 moveDirection;
-    private bool jumpTriggered;
-    public bool isMoving;
-    public bool jumpApplied;
+    #region Gravity
+    [Header("Gravity")]
     public float playerGravity;
-    public bool usePlayerGravity;
-    public bool useWallJumpGravity;
     public float wallJumpGravity;
-    public bool justSteppedUp;
-    public float maxSlideTime;
-    public float slideTime;
-    public float slideSpeed;
-    public bool slideTimerOngoing;
-    public bool slideStopTriggered;
+    [NonSerialized] public bool usePlayerGravity;
+    [NonSerialized] public bool useWallJumpGravity;
+    #endregion
 
-    // Raycast Info
-    private bool grounded;
+    #region Camera
+    [Header("Camera")]
+    public float cameraSmoothingEnableTimeLength;
+    [NonSerialized] public float cameraSmoothingEnableTime;
+    [NonSerialized] public bool cameraSmoothingEnabled;
+    [NonSerialized] public bool forceMeshSnap;
+    #endregion
+
+    #region Misc.
+    private List<InputActionReference> actionReferences;
+    [NonSerialized] public Vector3 wallDirection;
+    [NonSerialized] public readonly float playerRadius = 0.5f;
+    [NonSerialized] public readonly float playerHeight = 2f;
+    #endregion  
+
+    #region Raycast Info
     public readonly float verticalRaycastDist = 1.1f;
     public readonly float horizontalRaycastDist = .51f;
+    private bool grounded;
     private bool wallToLeft;
     private bool wallToRight;
-    public bool wallInSomeDirection;
+    [NonSerialized] public bool wallInSomeDirection;
     public RaycastHit groundHit;
     public RaycastHit leftWallHit;
     public RaycastHit rightWallHit;
+    #endregion
+
+    #region States
     private IState currentState;
     public IState exitingState;
     public IState nextState;
-
-    // State Instances
     public IdleState idleState;
     public GroundedMovingState groundedMovingState;
     public AirborneState airborneState;
@@ -121,6 +138,7 @@ public class StateMachine : MonoBehaviour
     public LeftWallrunState leftWallrunState;
     public RightWallrunState rightWallrunState;
     public SlideState slideState;
+    #endregion
 
 
     void Awake()
@@ -248,7 +266,6 @@ public class StateMachine : MonoBehaviour
     {
         moveRightLocked = TickTimer(ref moveRightInputLockTime);
         moveLeftLocked = TickTimer(ref moveLeftInputLockTime);
-        slideSlowdownLocked = TickTimer(ref slideSlowdownLockTime);
         inAirBuffered = TickTimer(ref inAirBufferTime);
         cameraSmoothingEnabled = TickTimer(ref cameraSmoothingEnableTime);
         slideTimerOngoing = TickTimer(ref slideTime);
