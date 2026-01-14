@@ -31,18 +31,30 @@ public class StateMachine : MonoBehaviour
 
     #region Wallrunning
     [Header("Wallrunning")]
-    public float wallrunRotationSpeed;
-    public float wallrunAngle;
+    public float WallrunRotationSpeed;
+    public float WallrunAngle;
     public float moveLeftInputLockLength;
     public float moveRightInputLockLength;
+    public float isLeftWallrunningBufferLength;
+    public float isRightWallrunningBufferLength;
     private bool pressedLeftWallrun;
     private bool pressedRightWallrun;
-    private bool isLeftWallRunning;
-    private bool isRightWallRunning;
+    [NonSerialized] public bool isLeftWallrunning;
+    [NonSerialized] public bool isRightWallrunning;
+    private bool leftWallrunStartTriggered;
+    private bool rightWallrunStartTriggered;
+    [NonSerialized] public bool leftWallrunStopTriggered;
+    [NonSerialized] public bool rightWallrunStopTriggered;
     [NonSerialized] public float moveRightInputLockTime = 0;
     [NonSerialized] public float moveLeftInputLockTime = 0;
     private bool moveRightLocked;
     private bool moveLeftLocked;
+    [NonSerialized] public float isLeftWallrunningBufferTime = 0;
+    [NonSerialized] public float isRightWallrunningBufferTime = 0;
+    private bool isLeftWallrunningIsBuffered;
+    private bool isRightWallrunningIsBuffered;
+    
+    
     #endregion
 
     #region Jumping
@@ -96,7 +108,7 @@ public class StateMachine : MonoBehaviour
     [Header("Gravity")]
     public float playerGravity;
     public float wallJumpGravity;
-    [NonSerialized] public bool usePlayerGravity;
+    [NonSerialized] public bool useCustomGravity;
     [NonSerialized] public bool useWallJumpGravity;
     #endregion
 
@@ -160,8 +172,8 @@ public class StateMachine : MonoBehaviour
     {
         currentState = idleState;
         exitingState = currentState;
-        rb.useGravity = false; // we'll use our false playerGravity instead, toggling it with usePlayerGravity
-        usePlayerGravity = true;
+        rb.useGravity = false; // we'll use our false playerGravity instead, toggling it with useCustomGravity
+        useCustomGravity = true;
     }
 
 
@@ -222,15 +234,15 @@ public class StateMachine : MonoBehaviour
         
 
         // Jumping
-        jumpTriggered = (grounded || isLeftWallRunning || isRightWallRunning) && pressedJump;
+        jumpTriggered = pressedJump; // I don't think it needs more conditions since we've already ensured certain ones for states
 
         // Wallrunning
-        if (!isLeftWallRunning && pressedLeftWallrun && wallToLeft && inAir) isLeftWallRunning = true;
-        if (!(pressedLeftWallrun && wallToLeft)) isLeftWallRunning = false;
-        if (!isRightWallRunning && pressedRightWallrun && wallToRight && inAir) isRightWallRunning = true;
-        if (!(pressedRightWallrun && wallToRight)) isRightWallRunning = false;
+        leftWallrunStartTriggered = !isLeftWallrunningIsBuffered && pressedLeftWallrun && wallToLeft;
+        if (isLeftWallrunning && (!pressedLeftWallrun || !wallToLeft)) leftWallrunStopTriggered = true;
+        rightWallrunStartTriggered = !isRightWallrunningIsBuffered && pressedRightWallrun && wallToRight;
+        if (isRightWallrunning && !(pressedRightWallrun && wallToRight)) rightWallrunStopTriggered = true;
 
-        Debug.Log(currentState);
+        // Debug.Log("Update: " + currentState);
         nextState = DetermineNextState();
         if (nextState != currentState) ChangeState(nextState);
     }
@@ -248,7 +260,7 @@ public class StateMachine : MonoBehaviour
     void FixedUpdate()
     {
         DrawRaycasts();
-
+        // Debug.Log("FixedUpdate: " + currentState);
         currentState.Apply();
 
         ApplyPhysicsActions();
@@ -266,6 +278,8 @@ public class StateMachine : MonoBehaviour
     {
         moveRightLocked = TickTimer(ref moveRightInputLockTime);
         moveLeftLocked = TickTimer(ref moveLeftInputLockTime);
+        isLeftWallrunningIsBuffered = TickTimer(ref isLeftWallrunningBufferTime);
+        isRightWallrunningIsBuffered = TickTimer(ref isRightWallrunningBufferTime);
         inAirBuffered = TickTimer(ref inAirBufferTime);
         cameraSmoothingEnabled = TickTimer(ref cameraSmoothingEnableTime);
         slideTimerOngoing = TickTimer(ref slideTime);
@@ -277,7 +291,6 @@ public class StateMachine : MonoBehaviour
         timer -= Time.deltaTime;
         return timer >= 0;
     }
-
 
 
     // FixedUpdate physics actions that take place independent of states
@@ -293,27 +306,32 @@ public class StateMachine : MonoBehaviour
     void ApplyExtraGravity()
     {
         float gravity = useWallJumpGravity ? wallJumpGravity : playerGravity;
-        if (usePlayerGravity) rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
+        // Debug.Log(gravity);
+        if (useCustomGravity) rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
     }
 
 
     void ApplyWallrunRotation()
     {
+        // use rb idk man
         Quaternion targetRotation;
-        if (isLeftWallRunning)
+        if (isLeftWallrunning)
         {
-            targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, -wallrunAngle);
-
+            Debug.Log("1");
+            targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, -WallrunAngle);
         }
-        else if (isRightWallRunning)
+        else if (isRightWallrunning)
         {
-            targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, wallrunAngle);
+            Debug.Log("2");
+            targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, WallrunAngle);
         }
         else
         {
+            Debug.Log("3");
             targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0);
         }
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, wallrunRotationSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, WallrunRotationSpeed * Time.deltaTime);
+        // rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, WallrunRotationSpeed * Time.deltaTime));
     }
 
 
@@ -371,18 +389,18 @@ public class StateMachine : MonoBehaviour
                 if (jumpApplied) return airborneState;
                 else return jumpState;
             case AirborneState:
-                if (isLeftWallRunning) return leftWallrunState;
-                else if (isRightWallRunning) return rightWallrunState;
+                if (leftWallrunStartTriggered) return leftWallrunState;
+                else if (rightWallrunStartTriggered) return rightWallrunState;
                 else if (inAir) return airborneState;
                 else if (isMoving) return groundedMovingState;
                 else return idleState;
             case LeftWallrunState:
                 if (jumpTriggered) return jumpState;
-                else if (!isLeftWallRunning) return airborneState;
+                else if (leftWallrunStopTriggered) return airborneState;
                 else return leftWallrunState;
             case RightWallrunState:
                 if (jumpTriggered) return jumpState;
-                else if (!isRightWallRunning) return airborneState;
+                else if (rightWallrunStopTriggered) return airborneState;
                 else return rightWallrunState;
         }
         return null; // won't logically happen but it wanted a return path

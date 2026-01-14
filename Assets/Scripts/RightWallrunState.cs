@@ -24,11 +24,14 @@ public class RightWallrunState : IState
     {
         rb.linearDamping = controller.groundDrag;
         // rb.constraints |= RigidbodyConstraints.FreezePositionY;
-        controller.usePlayerGravity = false;
+        controller.useCustomGravity = false;
+        controller.isRightWallrunning = true;
     }
 
     public void OnExit()
     {
-        controller.usePlayerGravity = true;
+        controller.useCustomGravity = true;
+        controller.isRightWallrunning = false;
+        controller.rightWallrunStopTriggered = false;
     }
 }

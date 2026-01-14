@@ -37,7 +37,6 @@ public class AirborneState : IState
     {
         if (!ValidDownwardStep(out RaycastHit downHit)) return false; // a step vs a drop below you (like walking off a cliff)
         if (!ValidStepSlopeClearance(downHit)) return false;
-        Debug.Log("down");
 
         // Success! You can move down a step
         Vector3 amountToMoveVertically = Vector3.down * (controller.feet.position.y - downHit.point.y);

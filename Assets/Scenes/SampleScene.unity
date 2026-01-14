@@ -1300,56 +1300,29 @@ MonoBehaviour:
   normalSpeed: 7
   groundDrag: 5
   airMovementMultiplier: 1
-  inAirGravityMultiplier: 0
-  wallrunRotationSpeed: 50
-  wallrunAngle: 15
+  WallrunRotationSpeed: 0
+  WallrunAngle: 0
   moveLeftInputLockLength: 0.2
   moveRightInputLockLength: 2
+  isLeftWallrunningBufferLength: 0
+  isRightWallrunningBufferLength: 0
   jumpForce: 12
   wallVerticalJumpForce: 7
   wallSideJumpForce: 7
   slideJumpHorizontalForce: 100
-  groundedJumpBufferLength: 0.2
-  slideSlowdownSpeed: 0
-  baseSlideSlowdownFactor: 0
-  minSlideSlowdownFactor: 0
+  inAirBufferTimeLength: 0.2
   slideRotationSpeed: 200
   slideAngle: 60
-  slideSlowdownLockLength: 0
+  slideSpeed: 50
+  maxSlideTime: 1
   minStepLength: 0.2
   maxStepHeight: 0.5
   maxStepSlope: 0.95
   maxSlopeAngle: 45
   stickToSlopeForce: 5
-  wallDirection: {x: 0, y: 0, z: 0}
-  isSprinting: 0
-  pressedJump: 0
-  moveRightInputLockTime: 0
-  moveLeftInputLockTime: 0
-  inAir: 0
-  inAirBuffered: 0
-  inAirBufferTime: 0
-  inAirBufferTimeLength: 0.2
-  cameraSmoothingEnabled: 0
-  cameraSmoothingEnableTime: 0
-  cameraSmoothingEnableTimeLength: 0.2
-  pressedSlide: 0
-  isSliding: 0
-  forceMeshSnap: 0
-  moveDirection: {x: 0, y: 0, z: 0}
-  isMoving: 0
-  jumpApplied: 0
   playerGravity: 30
-  usePlayerGravity: 0
-  useWallJumpGravity: 0
   wallJumpGravity: 10
-  justSteppedUp: 0
-  maxSlideTime: 1
-  slideTime: 0
-  slideSpeed: 16
-  slideTimerOngoing: 0
-  slideStarted: 0
-  wallInSomeDirection: 0
+  cameraSmoothingEnableTimeLength: 0.2
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
