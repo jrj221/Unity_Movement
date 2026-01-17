@@ -60,6 +60,7 @@ public class AirborneState : IState
 
     public void OnEnter()
     {
+        controller.inAir = true;
         rb.linearDamping = 0;
         controller.jumpApplied = false; // reset if you jumped to get airborne
 
