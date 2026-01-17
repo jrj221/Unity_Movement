@@ -3,7 +3,7 @@ using UnityEngine;
 public class MeshMovementSmoother : MonoBehaviour
 {
     public GameObject player;
-    public PlayerMovementController playerController;
+    public StateMachine playerController;
     public float movementSmoothingSpeed;
 
 

@@ -8,8 +8,6 @@ public class GroundedMovingState : IState
     private readonly float forwardNudge = 0.01f; // when you movePosition up a stair, Unity pushes back since you slightly collide 
                                         // with the corner of the stair this allows you to counter that push, staying put
                                         // on the edge of the stair
-    private readonly float howFarInFrontToCheck = 0.05f;
-
 
     public GroundedMovingState(StateMachine controller)
     {
@@ -33,7 +31,6 @@ public class GroundedMovingState : IState
             controller.moveDirection = Vector3.ProjectOnPlane(controller.moveDirection, controller.groundHit.normal);
             // controller.usePlayerGravity = false; // why did the tutorial want this?
             if (rb.linearVelocity.y > 0) rb.AddForce(Vector3.down * controller.stickToSlopeForce); // if going up slopes
-            rb.AddForce(10f * speed * controller.moveDirection);
         }
 
         Debug.DrawRay(controller.transform.position, controller.moveDirection, Color.blue);

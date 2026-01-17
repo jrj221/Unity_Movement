@@ -260,7 +260,7 @@ public class StateMachine : MonoBehaviour
     void FixedUpdate()
     {
         DrawRaycasts();
-        // Debug.Log("FixedUpdate: " + currentState);
+        Debug.Log("FixedUpdate: " + currentState);
         currentState.Apply();
 
         ApplyPhysicsActions();
@@ -317,17 +317,14 @@ public class StateMachine : MonoBehaviour
         Quaternion targetRotation;
         if (isLeftWallrunning)
         {
-            Debug.Log("1");
             targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, -WallrunAngle);
         }
         else if (isRightWallrunning)
         {
-            Debug.Log("2");
             targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, WallrunAngle);
         }
         else
         {
-            Debug.Log("3");
             targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0);
         }
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, WallrunRotationSpeed * Time.deltaTime);

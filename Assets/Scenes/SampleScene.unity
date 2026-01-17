@@ -1300,12 +1300,12 @@ MonoBehaviour:
   normalSpeed: 7
   groundDrag: 5
   airMovementMultiplier: 1
-  WallrunRotationSpeed: 0
-  WallrunAngle: 0
-  moveLeftInputLockLength: 0.2
-  moveRightInputLockLength: 2
-  isLeftWallrunningBufferLength: 0
-  isRightWallrunningBufferLength: 0
+  WallrunRotationSpeed: 100
+  WallrunAngle: 20
+  moveLeftInputLockLength: 1
+  moveRightInputLockLength: 1
+  isLeftWallrunningBufferLength: 0.2
+  isRightWallrunningBufferLength: 0.2
   jumpForce: 12
   wallVerticalJumpForce: 7
   wallSideJumpForce: 7
@@ -1321,7 +1321,7 @@ MonoBehaviour:
   maxSlopeAngle: 45
   stickToSlopeForce: 5
   playerGravity: 30
-  wallJumpGravity: 10
+  wallJumpGravity: 14
   cameraSmoothingEnableTimeLength: 0.2
 --- !u!1 &832575517
 GameObject:
