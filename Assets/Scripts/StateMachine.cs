@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class StateMachine : MonoBehaviour
 {
+    #region Objects and Action References
     [Header("Objects and Action References")]
     public Rigidbody rb;
     public Transform feet;
@@ -15,6 +16,7 @@ public class StateMachine : MonoBehaviour
     public InputActionReference rightWallrun;
     public InputActionReference leftWallrun;
     public InputActionReference slide;
+    #endregion
 
     #region Movement
     [Header("Movement")]
@@ -63,18 +65,17 @@ public class StateMachine : MonoBehaviour
     public float wallVerticalJumpForce;
     public float wallSideJumpForce;
     public float slideJumpHorizontalForce;
-    // public float groundedJumpBufferLength;
+    public float jumpBufferLength;
+    [NonSerialized] public float jumpBufferTime;
+    private bool jumpBuffered;
     [NonSerialized] public bool pressedJump;
-    private bool jumpTriggered;
+    [NonSerialized] public bool jumpTriggered;
     [NonSerialized] public bool jumpApplied;
     #endregion
 
     #region Air
     [Header("Air")]
-    public float inAirBufferTimeLength;
     [NonSerialized] public bool inAir;
-    [NonSerialized] public bool inAirBuffered;
-    [NonSerialized] public float inAirBufferTime;
     #endregion
 
     #region Sliding
@@ -128,7 +129,7 @@ public class StateMachine : MonoBehaviour
     #endregion  
 
     #region Raycast Info
-    public readonly float verticalRaycastDist = 1.1f;
+    public readonly float verticalRaycastDist = 1.01f;
     public readonly float horizontalRaycastDist = .51f;
     private bool grounded;
     private bool wallToLeft;
@@ -231,10 +232,10 @@ public class StateMachine : MonoBehaviour
 
         // Sliding
         if (isSliding && (!slideTimerOngoing || !pressedSlide)) slideStopTriggered = true;
-        
+
 
         // Jumping
-        jumpTriggered = pressedJump; // I don't think it needs more conditions since we've already ensured certain ones for states
+        jumpTriggered = jumpBuffered;
 
         // Wallrunning
         leftWallrunStartTriggered = !isLeftWallrunningIsBuffered && pressedLeftWallrun && wallToLeft;
@@ -280,9 +281,9 @@ public class StateMachine : MonoBehaviour
         moveLeftLocked = TickTimer(ref moveLeftInputLockTime);
         isLeftWallrunningIsBuffered = TickTimer(ref isLeftWallrunningBufferTime);
         isRightWallrunningIsBuffered = TickTimer(ref isRightWallrunningBufferTime);
-        inAirBuffered = TickTimer(ref inAirBufferTime);
         cameraSmoothingEnabled = TickTimer(ref cameraSmoothingEnableTime);
         slideTimerOngoing = TickTimer(ref slideTime);
+        jumpBuffered = TickTimer(ref jumpBufferTime);
     }
 
 
@@ -409,6 +410,7 @@ public class StateMachine : MonoBehaviour
         // actual raycasts (not debug ones)
         int layerMask = ~LayerMask.GetMask("IgnoreRaycast"); // selects everything EXCEPT IgnoreRaycast layer, thus ignoring those objects
         grounded = Physics.Raycast(rb.transform.position, Vector3.down, out groundHit, verticalRaycastDist);
+        // grounded = Physics.CheckCapsule(feet.position, feet.position + Vector3.up * 0.2f, 1);
 
         // Radial raycast search for walls in any direction, with a threshold for a valid leftwards or rightwards wall
         float rays = 16;
@@ -447,7 +449,7 @@ public class StateMachine : MonoBehaviour
         }
 
         // grounded raycasts
-        if (!inAirBuffered) inAir = !grounded;
+        inAir = !grounded;
         if (grounded)
         {
             Debug.DrawRay(rb.transform.position, Vector3.down * verticalRaycastDist, Color.green);
@@ -500,6 +502,7 @@ public class StateMachine : MonoBehaviour
     void StartJump(InputAction.CallbackContext ctx)
     {
         pressedJump = true;
+        jumpBufferTime = jumpBufferLength;
     }
 
 

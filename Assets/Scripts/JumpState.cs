@@ -40,6 +40,8 @@ public class JumpState : IState
     public void OnEnter()
     {
         controller.pressedJump = false; // prevents continous bouncing
+        controller.jumpTriggered = false;
+        controller.jumpBufferTime = 0;
 
         // NOTE: Be aware that exitingState is something different in OnEnter vs OnExit, so we assign to bools to keep it consistent
         if (controller.exitingState == controller.leftWallrunState) leftWallrunJump = true;
@@ -50,7 +52,6 @@ public class JumpState : IState
 
     public void OnExit()
     {
-        controller.inAirBufferTime = controller.inAirBufferTimeLength; // So grounded doesn't overwrite inAir 
         if (leftWallrunJump) controller.isLeftWallrunningBufferTime = controller.isLeftWallrunningBufferLength;
         else if (rightWallrunJump) controller.isRightWallrunningBufferTime = controller.isRightWallrunningBufferLength;
         normalJump = false; // reset in case we used one of them

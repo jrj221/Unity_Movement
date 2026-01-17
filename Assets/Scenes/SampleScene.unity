@@ -1106,7 +1106,6 @@ GameObject:
   m_Component:
   - component: {fileID: 731010733}
   - component: {fileID: 731010730}
-  - component: {fileID: 731010735}
   - component: {fileID: 731010737}
   - component: {fileID: 731010734}
   - component: {fileID: 731010736}
@@ -1184,52 +1183,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &731010735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 731010729}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 838d624dda608f946a20611b8c20527d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 731010734}
-  feet: {fileID: 1610946304}
-  move: {fileID: 3123106651497654279, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
-  sprint: {fileID: 148905540457228016, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
-  jump: {fileID: -6283006818321985514, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
-  rightWallrun: {fileID: -950213951704728490, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
-  leftWallrun: {fileID: -2711018499347473110, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
-  slide: {fileID: 7657075221882269483, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
-  sprintSpeed: 10
-  normalSpeed: 5
-  groundDrag: 5
-  airMovementMultiplier: 1.05
-  inAirGravityMultiplier: 2
-  wallrunRotationSpeed: 50
-  wallrunAngle: 15
-  moveLeftInputLockLength: 0.2
-  moveRightInputLockLength: 0.2
-  jumpForce: 8
-  wallVerticalJumpForce: 12
-  wallSideJumpForce: 7
-  slideJumpHorizontalForce: 100
-  groundedJumpBufferLength: 0.2
-  slideSlowdownSpeed: 3
-  baseSlideSlowdownFactor: 4
-  minSlideSlowdownFactor: 2
-  slideRotationSpeed: 200
-  slideAngle: 60
-  slideSlowdownLockLength: 0.2
-  minStepLength: 0.2
-  maxStepHeight: 0.5
-  maxStepSlope: 0.95
-  maxSlopeAngle: 45
-  stickToSlopeForce: 5
-  forceMeshSnap: 0
 --- !u!114 &731010736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1296,20 +1249,21 @@ MonoBehaviour:
   rightWallrun: {fileID: -950213951704728490, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
   leftWallrun: {fileID: -2711018499347473110, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
   slide: {fileID: 7657075221882269483, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
-  sprintSpeed: 14
+  sprintSpeed: 11
   normalSpeed: 7
   groundDrag: 5
-  airMovementMultiplier: 1
-  WallrunRotationSpeed: 100
+  airMovementMultiplier: 1.2
+  WallrunRotationSpeed: 60
   WallrunAngle: 20
   moveLeftInputLockLength: 1
   moveRightInputLockLength: 1
   isLeftWallrunningBufferLength: 0.2
   isRightWallrunningBufferLength: 0.2
-  jumpForce: 12
+  jumpForce: 10
   wallVerticalJumpForce: 7
   wallSideJumpForce: 7
   slideJumpHorizontalForce: 100
+  jumpBufferLength: 0.5
   inAirBufferTimeLength: 0.2
   slideRotationSpeed: 200
   slideAngle: 60
@@ -1320,7 +1274,7 @@ MonoBehaviour:
   maxStepSlope: 0.95
   maxSlopeAngle: 45
   stickToSlopeForce: 5
-  playerGravity: 30
+  playerGravity: 25
   wallJumpGravity: 14
   cameraSmoothingEnableTimeLength: 0.2
 --- !u!1 &832575517
@@ -2541,7 +2495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 731010729}
-  playerController: {fileID: 731010735}
+  playerController: {fileID: 731010738}
   movementSmoothingSpeed: 0.05
 --- !u!1001 &1942492173
 PrefabInstance:
