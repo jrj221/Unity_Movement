@@ -7,6 +7,7 @@ public class JumpState : IState
     private bool normalJump;
     private bool leftWallrunJump;
     private bool rightWallrunJump;
+    private bool slideJump;
 
 
     public JumpState(StateMachine controller)
@@ -34,6 +35,10 @@ public class JumpState : IState
             controller.moveRightInputLockTime = controller.moveRightInputLockLength;
             controller.useWallJumpGravity = true;
         }
+        else if (slideJump)
+        {
+            rb.AddForce(Vector3.up * controller.slideJumpVerticalForce + controller.moveDirection * controller.slideJumpHorizontalForce, ForceMode.Impulse);
+        }
         controller.jumpApplied = true;
     }
 
@@ -44,17 +49,17 @@ public class JumpState : IState
         // NOTE: Be aware that exitingState is something different in OnEnter vs OnExit, so we assign to bools to keep it consistent
         if (controller.exitingState == controller.leftWallrunState) leftWallrunJump = true;
         else if (controller.exitingState == controller.rightWallrunState) rightWallrunJump = true;
-        else if (controller.exitingState == controller.idleState
-                || controller.exitingState == controller.groundedMovingState) normalJump = true;
+        else if (controller.exitingState == controller.slideState) slideJump = true;
+        else normalJump = true;
     }
 
     public void OnExit()
     {
-        controller.inAirBufferTime = controller.inAirBufferTimeLength; // So grounded doesn't overwrite inAir 
         if (leftWallrunJump) controller.isLeftWallrunningBufferTime = controller.isLeftWallrunningBufferLength;
         else if (rightWallrunJump) controller.isRightWallrunningBufferTime = controller.isRightWallrunningBufferLength;
         normalJump = false; // reset in case we used one of them
-        leftWallrunJump = false; 
+        leftWallrunJump = false;
         rightWallrunJump = false;
+        slideJump = false;
     }
 }
