@@ -22,7 +22,6 @@ public class SlideState : IState
     public void OnEnter()
     {
         controller.slideTime = controller.maxSlideTime;
-        // controller.slideStartTriggered = false;
         controller.isSliding = true;
     }
 

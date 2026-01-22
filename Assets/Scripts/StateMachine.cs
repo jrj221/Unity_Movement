@@ -240,7 +240,7 @@ public class StateMachine : MonoBehaviour
         rightWallrunStartTriggered = !isRightWallrunningIsBuffered && pressedRightWallrun && wallToRight;
         if (isRightWallrunning && !(pressedRightWallrun && wallToRight)) rightWallrunStopTriggered = true;
 
-        Debug.Log("Update: " + currentState);
+        // Debug.Log("Update: " + currentState);
         nextState = DetermineNextState();
         if (nextState != currentState) ChangeState(nextState);
     }
@@ -379,7 +379,7 @@ public class StateMachine : MonoBehaviour
                 else if (slideStopTriggered) return idleState;
                 else return slideState;
             case JumpState:
-                if (inAir) return airborneState;
+                if (jumpApplied) return airborneState;
                 else return jumpState;
             case AirborneState:
                 if (leftWallrunStartTriggered) return leftWallrunState;
