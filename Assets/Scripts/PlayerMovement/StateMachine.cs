@@ -257,7 +257,7 @@ public class StateMachine : MonoBehaviour
     void FixedUpdate()
     {
         DrawRaycasts();
-        Debug.Log("FixedUpdate: " + currentState);
+        // Debug.Log("FixedUpdate: " + currentState);
         currentState.Apply();
 
         ApplyPhysicsActions();
