@@ -19,7 +19,7 @@ public class LeftWallrunState : IState
         Vector3 wallForward = Vector3.Cross(hit.normal, Vector3.up);
 
         // move alongside wall
-        controller.rb.AddForce(10f * controller.normalSpeed * wallForward.normalized);
+        controller.rb.AddForce(15f * controller.normalSpeed * wallForward.normalized);
 
         // push into wall for concave surfaces
         controller.rb.AddForce(controller.pushIntoWallForce * -hit.normal);
