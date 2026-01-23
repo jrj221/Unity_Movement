@@ -4,17 +4,17 @@ using UnityEngine;
 public class CheckpointManager : MonoBehaviour
 {
     public GameObject firstCheckpoint;
-    private Vector3 latestCheckpoint;
+    private Transform latestCheckpoint;
     public GameObject player;
 
 
     void Awake()
     {
-        latestCheckpoint = firstCheckpoint.transform.position;
+        latestCheckpoint = firstCheckpoint.transform;
     }
 
 
-    public void UpdateCheckpoint(Vector3 checkpoint)
+    public void UpdateCheckpoint(Transform checkpoint)
     {
 
         latestCheckpoint = checkpoint;
@@ -23,6 +23,7 @@ public class CheckpointManager : MonoBehaviour
 
     public void TeleportPlayer()
     {
-        player.transform.position = latestCheckpoint;
+        player.transform.position = latestCheckpoint.position;
+        player.transform.rotation = latestCheckpoint.rotation;
     }
 }

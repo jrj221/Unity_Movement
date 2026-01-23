@@ -7,7 +7,7 @@ public class PlayerInfoManger : MonoBehaviour
     {
         if (other.CompareTag("Checkpoint"))
         {
-            checkpointManager.UpdateCheckpoint(other.transform.position);
+            checkpointManager.UpdateCheckpoint(other.transform);
         }
         else if (other.CompareTag("Death"))
         {
