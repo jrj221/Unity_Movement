@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Wall
   - Pickupable
+  - Death
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
