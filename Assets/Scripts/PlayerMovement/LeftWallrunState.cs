@@ -17,7 +17,12 @@ public class LeftWallrunState : IState
         // Add force to move alongside the wall
         RaycastHit hit = controller.leftWallHit;
         Vector3 wallForward = Vector3.Cross(hit.normal, Vector3.up);
+
+        // move alongside wall
         controller.rb.AddForce(10f * controller.normalSpeed * wallForward.normalized);
+
+        // push into wall for concave surfaces
+        controller.rb.AddForce(controller.pushIntoWallForce * -hit.normal);
     }
 
     public void OnEnter()

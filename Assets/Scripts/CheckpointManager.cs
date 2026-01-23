@@ -16,7 +16,6 @@ public class CheckpointManager : MonoBehaviour
 
     public void TeleportPlayer()
     {
-        Debug.Log("teleported");
         player.transform.position = latestCheckpoint;
     }
 }

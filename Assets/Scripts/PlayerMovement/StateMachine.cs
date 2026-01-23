@@ -35,6 +35,7 @@ public class StateMachine : MonoBehaviour
     [Header("Wallrunning")]
     public float WallrunRotationSpeed;
     public float WallrunAngle;
+    public float pushIntoWallForce;
     public float moveLeftInputLockLength;
     public float moveRightInputLockLength;
     public float isLeftWallrunningBufferLength;
@@ -55,8 +56,6 @@ public class StateMachine : MonoBehaviour
     [NonSerialized] public float isRightWallrunningBufferTime = 0;
     private bool isLeftWallrunningIsBuffered;
     private bool isRightWallrunningIsBuffered;
-    
-    
     #endregion
 
     #region Jumping
