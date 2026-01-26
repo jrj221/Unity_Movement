@@ -15,12 +15,13 @@ public class PlayerInfoManger : MonoBehaviour
 
             if (other.name == "Final Checkpoint")
             {
+                checkpointManager.finishedCourse = true;
                 uiManager.UpdateBestTime();
             }
         }
         else if (other.CompareTag("Death"))
         {
-            checkpointManager.TeleportPlayer();
+            checkpointManager.Death();
         }
     }
 }

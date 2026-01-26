@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <ui:VisualElement style="flex-grow: 1;">
-        <ui:Label text="0.0s" name="currentTime" style="-unity-text-align: upper-center; font-size: 25px; -unity-text-outline-width: 1px; color: rgb(255, 255, 255); -unity-text-outline-color: rgb(0, 0, 0);" />
-        <ui:Label text="Best Time: " name="bestTime" style="font-size: 15px; -unity-text-outline-color: rgb(0, 0, 0); -unity-text-outline-width: 0.5px; color: rgb(255, 255, 255); -unity-text-align: upper-center;" />
+        <ui:Label text="0.0s" name="currentTime" style="-unity-text-align: middle-center; font-size: 25px; -unity-text-outline-width: 1px; color: rgb(255, 255, 255); -unity-text-outline-color: rgb(0, 0, 0); background-color: rgb(0, 0, 0); width: auto;" />
+        <ui:Label text="Best Time: " name="bestTime" style="font-size: 20px; -unity-text-outline-color: rgb(0, 0, 0); -unity-text-outline-width: 0.5px; color: rgb(255, 255, 255); -unity-text-align: upper-center; background-color: rgb(0, 0, 0);" />
     </ui:VisualElement>
 </ui:UXML>

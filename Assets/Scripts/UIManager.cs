@@ -40,4 +40,10 @@ public class UIManager : MonoBehaviour
             bestTime.text = "Best Time: " + currentTime.text;
         }
     }
+
+
+    public void RestartTime()
+    {
+        currentTimeFloat = 0;
+    }
 }
