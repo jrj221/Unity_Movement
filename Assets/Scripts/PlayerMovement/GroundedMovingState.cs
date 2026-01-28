@@ -23,6 +23,7 @@ public class GroundedMovingState : IState
         {
             rb.MovePosition(stairUpPosition);
             controller.justSteppedUp = true;
+            controller.wallrunBufferTime = controller.wallrunBufferLength;
             controller.cameraSmoothingEnableTime = controller.cameraSmoothingEnableTimeLength;
         }
 

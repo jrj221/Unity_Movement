@@ -1124,7 +1124,7 @@ Transform:
   m_GameObject: {fileID: 1173234699}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 16.55, y: 0.1, z: -14.18}
+  m_LocalPosition: {x: 16.55, y: 2.04, z: -14.18}
   m_LocalScale: {x: 0.2, y: 5, z: 15}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1608,7 +1608,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1864835525}
-  m_Material: {fileID: 13400000, guid: c9f04983b133824468479417f7aa8729, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1683,13 +1683,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1864835525}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.27220684, z: -0, w: 0.9622388}
-  m_LocalPosition: {x: 2.53, y: 0.5, z: -3.05}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 16.26, y: 0.5, z: -4.37}
   m_LocalScale: {x: 1, y: 1, z: 2.8841}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -31.591, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1866949085
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2047,9 +2047,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 905753445133444608, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2592554401233128678, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4232524787309858257, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
+      propertyPath: frictionless
+      value: 
+      objectReference: {fileID: 13400000, guid: 88aa0f8d5860f48b09150976f3b89d40, type: 2}
+    - target: {fileID: 4232524787309858257, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
+      propertyPath: jumpBufferTimeLength
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4232524787309858257, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
+      propertyPath: wallJumpBufferLength
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8615947065561016798, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
       propertyPath: m_LocalPosition.x

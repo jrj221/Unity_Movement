@@ -55,6 +55,8 @@ public class JumpState : IState
 
     public void OnExit()
     {
+        // controller.jumpBufferTime = 0;
+        
         if (leftWallrunJump) controller.isLeftWallrunningBufferTime = controller.isLeftWallrunningBufferLength;
         else if (rightWallrunJump) controller.isRightWallrunningBufferTime = controller.isRightWallrunningBufferLength;
         normalJump = false; // reset in case we used one of them

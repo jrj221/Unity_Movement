@@ -40,6 +40,9 @@ public class StateMachine : MonoBehaviour
     public float moveRightInputLockLength;
     public float isLeftWallrunningBufferLength;
     public float isRightWallrunningBufferLength;
+    public float wallrunBufferLength;
+    [NonSerialized] public float wallrunBufferTime;
+    private bool wallrunBuffered;
     private bool pressedLeftWallrun;
     private bool pressedRightWallrun;
     [NonSerialized] public bool isLeftWallrunning;
@@ -66,7 +69,7 @@ public class StateMachine : MonoBehaviour
     public float slideJumpHorizontalForce;
     public float slideJumpVerticalForce;
     public float jumpBufferTimeLength;
-    private float jumpBufferTime;
+    [NonSerialized] public float jumpBufferTime;
     private bool jumpBuffered;
     [NonSerialized] public bool pressedJump;
     private bool jumpTriggered;
@@ -126,7 +129,9 @@ public class StateMachine : MonoBehaviour
     [NonSerialized] public Vector3 wallDirection;
     [NonSerialized] public readonly float playerRadius = 0.5f;
     [NonSerialized] public readonly float playerHeight = 2f;
-    #endregion  
+    public PhysicsMaterial frictionless;
+    private Collider rbCollider;
+    #endregion
 
     #region Raycast Info
     public readonly float verticalRaycastDist = 1.1f;
@@ -175,6 +180,7 @@ public class StateMachine : MonoBehaviour
         exitingState = currentState;
         rb.useGravity = false; // we'll use our false playerGravity instead, toggling it with useCustomGravity
         useCustomGravity = true;
+        rbCollider = rb.GetComponent<CapsuleCollider>();
     }
 
 
@@ -229,6 +235,7 @@ public class StateMachine : MonoBehaviour
         isMoving = inputMoveDirection != Vector2.zero;
         if (pressedSprint && grounded) isSprinting = true;
         if (!pressedSprint) isSprinting = false;
+        // rbCollider.material = grounded ? null : frictionless;
 
         // Sliding
         if (isSliding && (!slideTimerOngoing || !pressedSlide)) slideStopTriggered = true;
@@ -237,9 +244,9 @@ public class StateMachine : MonoBehaviour
         jumpTriggered = jumpBuffered;
 
         // Wallrunning
-        leftWallrunStartTriggered = !isLeftWallrunningIsBuffered && pressedLeftWallrun && wallToLeft;
+        leftWallrunStartTriggered = !wallrunBuffered && !isLeftWallrunningIsBuffered && pressedLeftWallrun && wallToLeft;
         if (isLeftWallrunning && (!pressedLeftWallrun || !wallToLeft)) leftWallrunStopTriggered = true;
-        rightWallrunStartTriggered = !isRightWallrunningIsBuffered && pressedRightWallrun && wallToRight;
+        rightWallrunStartTriggered = !wallrunBuffered && !isRightWallrunningIsBuffered && pressedRightWallrun && wallToRight;
         if (isRightWallrunning && !(pressedRightWallrun && wallToRight)) rightWallrunStopTriggered = true;
 
         // Debug.Log("Update: " + currentState);
@@ -260,7 +267,7 @@ public class StateMachine : MonoBehaviour
     void FixedUpdate()
     {
         DrawRaycasts();
-        // Debug.Log("FixedUpdate: " + currentState);
+        Debug.Log("FixedUpdate: " + currentState);
         currentState.Apply();
 
         ApplyPhysicsActions();
@@ -283,6 +290,7 @@ public class StateMachine : MonoBehaviour
         cameraSmoothingEnabled = TickTimer(ref cameraSmoothingEnableTime);
         slideTimerOngoing = TickTimer(ref slideTime);
         jumpBuffered = TickTimer(ref jumpBufferTime);
+        wallrunBuffered = TickTimer(ref wallrunBufferTime);
     }
 
 
@@ -408,7 +416,6 @@ public class StateMachine : MonoBehaviour
         // actual raycasts (not debug ones)
         int layerMask = ~LayerMask.GetMask("IgnoreRaycast"); // selects everything EXCEPT IgnoreRaycast layer, thus ignoring those objects
         grounded = Physics.Raycast(rb.transform.position, Vector3.down, out groundHit, verticalRaycastDist);
-        // grounded = Physics.CheckCapsule(feet.position, feet.position + Vector3.up * 0.2f, 1);
 
         // Radial raycast search for walls in any direction, with a threshold for a valid leftwards or rightwards wall
         float rays = 16;

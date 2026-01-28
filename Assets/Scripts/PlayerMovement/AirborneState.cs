@@ -23,6 +23,7 @@ public class AirborneState : IState
             {
                 rb.MovePosition(stairDownPosition);
                 stepDownScheduled = false;
+                controller.wallrunBufferTime = controller.wallrunBufferLength;
                 controller.cameraSmoothingEnableTime = controller.cameraSmoothingEnableTimeLength;
             }
 
