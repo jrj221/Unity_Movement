@@ -65,6 +65,9 @@ public class StateMachine : MonoBehaviour
     public float wallSideJumpForce;
     public float slideJumpHorizontalForce;
     public float slideJumpVerticalForce;
+    public float jumpBufferTimeLength;
+    private float jumpBufferTime;
+    private bool jumpBuffered;
     [NonSerialized] public bool pressedJump;
     private bool jumpTriggered;
     [NonSerialized] public bool jumpApplied;
@@ -231,7 +234,7 @@ public class StateMachine : MonoBehaviour
         if (isSliding && (!slideTimerOngoing || !pressedSlide)) slideStopTriggered = true;
         
         // Jumping
-        jumpTriggered = pressedJump;
+        jumpTriggered = jumpBuffered;
 
         // Wallrunning
         leftWallrunStartTriggered = !isLeftWallrunningIsBuffered && pressedLeftWallrun && wallToLeft;
@@ -279,6 +282,7 @@ public class StateMachine : MonoBehaviour
         isRightWallrunningIsBuffered = TickTimer(ref isRightWallrunningBufferTime);
         cameraSmoothingEnabled = TickTimer(ref cameraSmoothingEnableTime);
         slideTimerOngoing = TickTimer(ref slideTime);
+        jumpBuffered = TickTimer(ref jumpBufferTime);
     }
 
 
@@ -496,6 +500,7 @@ public class StateMachine : MonoBehaviour
     void StartJump(InputAction.CallbackContext ctx)
     {
         pressedJump = true;
+        jumpBufferTime = jumpBufferTimeLength;
     }
 
 

@@ -738,7 +738,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e867e0ebf2ca04f17b321567f777b1b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1353656798}
   firstCheckpoint: {fileID: 295528616}
+  finishedCourse: 0
   player: {fileID: 91193059}
 --- !u!4 &556144414
 Transform:
