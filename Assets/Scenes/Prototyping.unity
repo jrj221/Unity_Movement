@@ -2079,6 +2079,10 @@ PrefabInstance:
       propertyPath: slideJumpHorizontalForce
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 8460623831748945863, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8615947065561016798, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.32
