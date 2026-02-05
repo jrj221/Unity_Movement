@@ -63,7 +63,6 @@ public class AirborneState : IState
     {
         controller.inAir = true;
         rb.linearDamping = 0;
-        controller.jumpApplied = false; // reset if you jumped to get airborne
 
         // check for a step and apply it next frame. If we check every physics frame, we'd get a ton of false positives
         if (!controller.justSteppedUp && controller.exitingState == controller.groundedMovingState && DownwardsStep())

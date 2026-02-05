@@ -1158,6 +1158,14 @@ PrefabInstance:
       propertyPath: pushIntoWallForce
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 4232524787309858257, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
+      propertyPath: wallrunBufferLength
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4232524787309858257, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
+      propertyPath: jumpBufferTimeLength
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 8615947065561016798, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.12

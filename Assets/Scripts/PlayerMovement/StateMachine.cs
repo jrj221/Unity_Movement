@@ -70,7 +70,7 @@ public class StateMachine : MonoBehaviour
     public float slideJumpVerticalForce;
     public float jumpBufferTimeLength;
     [NonSerialized] public float jumpBufferTime;
-    private bool jumpBuffered;
+    [NonSerialized] public bool jumpBuffered;
     [NonSerialized] public bool pressedJump;
     private bool jumpTriggered;
     [NonSerialized] public bool jumpApplied;
@@ -176,6 +176,7 @@ public class StateMachine : MonoBehaviour
 
     void Start()
     {
+        // Time.timeScale = 0.1f;
         currentState = idleState;
         exitingState = currentState;
         rb.useGravity = false; // we'll use our false playerGravity instead, toggling it with useCustomGravity
@@ -239,7 +240,7 @@ public class StateMachine : MonoBehaviour
 
         // Sliding
         if (isSliding && (!slideTimerOngoing || !pressedSlide)) slideStopTriggered = true;
-        
+
         // Jumping
         jumpTriggered = jumpBuffered;
 
