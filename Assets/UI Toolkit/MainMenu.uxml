@@ -2,6 +2,6 @@
     <Style src="project://database/Assets/UI%20Toolkit/MainMenuStyles.uss?fileID=7433441132597879392&amp;guid=a1cf6bbb309554583a8c69b7d096ece8&amp;type=3#MainMenuStyles" />
     <ui:VisualElement name="Container" style="flex-grow: 1;">
         <ui:Label text="Rigidbody Controller 3D!" name="Title" class="title" />
-        <ui:Button text="Start" name="Start" class="startButton" />
+        <ui:Button text="Start" name="StartGame" class="startButton" />
     </ui:VisualElement>
 </ui:UXML>
