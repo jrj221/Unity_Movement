@@ -129,8 +129,6 @@ public class StateMachine : MonoBehaviour
     [NonSerialized] public Vector3 wallDirection;
     [NonSerialized] public readonly float playerRadius = 0.5f;
     [NonSerialized] public readonly float playerHeight = 2f;
-    public PhysicsMaterial frictionless;
-    private Collider rbCollider;
     #endregion
 
     #region Raycast Info
@@ -181,7 +179,6 @@ public class StateMachine : MonoBehaviour
         exitingState = currentState;
         rb.useGravity = false; // we'll use our false playerGravity instead, toggling it with useCustomGravity
         useCustomGravity = true;
-        rbCollider = rb.GetComponent<CapsuleCollider>();
     }
 
 
