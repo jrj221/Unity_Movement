@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8460623831748945863}
   - component: {fileID: 6307278460307284956}
   - component: {fileID: 4232524787309858257}
+  - component: {fileID: 7743997182805635385}
   m_Layer: 2
   m_Name: PlayerRoot
   m_TagString: Untagged
@@ -102,7 +103,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &6307278460307284956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,21 +154,24 @@ MonoBehaviour:
   rightWallrun: {fileID: -950213951704728490, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
   leftWallrun: {fileID: -2711018499347473110, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
   slide: {fileID: 7657075221882269483, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
-  sprintSpeed: 14
+  sprintSpeed: 10
   normalSpeed: 7
   groundDrag: 5
   airMovementMultiplier: 1
-  WallrunRotationSpeed: 100
+  WallrunRotationSpeed: 60
   WallrunAngle: 20
+  pushIntoWallForce: 50
   moveLeftInputLockLength: 1
   moveRightInputLockLength: 1
   isLeftWallrunningBufferLength: 0.2
   isRightWallrunningBufferLength: 0.2
+  wallrunBufferLength: 0.2
   jumpForce: 12
   wallVerticalJumpForce: 7
   wallSideJumpForce: 7
   slideJumpHorizontalForce: 100
   slideJumpVerticalForce: 15
+  jumpBufferTimeLength: 0.2
   slideRotationSpeed: 200
   slideAngle: 60
   slideSpeed: 50
@@ -180,6 +184,20 @@ MonoBehaviour:
   playerGravity: 30
   wallJumpGravity: 14
   cameraSmoothingEnableTimeLength: 0.2
+--- !u!114 &7743997182805635385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111231114327906224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d312fbe59cf47a4b10b8b954747a12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 8460623831748945863}
+  frictionless: {fileID: 13400000, guid: 88aa0f8d5860f48b09150976f3b89d40, type: 2}
 --- !u!1 &1146860641482361583
 GameObject:
   m_ObjectHideFlags: 0
