@@ -17,6 +17,7 @@ public class GameplayState : IState
         gameManager.playerMovement.enabled = true;
         gameManager.cameraMovement.enabled = true;
         gameManager.mainMenuEvents.DisableMainMenu();
+        Cursor.visible = false;
     }
 
     public void OnExit()
