@@ -2,18 +2,25 @@ using UnityEngine;
 
 public class GameplayState : IState
 {
+    private readonly GameManager gameManager;
+
+    public GameplayState(GameManager GM) { gameManager = GM; }
+
     public void Apply()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public void OnEnter()
     {
-        throw new System.NotImplementedException();
+        // Disable the menu and enable player controls
+        gameManager.playerMovement.enabled = true;
+        gameManager.cameraMovement.enabled = true;
+        gameManager.mainMenuEvents.DisableMainMenu();
     }
 
     public void OnExit()
     {
-        throw new System.NotImplementedException();
+        
     }
 }
