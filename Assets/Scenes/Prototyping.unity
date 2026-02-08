@@ -854,6 +854,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6373f730dd4344e11838d327cc44a7ff, type: 3}
+--- !u!4 &820212896 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2070198670756366778, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
+  m_PrefabInstance: {fileID: 1635484815352917076}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1487,6 +1492,7 @@ MonoBehaviour:
   look: {fileID: 4891278584969314732, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
   throwObject: {fileID: -8190209284706820010, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
   pickup: {fileID: 3547766997971438085, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
+  pause: {fileID: 7984296390971067837, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
 --- !u!4 &1410794246
 Transform:
   m_ObjectHideFlags: 0
@@ -1502,6 +1508,61 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1643561611 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 111231114327906224, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
+  m_PrefabInstance: {fileID: 1635484815352917076}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1643561612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643561611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f82fda4b9b4d0b9468b2a0b4451def5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputManager: {fileID: 1410794245}
+  rb: {fileID: 1643561615}
+  feet: {fileID: 820212896}
+  sprintSpeed: 10
+  normalSpeed: 7
+  groundDrag: 5
+  airMovementMultiplier: 1
+  WallrunRotationSpeed: 60
+  WallrunAngle: 20
+  pushIntoWallForce: 50
+  moveLeftInputLockLength: 1
+  moveRightInputLockLength: 1
+  isLeftWallrunningBufferLength: 0.2
+  isRightWallrunningBufferLength: 0.2
+  wallrunBufferLength: 0.2
+  jumpForce: 12
+  wallVerticalJumpForce: 7
+  wallSideJumpForce: 7
+  slideJumpHorizontalForce: 100
+  slideJumpVerticalForce: 15
+  jumpBufferTimeLength: 0.2
+  slideRotationSpeed: 200
+  slideAngle: 60
+  slideSpeed: 50
+  maxSlideTime: 0.5
+  minStepLength: 0.2
+  maxStepHeight: 0.5
+  maxStepSlope: 0.95
+  maxSlopeAngle: 45
+  stickToSlopeForce: 5
+  playerGravity: 30
+  wallJumpGravity: 14
+  cameraSmoothingEnableTimeLength: 0.2
+--- !u!54 &1643561615 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 8460623831748945863, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
+  m_PrefabInstance: {fileID: 1635484815352917076}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1736156644 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6373f730dd4344e11838d327cc44a7ff, type: 3}
@@ -2199,7 +2260,7 @@ PrefabInstance:
     - target: {fileID: 2537730098264337337, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
       propertyPath: playerController
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1643561612}
     - target: {fileID: 2592554401233128678, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
       propertyPath: m_Name
       value: Player
@@ -2207,7 +2268,7 @@ PrefabInstance:
     - target: {fileID: 5679348373883442163, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
       propertyPath: controller
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1643561612}
     - target: {fileID: 5679348373883442163, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
       propertyPath: inputManager
       value: 
@@ -2254,9 +2315,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4232524787309858257, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
+    - {fileID: 6307278460307284956, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 111231114327906224, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1643561612}
   m_SourcePrefab: {fileID: 100100000, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

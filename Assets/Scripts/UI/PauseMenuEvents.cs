@@ -2,9 +2,9 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(UIDocument))]
-public class PauseMenuActions : MonoBehaviour
+public class PauseMenuEvents : MonoBehaviour
 {
-    public GameManager gameManager;
+    public InputManager inputManager;
     private UIDocument _document;
     private Button _resumeButton;
     private Button _settingsButton;
@@ -18,6 +18,9 @@ public class PauseMenuActions : MonoBehaviour
         _settingsButton = _document.rootVisualElement.Q("Buttons").Q("SettingsButton") as Button;
         _quitButton = _document.rootVisualElement.Q("Buttons").Q("QuitButton") as Button;
 
+
+        print("found resume: " + _resumeButton);
+        _document.enabled = false; // by default
 
         _resumeButton.RegisterCallback<ClickEvent>(ResumeGame);
         _settingsButton.RegisterCallback<ClickEvent>(OpenSettings);
@@ -33,10 +36,23 @@ public class PauseMenuActions : MonoBehaviour
     }
 
 
-    private void ResumeGame(ClickEvent e)
+
+    public void ShowPauseMenu()
+    {
+        _document.enabled = true;
+    }
+
+
+    public void HidePauseMenu()
     {
         _document.enabled = false;
-        gameManager.OnGameUnpaused();
+    }
+
+
+    private void ResumeGame(ClickEvent e)
+    {
+        Debug.Log("ne");
+        inputManager.ManualPauseToggle(); // manually switch pause off if you press the button instead
     }
 
 

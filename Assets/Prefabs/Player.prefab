@@ -146,44 +146,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f82fda4b9b4d0b9468b2a0b4451def5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  feet: {fileID: 0}
-  move: {fileID: 0}
-  sprint: {fileID: 0}
-  jump: {fileID: 0}
-  rightWallrun: {fileID: 0}
-  leftWallrun: {fileID: 0}
-  slide: {fileID: 0}
-  sprintSpeed: 0
-  normalSpeed: 0
-  groundDrag: 0
-  airMovementMultiplier: 0
-  WallrunRotationSpeed: 0
-  WallrunAngle: 0
-  pushIntoWallForce: 0
-  moveLeftInputLockLength: 0
-  moveRightInputLockLength: 0
-  isLeftWallrunningBufferLength: 0
-  isRightWallrunningBufferLength: 0
-  wallrunBufferLength: 0
-  jumpForce: 0
-  wallVerticalJumpForce: 0
-  wallSideJumpForce: 0
-  slideJumpHorizontalForce: 0
-  slideJumpVerticalForce: 0
-  jumpBufferTimeLength: 0
-  slideRotationSpeed: 0
-  slideAngle: 0
-  slideSpeed: 0
-  maxSlideTime: 0
-  minStepLength: 0
-  maxStepHeight: 0
-  maxStepSlope: 0
-  maxSlopeAngle: 0
-  stickToSlopeForce: 0
-  playerGravity: 0
-  wallJumpGravity: 0
-  cameraSmoothingEnableTimeLength: 0
+  inputManager: {fileID: 0}
+  rb: {fileID: 8460623831748945863}
+  feet: {fileID: 2070198670756366778}
+  sprintSpeed: 10
+  normalSpeed: 7
+  groundDrag: 5
+  airMovementMultiplier: 1
+  WallrunRotationSpeed: 60
+  WallrunAngle: 20
+  pushIntoWallForce: 50
+  moveLeftInputLockLength: 1
+  moveRightInputLockLength: 1
+  isLeftWallrunningBufferLength: 0.2
+  isRightWallrunningBufferLength: 0.2
+  wallrunBufferLength: 0.2
+  jumpForce: 12
+  wallVerticalJumpForce: 7
+  wallSideJumpForce: 7
+  slideJumpHorizontalForce: 100
+  slideJumpVerticalForce: 15
+  jumpBufferTimeLength: 0.2
+  slideRotationSpeed: 200
+  slideAngle: 60
+  slideSpeed: 50
+  maxSlideTime: 0.5
+  minStepLength: 0.2
+  maxStepHeight: 0.5
+  maxStepSlope: 0.95
+  maxSlopeAngle: 45
+  stickToSlopeForce: 5
+  playerGravity: 30
+  wallJumpGravity: 14
+  cameraSmoothingEnableTimeLength: 0.2
 --- !u!114 &7743997182805635385
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
+    #region Input Actions
     public InputActionReference move;
     public InputActionReference sprint;
     public InputActionReference jump;
@@ -13,9 +14,12 @@ public class InputManager : MonoBehaviour
     public InputActionReference look;
     public InputActionReference throwObject;
     public InputActionReference pickup;
+    public InputActionReference pause;
     private List<InputActionReference> actionReferences;
+    #endregion
 
 
+    #region Input Properties
     public Vector2 InputMoveDirection { get; private set; } // auto-property that allows public getting, but not setting (encapsulation!!)
     public bool PressedSprint { get; private set; }
     public bool PressedJump { get; private set; }
@@ -24,13 +28,15 @@ public class InputManager : MonoBehaviour
     public bool PressedSlide { get; private set; }
     public Vector2 DeltaCameraMovement { get; private set; }
     public bool PressedThrowObject { get; private set; }
-
+    public bool PressedPause { get; private set; }
+    #endregion
 
 
     void Awake()
     {
-        actionReferences = new() { move, sprint, jump, leftWallrun, rightWallrun, slide, look, pickup, throwObject };
+        actionReferences = new() { move, sprint, jump, leftWallrun, rightWallrun, slide, look, pickup, throwObject, pause };
     }
+
 
     void OnEnable()
     {
@@ -58,7 +64,11 @@ public class InputManager : MonoBehaviour
         pickup.action.started += StartPickup;
         throwObject.action.started += StartThrowObject;
         throwObject.action.performed += PerformThrowObject;
+
+        // UI
+        pause.action.started += TogglePause;
     }
+
 
     void OnDisable()
     {
@@ -85,6 +95,9 @@ public class InputManager : MonoBehaviour
         pickup.action.started -= StartPickup;
         throwObject.action.started -= StartThrowObject;
         throwObject.action.performed -= PerformThrowObject;
+
+        // UI
+        pause.action.started -= TogglePause;
     }
 
 
@@ -179,5 +192,17 @@ public class InputManager : MonoBehaviour
     void PerformThrowObject(InputAction.CallbackContext ctx)
     {
 
+    }
+
+
+    void TogglePause(InputAction.CallbackContext ctx)
+    {
+        PressedPause = !PressedPause; // this way you repress the button to toggle
+    }
+
+
+    public void ManualPauseToggle() // for PauseMenuEvents
+    {
+        PressedPause = !PressedPause;
     }
 }

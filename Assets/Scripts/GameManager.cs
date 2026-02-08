@@ -12,14 +12,15 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Object References
+    public InputManager inputManager;
     public StateMachine playerMovement;
     public CameraController cameraMovement;
     public MainMenuEvents mainMenuEvents;
+    public PauseMenuEvents pauseMenuEvents;
     #endregion
 
     #region Class Variables
-    private bool gameInMenu;
-    private bool gamePaused;
+    private bool gameInMenu = true;
     #endregion
 
 
@@ -27,7 +28,7 @@ public class GameManager : MonoBehaviour
     {
         gameplayState = new GameplayState(this);
         mainMenuState = new MainMenuState();
-        pauseMenuState = new PauseMenuState();
+        pauseMenuState = new PauseMenuState(pauseMenuEvents);
 
         playerMovement.enabled = false;
         cameraMovement.enabled = false;
@@ -44,7 +45,7 @@ public class GameManager : MonoBehaviour
     {
         nextState = DetermineNextState();
         if (nextState != currentState) ChangeState(nextState);
-        // Debug.Log(currentState);
+        Debug.Log(currentState);
     }
 
 
@@ -56,10 +57,11 @@ public class GameManager : MonoBehaviour
                 if (!gameInMenu) return gameplayState;
                 else return mainMenuState;
             case PauseMenuState:
-                if (!gamePaused) return gameplayState;
+                if (!inputManager.PressedPause) return gameplayState;
                 else if (gameInMenu) return mainMenuState;
                 else return pauseMenuState;
             case GameplayState:
+                if (inputManager.PressedPause) return pauseMenuState;
                 return gameplayState;
         }
         return null; // won't logically happen but it wanted a return path
@@ -78,12 +80,6 @@ public class GameManager : MonoBehaviour
     public void OnGameStarted()
     {
         gameInMenu = false;
-    }
-
-
-    public void OnGameUnpaused()
-    {
-        gamePaused = false;
     }
 
 

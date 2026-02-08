@@ -2,18 +2,27 @@ using UnityEngine;
 
 public class PauseMenuState : IState
 {
+    private PauseMenuEvents pauseMenuEvents;
+
+    public PauseMenuState(PauseMenuEvents events)
+    {
+        pauseMenuEvents = events;
+    }
+
     public void Apply()
     {
-        throw new System.NotImplementedException();
+
     }
 
     public void OnEnter()
     {
-        throw new System.NotImplementedException();
+        pauseMenuEvents.ShowPauseMenu();
+        Cursor.visible = true;
     }
 
     public void OnExit()
     {
-        throw new System.NotImplementedException();
+        pauseMenuEvents.HidePauseMenu();
+        Cursor.visible = false;
     }
 }
