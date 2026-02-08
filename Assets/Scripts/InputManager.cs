@@ -154,6 +154,12 @@ public class InputManager : MonoBehaviour
     }
 
 
+    public void StopSlide() // only public so that SlideState can use it
+    {
+        PressedSlide = false;
+    }
+
+
     void PerformLook(InputAction.CallbackContext ctx)
     {
         DeltaCameraMovement = ctx.ReadValue<Vector2>();

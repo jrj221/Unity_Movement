@@ -6,16 +6,11 @@ using UnityEngine.InputSystem;
 
 public class StateMachine : MonoBehaviour
 {
-    #region Objects and Action References
-    [Header("Objects and Action References")]
+    #region Object References
+    [Header("Object References")]
+    public InputManager inputManager;
     public Rigidbody rb;
     public Transform feet;
-    public InputActionReference move;
-    public InputActionReference sprint;
-    public InputActionReference jump;
-    public InputActionReference rightWallrun;
-    public InputActionReference leftWallrun;
-    public InputActionReference slide;
     #endregion
 
     #region Movement
@@ -24,9 +19,7 @@ public class StateMachine : MonoBehaviour
     public float normalSpeed;
     public float groundDrag;
     public float airMovementMultiplier;
-    private Vector2 inputMoveDirection;
     [NonSerialized] public Vector3 moveDirection;
-    private bool pressedSprint;
     [NonSerialized] public bool isSprinting;
     [NonSerialized] public bool isMoving;
     #endregion
@@ -43,8 +36,6 @@ public class StateMachine : MonoBehaviour
     public float wallrunBufferLength;
     [NonSerialized] public float wallrunBufferTime;
     private bool wallrunBuffered;
-    private bool pressedLeftWallrun;
-    private bool pressedRightWallrun;
     [NonSerialized] public bool isLeftWallrunning;
     [NonSerialized] public bool isRightWallrunning;
     private bool leftWallrunStartTriggered;
@@ -90,7 +81,6 @@ public class StateMachine : MonoBehaviour
     [NonSerialized] public float slideTime;
     [NonSerialized] public bool slideTimerOngoing;
     [NonSerialized] public bool slideStopTriggered;
-    [NonSerialized] public bool pressedSlide;
     [NonSerialized] public bool isSliding;
     #endregion
 
@@ -125,7 +115,6 @@ public class StateMachine : MonoBehaviour
     #endregion
 
     #region Misc.
-    private List<InputActionReference> actionReferences;
     [NonSerialized] public Vector3 wallDirection;
     [NonSerialized] public readonly float playerRadius = 0.5f;
     [NonSerialized] public readonly float playerHeight = 2f;
@@ -159,8 +148,6 @@ public class StateMachine : MonoBehaviour
 
     void Awake()
     {
-        actionReferences = new() { move, sprint, jump, leftWallrun, rightWallrun, slide };
-
         // Create all state instances once, then swap between them
         idleState = new IdleState(this);
         groundedMovingState = new GroundedMovingState(this);
@@ -182,70 +169,30 @@ public class StateMachine : MonoBehaviour
     }
 
 
-    void OnEnable()
-    {
-        foreach (InputActionReference actionReference in actionReferences)
-        {
-            actionReference.action.Enable();
-        }
-        move.action.performed += PerformMovement;
-        sprint.action.started += StartSprint;
-        sprint.action.canceled += CancelSprint;
-        jump.action.started += StartJump;
-        jump.action.canceled += CancelJump;
-        // technically using an event approach for jumping isn't any better than just using .triggered, but I kept it for consistency across all actions
-        rightWallrun.action.started += StartRightWallrun;
-        rightWallrun.action.canceled += CancelRightWallrun;
-        leftWallrun.action.started += StartLeftWallrun;
-        leftWallrun.action.canceled += CancelLeftWallrun;
-        slide.action.started += StartSlide;
-        slide.action.canceled += CancelSlide;
-    }
-
-
-    void OnDisable()
-    {
-        foreach (InputActionReference actionReference in actionReferences)
-        {
-            actionReference.action.Disable();
-        }
-        move.action.performed -= PerformMovement;
-        sprint.action.started -= StartSprint;
-        sprint.action.canceled -= CancelSprint;
-        jump.action.started -= StartJump;
-        jump.action.canceled -= CancelJump;
-        rightWallrun.action.started -= StartRightWallrun;
-        rightWallrun.action.canceled -= CancelRightWallrun;
-        leftWallrun.action.started -= StartLeftWallrun;
-        leftWallrun.action.canceled -= CancelLeftWallrun;
-        slide.action.started -= StartSlide;
-        slide.action.canceled -= CancelSlide;
-    }
-
-
     // Update is called once per frame
     void Update()
     {
         ApplyGeneralActions();
 
         // Moving
-        moveDirection = Vector3.ProjectOnPlane(inputMoveDirection.x * transform.right + inputMoveDirection.y * transform.forward, Vector3.up).normalized;
-        isMoving = inputMoveDirection != Vector2.zero;
-        if (pressedSprint && grounded) isSprinting = true;
-        if (!pressedSprint) isSprinting = false;
+        moveDirection = Vector3.ProjectOnPlane(inputManager.InputMoveDirection.x * transform.right + inputManager.InputMoveDirection.y * transform.forward, Vector3.up).normalized;
+        isMoving = inputManager.InputMoveDirection != Vector2.zero;
+        if (inputManager.PressedSprint && grounded) isSprinting = true;
+        if (!inputManager.PressedSprint) isSprinting = false;
         // rbCollider.material = grounded ? null : frictionless;
 
         // Sliding
-        if (isSliding && (!slideTimerOngoing || !pressedSlide)) slideStopTriggered = true;
+        if (isSliding && (!slideTimerOngoing || !inputManager.PressedSlide)) slideStopTriggered = true;
 
         // Jumping
+        if (inputManager.PressedJump) jumpBufferTime = jumpBufferTimeLength;
         jumpTriggered = jumpBuffered;
 
         // Wallrunning
-        leftWallrunStartTriggered = !wallrunBuffered && !isLeftWallrunningIsBuffered && pressedLeftWallrun && wallToLeft;
-        if (isLeftWallrunning && (!pressedLeftWallrun || !wallToLeft)) leftWallrunStopTriggered = true;
-        rightWallrunStartTriggered = !wallrunBuffered && !isRightWallrunningIsBuffered && pressedRightWallrun && wallToRight;
-        if (isRightWallrunning && !(pressedRightWallrun && wallToRight)) rightWallrunStopTriggered = true;
+        leftWallrunStartTriggered = !wallrunBuffered && !isLeftWallrunningIsBuffered && inputManager.PressedLeftWallrun && wallToLeft;
+        if (isLeftWallrunning && (!inputManager.PressedLeftWallrun || !wallToLeft)) leftWallrunStopTriggered = true;
+        rightWallrunStartTriggered = !wallrunBuffered && !isRightWallrunningIsBuffered && inputManager.PressedRightWallrun && wallToRight;
+        if (isRightWallrunning && !(inputManager.PressedRightWallrun && wallToRight)) rightWallrunStopTriggered = true;
 
         // Debug.Log("Update: " + currentState);
         nextState = DetermineNextState();
@@ -379,7 +326,7 @@ public class StateMachine : MonoBehaviour
             case GroundedMovingState:
                 if (jumpTriggered) return jumpState;
                 else if (inAir) return airborneState;
-                else if (pressedSlide) return slideState;
+                else if (inputManager.PressedSlide) return slideState;
                 else if (isMoving) return groundedMovingState;
                 else return idleState;
             case SlideState:
@@ -481,72 +428,5 @@ public class StateMachine : MonoBehaviour
         {
             Debug.DrawRay(rightRay.origin, rightRay.direction, Color.red);
         }
-    }
-
-
-    void PerformMovement(InputAction.CallbackContext ctx)
-    {
-        inputMoveDirection = ctx.ReadValue<Vector2>();
-    }
-
-
-    void StartSprint(InputAction.CallbackContext ctx)
-    {
-        pressedSprint = true;
-    }
-
-
-    void CancelSprint(InputAction.CallbackContext ctx)
-    {
-        pressedSprint = false;
-    }
-
-
-    void StartJump(InputAction.CallbackContext ctx)
-    {
-        pressedJump = true;
-        jumpBufferTime = jumpBufferTimeLength;
-    }
-
-
-    void CancelJump(InputAction.CallbackContext ctx)
-    {
-        pressedJump = false;
-    }
-
-
-    void StartRightWallrun(InputAction.CallbackContext ctx)
-    {
-        pressedRightWallrun = true;
-    }
-
-
-    void CancelRightWallrun(InputAction.CallbackContext ctx)
-    {
-        pressedRightWallrun = false;
-    }
-
-
-    void StartLeftWallrun(InputAction.CallbackContext ctx)
-    {
-        pressedLeftWallrun = true;
-    }
-
-
-    void CancelLeftWallrun(InputAction.CallbackContext ctx)
-    {
-        pressedLeftWallrun = false;
-    }
-    
-
-    void StartSlide(InputAction.CallbackContext ctx)
-    {
-        pressedSlide = true;
-    }
-
-
-    void CancelSlide(InputAction.CallbackContext ctx)
-    {
-        pressedSlide = false;
     }
 }

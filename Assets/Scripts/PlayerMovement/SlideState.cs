@@ -29,7 +29,7 @@ public class SlideState : IState
     public void OnExit()
     {
         controller.slideStopTriggered = false;
-        controller.pressedSlide = false; // means you must repress the button to initate a new slide
+        controller.inputManager.StopSlide(); // means you must repress the button to initate a new slide
         controller.isSliding = false;
     }
 }
