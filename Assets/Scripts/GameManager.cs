@@ -18,7 +18,8 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Class Variables
-    private bool gameStarted;
+    private bool gameInMenu;
+    private bool gamePaused;
     #endregion
 
 
@@ -52,10 +53,12 @@ public class GameManager : MonoBehaviour
         switch (currentState)
         {
             case MainMenuState:
-                if (gameStarted) return gameplayState;
+                if (!gameInMenu) return gameplayState;
                 else return mainMenuState;
             case PauseMenuState:
-                break;
+                if (!gamePaused) return gameplayState;
+                else if (gameInMenu) return mainMenuState;
+                else return pauseMenuState;
             case GameplayState:
                 return gameplayState;
         }
@@ -74,6 +77,18 @@ public class GameManager : MonoBehaviour
 
     public void OnGameStarted()
     {
-        gameStarted = true;
+        gameInMenu = false;
+    }
+
+
+    public void OnGameUnpaused()
+    {
+        gamePaused = false;
+    }
+
+
+    public void OnBackToMenu()
+    {
+        gameInMenu = true;
     }
 }

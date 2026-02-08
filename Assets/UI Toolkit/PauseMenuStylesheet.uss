@@ -1,0 +1,10 @@
+:root {
+}
+
+.button {
+    width: 350px;
+    height: 70px;
+    align-self: center;
+    font-size: 30px;
+    margin-top: 25px;
+}
