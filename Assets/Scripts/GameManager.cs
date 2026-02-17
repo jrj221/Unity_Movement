@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _currentState = _gameplayState;
+        Time.timeScale = 0f;
     }
 
 
@@ -61,5 +62,7 @@ public class GameManager : MonoBehaviour
     {
         _pauseMenuEvents.enabled = true;
         InputManager.Instance.EnableInput();
+        Cursor.visible = false;
+        Time.timeScale = 1f;
     }
 }

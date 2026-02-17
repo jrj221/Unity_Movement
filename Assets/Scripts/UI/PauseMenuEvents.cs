@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
 
 [RequireComponent(typeof(UIDocument))]
 public class PauseMenuEvents : MonoBehaviour
@@ -46,11 +47,15 @@ public class PauseMenuEvents : MonoBehaviour
         {
             _document.rootVisualElement.style.display = DisplayStyle.Flex;
             InputManager.Instance.DisableInput();
+            Cursor.visible = true;
+            Time.timeScale = 0f;
         }
         else
         {
             _document.rootVisualElement.style.display = DisplayStyle.None;
             InputManager.Instance.EnableInput();
+            Cursor.visible = false;
+            Time.timeScale = 1f;
         }
     }
 
