@@ -107,7 +107,12 @@ public class InputManager : MonoBehaviour
     }
 
 
-    public void DisableInput() { _actions.Disable(); }
+    public void DisableInput()
+    {
+        _actions.Disable();
+        InputMoveDirection = Vector2.zero;
+        DeltaCameraMovement = Vector2.zero;
+    }
     
     
     public void EnableInput() { _actions.Enable(); }
