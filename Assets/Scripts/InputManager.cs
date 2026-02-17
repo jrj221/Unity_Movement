@@ -124,7 +124,7 @@ public class InputManager : MonoBehaviour
     
     private void OnSprintInput(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed) StartSprint();
+        if (ctx.started) StartSprint();
         else if (ctx.canceled) CancelSprint();
     }
 
@@ -137,7 +137,7 @@ public class InputManager : MonoBehaviour
 
     private void OnJumpInput(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed) StartJump();
+        if (ctx.started) StartJump();
         else if (ctx.canceled) CancelJump();
     }
     
@@ -150,7 +150,7 @@ public class InputManager : MonoBehaviour
 
     private void OnRightWallrunInput(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed) StartRightWallrun();
+        if (ctx.started) StartRightWallrun();
         else if (ctx.canceled) CancelRightWallrun();
     }
     
@@ -163,7 +163,7 @@ public class InputManager : MonoBehaviour
 
     private void OnLeftWallrunInput(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed) StartLeftWallrun();
+        if (ctx.started) StartLeftWallrun();
         else if (ctx.canceled) CancelLeftWallrun();
     }
 
@@ -176,7 +176,7 @@ public class InputManager : MonoBehaviour
 
     private void OnSlideInput(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed) StartSlide();
+        if (ctx.started) StartSlide();
         else if (ctx.canceled) CancelSlide();
     }
 

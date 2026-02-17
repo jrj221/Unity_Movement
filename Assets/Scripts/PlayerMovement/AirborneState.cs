@@ -10,7 +10,7 @@ public class AirborneState : IState
 
     public AirborneState(StateMachine controller)
     {
-        this._controller = _controller;
+        _controller = controller;
         _rb = controller.rb;
     }
 
