@@ -34,7 +34,7 @@ public class AirborneState : IState
     }
 
 
-    bool DownwardsStep()
+    private bool DownwardsStep()
     {
         if (!ValidDownwardStep(out RaycastHit downHit)) return false; // a step vs a drop below you (like walking off a cliff)
         if (!ValidStepSlopeClearance(downHit)) return false;
@@ -46,14 +46,14 @@ public class AirborneState : IState
     }
 
 
-    bool ValidDownwardStep(out RaycastHit downHit)
+    private bool ValidDownwardStep(out RaycastHit downHit)
     {
         // feet are slightly elevated above capsule, so this is slightly off of maxStepHeight
         return Physics.Raycast(_controller.feet.position, Vector3.down, out downHit, _controller.maxStepHeight);
     }
 
     
-    bool ValidStepSlopeClearance(RaycastHit raycastHit)
+    private bool ValidStepSlopeClearance(RaycastHit raycastHit)
     {
         return raycastHit.normal.y > _controller.maxStepSlope; // otherwise too sloped to be a step, perhaps it's a ramp
     }

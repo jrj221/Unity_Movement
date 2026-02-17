@@ -132,7 +132,7 @@ public class InputManager : MonoBehaviour
     private void StartJump() { PressedJump = true; }
 
 
-    private void CancelJump() { PressedJump = false; }
+    public void CancelJump() { PressedJump = false; }
 
 
     private void OnJumpInput(InputAction.CallbackContext ctx)

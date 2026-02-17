@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     {
         _nextState = DetermineNextState();
         if (_nextState != _currentState) ChangeState();
-        Debug.Log(_currentState);
+        // Debug.Log(_currentState);
     }
 
 

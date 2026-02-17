@@ -24,6 +24,7 @@ public class JumpState : IState
 
     public void Apply()
     {
+        Debug.Log("Jumped");
         switch (_jumpType)
         {
             case JumpType.NormalJump:
@@ -49,6 +50,7 @@ public class JumpState : IState
 
     public void OnEnter()
     {
+        InputManager.Instance.CancelJump();
         // NOTE: Be aware that exitingState is something different in OnEnter vs OnExit, so we assign to bools to keep it consistent
         if (_controller.exitingState == _controller.leftWallrunState) _jumpType = JumpType.LeftWallrunJump;
         else if (_controller.exitingState == _controller.rightWallrunState) _jumpType = JumpType.RightWallrunJump;
