@@ -8,7 +8,7 @@ public class SlideState : IState
 
     public SlideState(StateMachine controller)
     {
-        this._controller = controller;
+        _controller = controller;
         _rb = _controller.rb;
     }
 
@@ -29,7 +29,7 @@ public class SlideState : IState
     public void OnExit()
     {
         _controller.slideStopTriggered = false;
-        _controller.inputManager.CancelSlide(); // means you must repress the button to initiate a new slide
+        InputManager.Instance.CancelSlide(); // means you must repress the button to initiate a new slide
         _controller.isSliding = false;
     }
 }

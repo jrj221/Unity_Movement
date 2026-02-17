@@ -7,7 +7,7 @@ public class PlayerInfoManger : MonoBehaviour
     public UIManager uiManager;
 
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Checkpoint"))
         {

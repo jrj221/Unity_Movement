@@ -1,14 +1,10 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-
 
 public class StateMachine : MonoBehaviour
 {
     #region Object References
     [Header("Object References")]
-    public InputManager inputManager;
     public Rigidbody rb;
     public Transform feet;
     #endregion
@@ -62,7 +58,6 @@ public class StateMachine : MonoBehaviour
     public float jumpBufferTimeLength;
     [NonSerialized] public float jumpBufferTime;
     [NonSerialized] public bool jumpBuffered;
-    [NonSerialized] public bool pressedJump;
     private bool _jumpTriggered;
     [NonSerialized] public bool jumpApplied;
     #endregion
@@ -79,7 +74,7 @@ public class StateMachine : MonoBehaviour
     public float slideSpeed;
     public float maxSlideTime;
     [NonSerialized] public float slideTime;
-    [NonSerialized] public bool slideTimerOngoing;
+    [NonSerialized] private bool _slideTimerOngoing;
     [NonSerialized] public bool slideStopTriggered;
     [NonSerialized] public bool isSliding;
     #endregion
@@ -135,34 +130,34 @@ public class StateMachine : MonoBehaviour
     #region States
     private IState _currentState;
     public IState exitingState;
-    public IState nextState;
-    public IdleState idleState;
+    private IState _nextState;
+    private IdleState _idleState;
     public GroundedMovingState groundedMovingState;
-    public AirborneState airborneState;
-    public JumpState jumpState;
+    private AirborneState _airborneState;
+    private JumpState _jumpState;
     public LeftWallrunState leftWallrunState;
     public RightWallrunState rightWallrunState;
     public SlideState slideState;
     #endregion
 
 
-    void Awake()
+    private void Awake()
     {
         // Create all state instances once, then swap between them
-        idleState = new IdleState(this);
+        _idleState = new IdleState(this);
         groundedMovingState = new GroundedMovingState(this);
-        airborneState = new AirborneState(this);
-        jumpState = new JumpState(this);
+        _airborneState = new AirborneState(this);
+        _jumpState = new JumpState(this);
         leftWallrunState = new LeftWallrunState(this);
         rightWallrunState = new RightWallrunState(this);
         slideState = new SlideState(this);
     }
 
 
-    void Start()
+    private void Start()
     {
         // Time.timeScale = 0.1f;
-        _currentState = idleState;
+        _currentState = _idleState;
         exitingState = _currentState;
         rb.useGravity = false; // we'll use our false playerGravity instead, toggling it with useCustomGravity
         useCustomGravity = true;
@@ -170,37 +165,37 @@ public class StateMachine : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         ApplyGeneralActions();
 
         // Moving
-        moveDirection = Vector3.ProjectOnPlane(inputManager.InputMoveDirection.x * transform.right + inputManager.InputMoveDirection.y * transform.forward, Vector3.up).normalized;
-        isMoving = inputManager.InputMoveDirection != Vector2.zero;
-        if (inputManager.PressedSprint && _grounded) isSprinting = true;
-        if (!inputManager.PressedSprint) isSprinting = false;
+        moveDirection = Vector3.ProjectOnPlane(InputManager.Instance.InputMoveDirection.x * transform.right + InputManager.Instance.InputMoveDirection.y * transform.forward, Vector3.up).normalized;
+        isMoving = InputManager.Instance.InputMoveDirection != Vector2.zero;
+        if (InputManager.Instance.PressedSprint && _grounded) isSprinting = true;
+        if (!InputManager.Instance.PressedSprint) isSprinting = false;
         // rbCollider.material = _grounded ? null : frictionless;
 
         // Sliding
-        if (isSliding && (!slideTimerOngoing || !inputManager.PressedSlide)) slideStopTriggered = true;
+        if (isSliding && (!_slideTimerOngoing || !InputManager.Instance.PressedSlide)) slideStopTriggered = true;
 
         // Jumping
-        if (inputManager.PressedJump) jumpBufferTime = jumpBufferTimeLength;
+        if (InputManager.Instance.PressedJump) jumpBufferTime = jumpBufferTimeLength;
         _jumpTriggered = jumpBuffered;
 
         // Wallrunning
-        _leftWallrunStartTriggered = !_wallrunBuffered && !_isLeftWallrunningIsBuffered && inputManager.PressedLeftWallrun && _wallToLeft;
-        if (isLeftWallrunning && (!inputManager.PressedLeftWallrun || !_wallToLeft)) leftWallrunStopTriggered = true;
-        _rightWallrunStartTriggered = !_wallrunBuffered && !_isRightWallrunningIsBuffered && inputManager.PressedRightWallrun && _wallToRight;
-        if (isRightWallrunning && !(inputManager.PressedRightWallrun && _wallToRight)) rightWallrunStopTriggered = true;
+        _leftWallrunStartTriggered = !_wallrunBuffered && !_isLeftWallrunningIsBuffered && InputManager.Instance.PressedLeftWallrun && _wallToLeft;
+        if (isLeftWallrunning && (!InputManager.Instance.PressedLeftWallrun || !_wallToLeft)) leftWallrunStopTriggered = true;
+        _rightWallrunStartTriggered = !_wallrunBuffered && !_isRightWallrunningIsBuffered && InputManager.Instance.PressedRightWallrun && _wallToRight;
+        if (isRightWallrunning && !(InputManager.Instance.PressedRightWallrun && _wallToRight)) rightWallrunStopTriggered = true;
 
         // Debug.Log("Update: " + _currentState);
-        nextState = DetermineNextState();
-        if (nextState != _currentState) ChangeState(nextState);
+        _nextState = DetermineNextState();
+        if (_nextState != _currentState) ChangeState(_nextState);
     }
 
 
-    void ChangeState(IState nextState)
+    private void ChangeState(IState nextState)
     {
         exitingState = _currentState;
         exitingState.OnExit();
@@ -209,7 +204,7 @@ public class StateMachine : MonoBehaviour
     }
 
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         DrawRaycasts();
         // Debug.Log("FixedUpdate: " + _currentState);
@@ -220,26 +215,26 @@ public class StateMachine : MonoBehaviour
 
 
     // Update actions that take place independent of states (like cooldowns)
-    void ApplyGeneralActions()
+    private void ApplyGeneralActions()
     {
         UpdateCooldowns();
     }
 
 
-    void UpdateCooldowns()
+    private void UpdateCooldowns()
     {
         _moveRightLocked = TickTimer(ref moveRightInputLockTime);
         _moveLeftLocked = TickTimer(ref moveLeftInputLockTime);
         _isLeftWallrunningIsBuffered = TickTimer(ref isLeftWallrunningBufferTime);
         _isRightWallrunningIsBuffered = TickTimer(ref isRightWallrunningBufferTime);
         cameraSmoothingEnabled = TickTimer(ref cameraSmoothingEnableTime);
-        slideTimerOngoing = TickTimer(ref slideTime);
+        _slideTimerOngoing = TickTimer(ref slideTime);
         jumpBuffered = TickTimer(ref jumpBufferTime);
         _wallrunBuffered = TickTimer(ref wallrunBufferTime);
     }
 
 
-    bool TickTimer(ref float timer)
+    private bool TickTimer(ref float timer)
     {
         timer -= Time.deltaTime;
         return timer >= 0;
@@ -247,7 +242,7 @@ public class StateMachine : MonoBehaviour
 
 
     // FixedUpdate physics actions that take place independent of states
-    void ApplyPhysicsActions()
+    private void ApplyPhysicsActions()
     {
         ApplyExtraGravity();
         ApplyWallrunRotation();
@@ -256,7 +251,7 @@ public class StateMachine : MonoBehaviour
     }
 
 
-    void ApplyExtraGravity()
+    private void ApplyExtraGravity()
     {
         float gravity = useWallJumpGravity ? wallJumpGravity : playerGravity;
         // Debug.Log(gravity);
@@ -264,9 +259,9 @@ public class StateMachine : MonoBehaviour
     }
 
 
-    void ApplyWallrunRotation()
+    private void ApplyWallrunRotation()
     {
-        // use rb idk man
+        // use rb IDK man
         Quaternion targetRotation;
         if (isLeftWallrunning)
         {
@@ -285,7 +280,7 @@ public class StateMachine : MonoBehaviour
     }
 
 
-    void ApplySlideRotation()
+    private void ApplySlideRotation()
     {
         Quaternion targetRotation;
         // Rotate back to normal
@@ -305,7 +300,7 @@ public class StateMachine : MonoBehaviour
     }
 
 
-    void CapSpeed()
+    private void CapSpeed()
     {
         float speed = isSprinting ? sprintSpeed : normalSpeed;
         // if (inAir) speed *= airMovementMultiplier;
@@ -314,49 +309,49 @@ public class StateMachine : MonoBehaviour
     }
 
 
-    IState DetermineNextState()
+    private IState DetermineNextState()
     {
         // Take the current state, and decide what the next state should be
         switch (_currentState)
         {
             case IdleState:
-                if (_jumpTriggered) return jumpState;
+                if (_jumpTriggered) return _jumpState;
                 else if (isMoving) return groundedMovingState;
-                else return idleState;
+                else return _idleState;
             case GroundedMovingState:
-                if (_jumpTriggered) return jumpState;
-                else if (inAir) return airborneState;
-                else if (inputManager.PressedSlide) return slideState;
+                if (_jumpTriggered) return _jumpState;
+                else if (inAir) return _airborneState;
+                else if (InputManager.Instance.PressedSlide) return slideState;
                 else if (isMoving) return groundedMovingState;
-                else return idleState;
+                else return _idleState;
             case SlideState:
-                if (_jumpTriggered) return jumpState;
+                if (_jumpTriggered) return _jumpState;
                 else if (slideStopTriggered && isMoving) return groundedMovingState;
-                else if (slideStopTriggered) return idleState;
+                else if (slideStopTriggered) return _idleState;
                 else return slideState;
             case JumpState:
-                if (jumpApplied) return airborneState;
-                else return jumpState;
+                if (jumpApplied) return _airborneState;
+                else return _jumpState;
             case AirborneState:
                 if (_leftWallrunStartTriggered) return leftWallrunState;
                 else if (_rightWallrunStartTriggered) return rightWallrunState;
-                else if (inAir) return airborneState;
+                else if (inAir) return _airborneState;
                 else if (isMoving) return groundedMovingState;
-                else return idleState;
+                else return _idleState;
             case LeftWallrunState:
-                if (_jumpTriggered) return jumpState;
-                else if (leftWallrunStopTriggered) return airborneState;
+                if (_jumpTriggered) return _jumpState;
+                else if (leftWallrunStopTriggered) return _airborneState;
                 else return leftWallrunState;
             case RightWallrunState:
-                if (_jumpTriggered) return jumpState;
-                else if (rightWallrunStopTriggered) return airborneState;
+                if (_jumpTriggered) return _jumpState;
+                else if (rightWallrunStopTriggered) return _airborneState;
                 else return rightWallrunState;
         }
         return null; // won't logically happen but it wanted a return path
     }
 
 
-    void DrawRaycasts()
+    private void DrawRaycasts()
     {
         // actual raycasts (not debug ones)
         int layerMask = ~LayerMask.GetMask("IgnoreRaycast"); // selects everything EXCEPT IgnoreRaycast layer, thus ignoring those objects
