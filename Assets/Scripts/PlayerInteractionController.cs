@@ -12,31 +12,31 @@ public class PlayerInteractionController : MonoBehaviour
     public Transform holdPoint;
 
     // Private References
-    private GameObject heldObject = null;
+    private GameObject _heldObject = null;
 
     // Private Values
-    private List<InputActionReference> actionReferences;
-    private bool pressedThrowObject;
+    private List<InputActionReference> _actionReferences;
+    private bool _pressedThrowObject;
 
 
     void Awake()
     {
-        actionReferences = new() {pickup, throwObject};
+        _actionReferences = new() {pickup, throwObject};
     }
 
 
     void LateUpdate()
     {
-        if (heldObject)
+        if (_heldObject)
         {
-            heldObject.transform.SetPositionAndRotation(holdPoint.position, holdPoint.rotation);
+            _heldObject.transform.SetPositionAndRotation(holdPoint.position, holdPoint.rotation);
         }
     }
 
 
     void OnEnable()
     {
-        foreach (InputActionReference actionReference in actionReferences)
+        foreach (InputActionReference actionReference in _actionReferences)
         {
             actionReference.action.Enable();
         }
@@ -48,7 +48,7 @@ public class PlayerInteractionController : MonoBehaviour
 
     void OnDisable()
     {
-        foreach (InputActionReference actionReference in actionReferences)
+        foreach (InputActionReference actionReference in _actionReferences)
         {
             actionReference.action.Disable();
         }
@@ -60,10 +60,10 @@ public class PlayerInteractionController : MonoBehaviour
 
     void StartPickup(InputAction.CallbackContext ctx)
     {
-        if (heldObject) // initiate drop
+        if (_heldObject) // initiate drop
         {
             PerformDrop();
-            heldObject = null;
+            _heldObject = null;
         } else // initiate pickup
         {
             bool lookingAtObject = Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, 3);
@@ -82,32 +82,32 @@ public class PlayerInteractionController : MonoBehaviour
         other.GetComponent<BoxCollider>().enabled = false;
         other.GetComponent<Rigidbody>().useGravity = false;
         // other.GetComponent<Rigidbody>().isKinematic = true;
-        heldObject = other; 
+        _heldObject = other; 
     }
 
 
     void PerformDrop()
     {
-        heldObject.GetComponent<BoxCollider>().enabled = true;
-        heldObject.GetComponent<Rigidbody>().useGravity = true;
-        // heldObject.GetComponent<Rigidbody>().isKinematic = false;
+        _heldObject.GetComponent<BoxCollider>().enabled = true;
+        _heldObject.GetComponent<Rigidbody>().useGravity = true;
+        // _heldObject.GetComponent<Rigidbody>().isKinematic = false;
     }
     
 
     void StartThrowObject(InputAction.CallbackContext ctx)
     {
-        pressedThrowObject = true;
+        _pressedThrowObject = true;
     }
 
 
     void PerformThrowObject(InputAction.CallbackContext ctx)
     {
-        if (heldObject)
+        if (_heldObject)
         {
             PerformDrop();
-            heldObject.GetComponent<Rigidbody>().AddForce(cam.transform.forward * 15f, ForceMode.Impulse);
-            heldObject = null;
-            pressedThrowObject = false;
+            _heldObject.GetComponent<Rigidbody>().AddForce(cam.transform.forward * 15f, ForceMode.Impulse);
+            _heldObject = null;
+            _pressedThrowObject = false;
         }
     }
 }

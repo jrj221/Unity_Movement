@@ -1,10 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(UIDocument))]
 public class PauseMenuEvents : MonoBehaviour
 {
-    public InputManager inputManager;
     private UIDocument _document;
     private Button _resumeButton;
     private Button _settingsButton;
@@ -18,10 +18,15 @@ public class PauseMenuEvents : MonoBehaviour
         _settingsButton = _document.rootVisualElement.Q("Buttons").Q("SettingsButton") as Button;
         _quitButton = _document.rootVisualElement.Q("Buttons").Q("QuitButton") as Button;
 
+        Helpers.CheckNull(_resumeButton, "resumeButton");
+        Helpers.CheckNull(_settingsButton, "settingsButton");
+        Helpers.CheckNull(_quitButton, "quitButton");
+        
+        _document.rootVisualElement.style.display = DisplayStyle.None; // by default
+    }
 
-        print("found resume: " + _resumeButton);
-        _document.enabled = false; // by default
-
+    private void OnEnable()
+    {
         _resumeButton.RegisterCallback<ClickEvent>(ResumeGame);
         _settingsButton.RegisterCallback<ClickEvent>(OpenSettings);
         _quitButton.RegisterCallback<ClickEvent>(QuitToMenu);
@@ -35,24 +40,23 @@ public class PauseMenuEvents : MonoBehaviour
         _quitButton.UnregisterCallback<ClickEvent>(QuitToMenu);
     }
 
-
-
-    public void ShowPauseMenu()
+    private void Update()
     {
-        _document.enabled = true;
-    }
-
-
-    public void HidePauseMenu()
-    {
-        _document.enabled = false;
+        if (InputManager.Instance.PressedPause)
+        {
+            _document.rootVisualElement.style.display = DisplayStyle.Flex;
+            
+        }
+        else
+        {
+            _document.rootVisualElement.style.display = DisplayStyle.None;
+        }
     }
 
 
     private void ResumeGame(ClickEvent e)
     {
-        Debug.Log("ne");
-        inputManager.ManualPauseToggle(); // manually switch pause off if you press the button instead
+        InputManager.Instance.TogglePause(); // manually switch pause off if you press the button instead
     }
 
 

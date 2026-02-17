@@ -5,7 +5,6 @@ using UnityEngine.UIElements;
 
 public class MainMenuEvents : MonoBehaviour
 {
-    public GameManager gameManager;
     private UIDocument _document;
     private Button _startButton;
 
@@ -13,10 +12,16 @@ public class MainMenuEvents : MonoBehaviour
     {
         _document = GetComponent<UIDocument>();
         _startButton = _document.rootVisualElement.Q("StartGame") as Button; // type casts into a Button
+        
+        Helpers.CheckNull(_startButton, "_startButton");
+    }
+    
 
-
+    private void OnEnable()
+    {
         _startButton.RegisterCallback<ClickEvent>(OnStartGameClick);
     }
+    
 
     private void OnDisable()
     {
@@ -24,15 +29,17 @@ public class MainMenuEvents : MonoBehaviour
         _startButton.UnregisterCallback<ClickEvent>(OnStartGameClick);
     }
 
-
-    private void OnStartGameClick(ClickEvent e)
+    private void Start()
     {
-        gameManager.OnGameStarted(); // seems redundant but I wanted to keep the click event disjoint from the gameManager
+        Debug.Log("Instance is null: " + (InputManager.Instance == null));
+        Debug.Log("Actions is null : " + (InputManager.Instance.Actions == null));
+        InputManager.Instance.Actions.Disable(); // input is disabled by default
     }
 
 
-    public void DisableMainMenu()
+    private void OnStartGameClick(ClickEvent e)
     {
-        _document.enabled = false;
+        _document.rootVisualElement.style.display = DisplayStyle.None;
+        InputManager.Instance.Actions.Enable();
     }
 }

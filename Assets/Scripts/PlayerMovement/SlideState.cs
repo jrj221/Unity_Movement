@@ -2,34 +2,34 @@ using UnityEngine;
 
 public class SlideState : IState
 {
-    private readonly StateMachine controller;
-    private readonly Rigidbody rb;
+    private readonly StateMachine _controller;
+    private readonly Rigidbody _rb;
 
 
     public SlideState(StateMachine controller)
     {
-        this.controller = controller;
-        rb = controller.rb;
+        this._controller = controller;
+        _rb = _controller.rb;
     }
 
 
     public void Apply()
     {
-        rb.AddForce(10f * controller.slideSpeed * controller.moveDirection);
+        _rb.AddForce(10f * _controller.slideSpeed * _controller.moveDirection);
     }
 
 
     public void OnEnter()
     {
-        controller.slideTime = controller.maxSlideTime;
-        controller.isSliding = true;
+        _controller.slideTime = _controller.maxSlideTime;
+        _controller.isSliding = true;
     }
 
 
     public void OnExit()
     {
-        controller.slideStopTriggered = false;
-        controller.inputManager.StopSlide(); // means you must repress the button to initate a new slide
-        controller.isSliding = false;
+        _controller.slideStopTriggered = false;
+        _controller.inputManager.CancelSlide(); // means you must repress the button to initiate a new slide
+        _controller.isSliding = false;
     }
 }

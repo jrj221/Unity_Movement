@@ -26,8 +26,8 @@ public class StateMachine : MonoBehaviour
 
     #region Wallrunning
     [Header("Wallrunning")]
-    public float WallrunRotationSpeed;
-    public float WallrunAngle;
+    public float wallrunRotationSpeed;
+    public float wallrunAngle;
     public float pushIntoWallForce;
     public float moveLeftInputLockLength;
     public float moveRightInputLockLength;
@@ -35,21 +35,21 @@ public class StateMachine : MonoBehaviour
     public float isRightWallrunningBufferLength;
     public float wallrunBufferLength;
     [NonSerialized] public float wallrunBufferTime;
-    private bool wallrunBuffered;
+    private bool _wallrunBuffered;
     [NonSerialized] public bool isLeftWallrunning;
     [NonSerialized] public bool isRightWallrunning;
-    private bool leftWallrunStartTriggered;
-    private bool rightWallrunStartTriggered;
+    private bool _leftWallrunStartTriggered;
+    private bool _rightWallrunStartTriggered;
     [NonSerialized] public bool leftWallrunStopTriggered;
     [NonSerialized] public bool rightWallrunStopTriggered;
     [NonSerialized] public float moveRightInputLockTime = 0;
     [NonSerialized] public float moveLeftInputLockTime = 0;
-    private bool moveRightLocked;
-    private bool moveLeftLocked;
+    private bool _moveRightLocked;
+    private bool _moveLeftLocked;
     [NonSerialized] public float isLeftWallrunningBufferTime = 0;
     [NonSerialized] public float isRightWallrunningBufferTime = 0;
-    private bool isLeftWallrunningIsBuffered;
-    private bool isRightWallrunningIsBuffered;
+    private bool _isLeftWallrunningIsBuffered;
+    private bool _isRightWallrunningIsBuffered;
     #endregion
 
     #region Jumping
@@ -63,7 +63,7 @@ public class StateMachine : MonoBehaviour
     [NonSerialized] public float jumpBufferTime;
     [NonSerialized] public bool jumpBuffered;
     [NonSerialized] public bool pressedJump;
-    private bool jumpTriggered;
+    private bool _jumpTriggered;
     [NonSerialized] public bool jumpApplied;
     #endregion
 
@@ -123,9 +123,9 @@ public class StateMachine : MonoBehaviour
     #region Raycast Info
     public readonly float verticalRaycastDist = 1.1f;
     public readonly float horizontalRaycastDist = .51f;
-    private bool grounded;
-    private bool wallToLeft;
-    private bool wallToRight;
+    private bool _grounded;
+    private bool _wallToLeft;
+    private bool _wallToRight;
     [NonSerialized] public bool wallInSomeDirection;
     public RaycastHit groundHit;
     public RaycastHit leftWallHit;
@@ -133,7 +133,7 @@ public class StateMachine : MonoBehaviour
     #endregion
 
     #region States
-    private IState currentState;
+    private IState _currentState;
     public IState exitingState;
     public IState nextState;
     public IdleState idleState;
@@ -162,8 +162,8 @@ public class StateMachine : MonoBehaviour
     void Start()
     {
         // Time.timeScale = 0.1f;
-        currentState = idleState;
-        exitingState = currentState;
+        _currentState = idleState;
+        exitingState = _currentState;
         rb.useGravity = false; // we'll use our false playerGravity instead, toggling it with useCustomGravity
         useCustomGravity = true;
     }
@@ -177,43 +177,43 @@ public class StateMachine : MonoBehaviour
         // Moving
         moveDirection = Vector3.ProjectOnPlane(inputManager.InputMoveDirection.x * transform.right + inputManager.InputMoveDirection.y * transform.forward, Vector3.up).normalized;
         isMoving = inputManager.InputMoveDirection != Vector2.zero;
-        if (inputManager.PressedSprint && grounded) isSprinting = true;
+        if (inputManager.PressedSprint && _grounded) isSprinting = true;
         if (!inputManager.PressedSprint) isSprinting = false;
-        // rbCollider.material = grounded ? null : frictionless;
+        // rbCollider.material = _grounded ? null : frictionless;
 
         // Sliding
         if (isSliding && (!slideTimerOngoing || !inputManager.PressedSlide)) slideStopTriggered = true;
 
         // Jumping
         if (inputManager.PressedJump) jumpBufferTime = jumpBufferTimeLength;
-        jumpTriggered = jumpBuffered;
+        _jumpTriggered = jumpBuffered;
 
         // Wallrunning
-        leftWallrunStartTriggered = !wallrunBuffered && !isLeftWallrunningIsBuffered && inputManager.PressedLeftWallrun && wallToLeft;
-        if (isLeftWallrunning && (!inputManager.PressedLeftWallrun || !wallToLeft)) leftWallrunStopTriggered = true;
-        rightWallrunStartTriggered = !wallrunBuffered && !isRightWallrunningIsBuffered && inputManager.PressedRightWallrun && wallToRight;
-        if (isRightWallrunning && !(inputManager.PressedRightWallrun && wallToRight)) rightWallrunStopTriggered = true;
+        _leftWallrunStartTriggered = !_wallrunBuffered && !_isLeftWallrunningIsBuffered && inputManager.PressedLeftWallrun && _wallToLeft;
+        if (isLeftWallrunning && (!inputManager.PressedLeftWallrun || !_wallToLeft)) leftWallrunStopTriggered = true;
+        _rightWallrunStartTriggered = !_wallrunBuffered && !_isRightWallrunningIsBuffered && inputManager.PressedRightWallrun && _wallToRight;
+        if (isRightWallrunning && !(inputManager.PressedRightWallrun && _wallToRight)) rightWallrunStopTriggered = true;
 
-        // Debug.Log("Update: " + currentState);
+        // Debug.Log("Update: " + _currentState);
         nextState = DetermineNextState();
-        if (nextState != currentState) ChangeState(nextState);
+        if (nextState != _currentState) ChangeState(nextState);
     }
 
 
     void ChangeState(IState nextState)
     {
-        exitingState = currentState;
+        exitingState = _currentState;
         exitingState.OnExit();
-        currentState = nextState;
-        currentState.OnEnter();
+        _currentState = nextState;
+        _currentState.OnEnter();
     }
 
 
     void FixedUpdate()
     {
         DrawRaycasts();
-        // Debug.Log("FixedUpdate: " + currentState);
-        currentState.Apply();
+        // Debug.Log("FixedUpdate: " + _currentState);
+        _currentState.Apply();
 
         ApplyPhysicsActions();
     }
@@ -228,14 +228,14 @@ public class StateMachine : MonoBehaviour
 
     void UpdateCooldowns()
     {
-        moveRightLocked = TickTimer(ref moveRightInputLockTime);
-        moveLeftLocked = TickTimer(ref moveLeftInputLockTime);
-        isLeftWallrunningIsBuffered = TickTimer(ref isLeftWallrunningBufferTime);
-        isRightWallrunningIsBuffered = TickTimer(ref isRightWallrunningBufferTime);
+        _moveRightLocked = TickTimer(ref moveRightInputLockTime);
+        _moveLeftLocked = TickTimer(ref moveLeftInputLockTime);
+        _isLeftWallrunningIsBuffered = TickTimer(ref isLeftWallrunningBufferTime);
+        _isRightWallrunningIsBuffered = TickTimer(ref isRightWallrunningBufferTime);
         cameraSmoothingEnabled = TickTimer(ref cameraSmoothingEnableTime);
         slideTimerOngoing = TickTimer(ref slideTime);
         jumpBuffered = TickTimer(ref jumpBufferTime);
-        wallrunBuffered = TickTimer(ref wallrunBufferTime);
+        _wallrunBuffered = TickTimer(ref wallrunBufferTime);
     }
 
 
@@ -270,18 +270,18 @@ public class StateMachine : MonoBehaviour
         Quaternion targetRotation;
         if (isLeftWallrunning)
         {
-            targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, -WallrunAngle);
+            targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, -wallrunAngle);
         }
         else if (isRightWallrunning)
         {
-            targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, WallrunAngle);
+            targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, wallrunAngle);
         }
         else
         {
             targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0);
         }
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, WallrunRotationSpeed * Time.deltaTime);
-        // rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, WallrunRotationSpeed * Time.deltaTime));
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, wallrunRotationSpeed * Time.deltaTime);
+        // rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, wallrunRotationSpeed * Time.deltaTime));
     }
 
 
@@ -317,20 +317,20 @@ public class StateMachine : MonoBehaviour
     IState DetermineNextState()
     {
         // Take the current state, and decide what the next state should be
-        switch (currentState)
+        switch (_currentState)
         {
             case IdleState:
-                if (jumpTriggered) return jumpState;
+                if (_jumpTriggered) return jumpState;
                 else if (isMoving) return groundedMovingState;
                 else return idleState;
             case GroundedMovingState:
-                if (jumpTriggered) return jumpState;
+                if (_jumpTriggered) return jumpState;
                 else if (inAir) return airborneState;
                 else if (inputManager.PressedSlide) return slideState;
                 else if (isMoving) return groundedMovingState;
                 else return idleState;
             case SlideState:
-                if (jumpTriggered) return jumpState;
+                if (_jumpTriggered) return jumpState;
                 else if (slideStopTriggered && isMoving) return groundedMovingState;
                 else if (slideStopTriggered) return idleState;
                 else return slideState;
@@ -338,17 +338,17 @@ public class StateMachine : MonoBehaviour
                 if (jumpApplied) return airborneState;
                 else return jumpState;
             case AirborneState:
-                if (leftWallrunStartTriggered) return leftWallrunState;
-                else if (rightWallrunStartTriggered) return rightWallrunState;
+                if (_leftWallrunStartTriggered) return leftWallrunState;
+                else if (_rightWallrunStartTriggered) return rightWallrunState;
                 else if (inAir) return airborneState;
                 else if (isMoving) return groundedMovingState;
                 else return idleState;
             case LeftWallrunState:
-                if (jumpTriggered) return jumpState;
+                if (_jumpTriggered) return jumpState;
                 else if (leftWallrunStopTriggered) return airborneState;
                 else return leftWallrunState;
             case RightWallrunState:
-                if (jumpTriggered) return jumpState;
+                if (_jumpTriggered) return jumpState;
                 else if (rightWallrunStopTriggered) return airborneState;
                 else return rightWallrunState;
         }
@@ -360,14 +360,14 @@ public class StateMachine : MonoBehaviour
     {
         // actual raycasts (not debug ones)
         int layerMask = ~LayerMask.GetMask("IgnoreRaycast"); // selects everything EXCEPT IgnoreRaycast layer, thus ignoring those objects
-        grounded = Physics.Raycast(rb.transform.position, Vector3.down, out groundHit, verticalRaycastDist);
+        _grounded = Physics.Raycast(rb.transform.position, Vector3.down, out groundHit, verticalRaycastDist);
 
         // Radial raycast search for walls in any direction, with a threshold for a valid leftwards or rightwards wall
         float rays = 16;
-        wallToLeft = false;
-        wallToRight = false;
+        _wallToLeft = false;
+        _wallToRight = false;
         wallInSomeDirection = false;
-        Ray leftRay = new(); // initalized will 0s, gets populated if wallToLeft is true, which is the only time we use it anyway
+        Ray leftRay = new(); // initalized will 0s, gets populated if _wallToLeft is true, which is the only time we use it anyway
         Ray rightRay = new();
         for (int i = 0; i < rays; i++)
         {
@@ -384,13 +384,13 @@ public class StateMachine : MonoBehaviour
                 bool isLeftSlice = i >= 5 && i <= 10;
                 if (isLeftSlice)
                 {
-                    wallToLeft = true;
+                    _wallToLeft = true;
                     leftWallHit = wallHit;
                     leftRay = ray;
                 }
                 else if (isRightSlice)
                 {
-                    wallToRight = true;
+                    _wallToRight = true;
                     rightWallHit = wallHit;
                     rightRay = ray;
                 }
@@ -398,9 +398,9 @@ public class StateMachine : MonoBehaviour
             }
         }
 
-        // grounded raycasts
-        inAir = !grounded;
-        if (grounded)
+        // _grounded raycasts
+        inAir = !_grounded;
+        if (_grounded)
         {
             Debug.DrawRay(rb.transform.position, Vector3.down * verticalRaycastDist, Color.green);
         }
@@ -410,7 +410,7 @@ public class StateMachine : MonoBehaviour
         }
 
         // left wall raycasts
-        if (wallToLeft)
+        if (_wallToLeft)
         {
             Debug.DrawRay(leftRay.origin, leftRay.direction, Color.green);
         }
@@ -420,7 +420,7 @@ public class StateMachine : MonoBehaviour
         }
 
         // right wall raycasts
-        if (wallToRight)
+        if (_wallToRight)
         {
             Debug.DrawRay(rightRay.origin, rightRay.direction, Color.green);
         }

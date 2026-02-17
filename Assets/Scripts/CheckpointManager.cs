@@ -5,21 +5,21 @@ public class CheckpointManager : MonoBehaviour
 {
     public UIManager uiManager;
     public GameObject firstCheckpoint;
-    private Transform latestCheckpoint;
+    private Transform _latestCheckpoint;
     public bool finishedCourse;
     public GameObject player;
 
 
     void Awake()
     {
-        latestCheckpoint = firstCheckpoint.transform;
+        _latestCheckpoint = firstCheckpoint.transform;
     }
 
 
     public void UpdateCheckpoint(Transform checkpoint)
     {
 
-        latestCheckpoint = checkpoint;
+        _latestCheckpoint = checkpoint;
     }
 
 
@@ -27,12 +27,12 @@ public class CheckpointManager : MonoBehaviour
     {
         if (finishedCourse)
         {
-            latestCheckpoint = firstCheckpoint.transform;
+            _latestCheckpoint = firstCheckpoint.transform;
             finishedCourse = false;
             uiManager.RestartTime();
         }
 
-        player.transform.position = latestCheckpoint.position;
-        player.transform.rotation = latestCheckpoint.rotation;
+        player.transform.position = _latestCheckpoint.position;
+        player.transform.rotation = _latestCheckpoint.rotation;
     }
 }

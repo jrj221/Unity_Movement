@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class JumpState : IState
 {
-    private readonly StateMachine controller;
-    private readonly Rigidbody rb;
+    private readonly StateMachine _controller;
+    private readonly Rigidbody _rb;
     private enum JumpType
     {
         normalJump,
@@ -12,60 +12,60 @@ public class JumpState : IState
         slideJump,
         None,
     }
-    private JumpType jumpType = JumpType.None;
+    private JumpType _jumpType = JumpType.None;
 
 
     public JumpState(StateMachine controller)
     {
-        this.controller = controller;
-        rb = controller.rb;
+        this._controller = controller;
+        _rb = _controller.rb;
     }
 
 
     public void Apply()
     {
-        switch (jumpType)
+        switch (_jumpType)
         {
             case JumpType.normalJump:
-                if (controller.exitingState == controller.groundedMovingState) rb.position += Vector3.up * 0.1f;
-                rb.AddForce(Vector3.up * controller.jumpForce, ForceMode.Impulse);
+                if (_controller.exitingState == _controller.groundedMovingState) _rb.position += Vector3.up * 0.1f;
+                _rb.AddForce(Vector3.up * _controller.jumpForce, ForceMode.Impulse);
                 break;
             case JumpType.leftWallrunJump:
-                rb.AddForce(Vector3.up * controller.wallVerticalJumpForce + controller.leftWallHit.normal * controller.wallSideJumpForce, ForceMode.Impulse);
-                controller.moveLeftInputLockTime = controller.moveLeftInputLockLength;
-                controller.useWallJumpGravity = true;
+                _rb.AddForce(Vector3.up * _controller.wallVerticalJumpForce + _controller.leftWallHit.normal * _controller.wallSideJumpForce, ForceMode.Impulse);
+                _controller.moveLeftInputLockTime = _controller.moveLeftInputLockLength;
+                _controller.useWallJumpGravity = true;
                 break;
             case JumpType.rightWallrunJump:
-                rb.AddForce(Vector3.up * controller.wallVerticalJumpForce + controller.rightWallHit.normal * controller.wallSideJumpForce, ForceMode.Impulse);
-                controller.moveRightInputLockTime = controller.moveRightInputLockLength;
-                controller.useWallJumpGravity = true;
+                _rb.AddForce(Vector3.up * _controller.wallVerticalJumpForce + _controller.rightWallHit.normal * _controller.wallSideJumpForce, ForceMode.Impulse);
+                _controller.moveRightInputLockTime = _controller.moveRightInputLockLength;
+                _controller.useWallJumpGravity = true;
                 break;
             case JumpType.slideJump:
-                rb.AddForce(Vector3.up * controller.slideJumpVerticalForce + controller.moveDirection * controller.slideJumpHorizontalForce, ForceMode.Impulse);
+                _rb.AddForce(Vector3.up * _controller.slideJumpVerticalForce + _controller.moveDirection * _controller.slideJumpHorizontalForce, ForceMode.Impulse);
                 break;
         }
-        controller.jumpApplied = true;
+        _controller.jumpApplied = true;
     }
 
     public void OnEnter()
     {
-        controller.pressedJump = false; // prevents continous bouncing
+        _controller.pressedJump = false; // prevents continous bouncing
 
         // NOTE: Be aware that exitingState is something different in OnEnter vs OnExit, so we assign to bools to keep it consistent
-        if (controller.exitingState == controller.leftWallrunState) jumpType = JumpType.leftWallrunJump;
-        else if (controller.exitingState == controller.rightWallrunState) jumpType = JumpType.rightWallrunJump;
-        else if (controller.exitingState == controller.slideState) jumpType = JumpType.slideJump;
-        else jumpType = JumpType.normalJump;
+        if (_controller.exitingState == _controller.leftWallrunState) _jumpType = JumpType.leftWallrunJump;
+        else if (_controller.exitingState == _controller.rightWallrunState) _jumpType = JumpType.rightWallrunJump;
+        else if (_controller.exitingState == _controller.slideState) _jumpType = JumpType.slideJump;
+        else _jumpType = JumpType.normalJump;
     }
 
     public void OnExit()
     {
-        controller.jumpBuffered = false;
-        controller.jumpBufferTime = 0;
+        _controller.jumpBuffered = false;
+        _controller.jumpBufferTime = 0;
 
-        if (jumpType == JumpType.leftWallrunJump) controller.isLeftWallrunningBufferTime = controller.isLeftWallrunningBufferLength;
-        else if (jumpType == JumpType.rightWallrunJump) controller.isRightWallrunningBufferTime = controller.isRightWallrunningBufferLength;
-        jumpType = JumpType.None; // reset
-        controller.jumpApplied = false;
+        if (_jumpType == JumpType.leftWallrunJump) _controller.isLeftWallrunningBufferTime = _controller.isLeftWallrunningBufferLength;
+        else if (_jumpType == JumpType.rightWallrunJump) _controller.isRightWallrunningBufferTime = _controller.isRightWallrunningBufferLength;
+        _jumpType = JumpType.None; // reset
+        _controller.jumpApplied = false;
     }
 }

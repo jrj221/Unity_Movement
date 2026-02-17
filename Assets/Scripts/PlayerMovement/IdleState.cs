@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class IdleState : IState
 {
-    private readonly StateMachine controller;
+    private readonly StateMachine _controller;
 
 
-    public IdleState(StateMachine controller)
+    public IdleState(StateMachine _controller)
     {
-        this.controller = controller;
+        this._controller = _controller;
     }
 
 

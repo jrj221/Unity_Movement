@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
     #region Input Actions
+
+    [SerializeField] private InputActionAsset _actions;
+    public InputActionAsset Actions { get; private set; }
     public InputActionReference move;
     public InputActionReference sprint;
     public InputActionReference jump;
@@ -15,7 +18,7 @@ public class InputManager : MonoBehaviour
     public InputActionReference throwObject;
     public InputActionReference pickup;
     public InputActionReference pause;
-    private List<InputActionReference> actionReferences;
+    private List<InputActionReference> _actionReferences;
     #endregion
 
 
@@ -31,31 +34,36 @@ public class InputManager : MonoBehaviour
     public bool PressedPause { get; private set; }
     #endregion
 
-
-    void Awake()
+    
+    public static InputManager Instance { get; private set; } // global singleton
+    
+    
+    private void Awake()
     {
-        actionReferences = new() { move, sprint, jump, leftWallrun, rightWallrun, slide, look, pickup, throwObject, pause };
+        Instance = this;
+        Actions = _actions;
+        _actionReferences = new List<InputActionReference> { move, sprint, jump, leftWallrun, rightWallrun, slide, look, pickup, throwObject, pause };
     }
 
 
-    void OnEnable()
+    private void OnEnable()
     {
-        foreach (InputActionReference actionReference in actionReferences)
+        foreach (InputActionReference actionReference in _actionReferences)
         {
             actionReference.action.Enable();
         }
         move.action.performed += PerformMovement;
-        sprint.action.started += StartSprint;
-        sprint.action.canceled += CancelSprint;
-        jump.action.started += StartJump;
-        jump.action.canceled += CancelJump;
+        sprint.action.started += OnSprintInput;
+        sprint.action.canceled += OnSprintInput;
+        jump.action.started += OnJumpInput;
+        jump.action.canceled += OnJumpInput;
         // technically using an event approach for jumping isn't any better than just using .triggered, but I kept it for consistency across all actions
-        rightWallrun.action.started += StartRightWallrun;
-        rightWallrun.action.canceled += CancelRightWallrun;
-        leftWallrun.action.started += StartLeftWallrun;
-        leftWallrun.action.canceled += CancelLeftWallrun;
-        slide.action.started += StartSlide;
-        slide.action.canceled += CancelSlide;
+        rightWallrun.action.started += OnRightWallrunInput;
+        rightWallrun.action.canceled += OnRightWallrunInput;
+        leftWallrun.action.started += OnLeftWallrunInput;
+        leftWallrun.action.canceled += OnLeftWallrunInput;
+        slide.action.started += OnSlideInput;
+        slide.action.canceled += OnSlideInput;
 
         // Camera
         look.action.performed += PerformLook;
@@ -66,27 +74,27 @@ public class InputManager : MonoBehaviour
         throwObject.action.performed += PerformThrowObject;
 
         // UI
-        pause.action.started += TogglePause;
+        pause.action.started += OnPauseInput;
     }
 
 
-    void OnDisable()
+    private void OnDisable()
     {
-        foreach (InputActionReference actionReference in actionReferences)
+        foreach (InputActionReference actionReference in _actionReferences)
         {
             actionReference.action.Disable();
         }
         move.action.performed -= PerformMovement;
-        sprint.action.started -= StartSprint;
-        sprint.action.canceled -= CancelSprint;
-        jump.action.started -= StartJump;
-        jump.action.canceled -= CancelJump;
-        rightWallrun.action.started -= StartRightWallrun;
-        rightWallrun.action.canceled -= CancelRightWallrun;
-        leftWallrun.action.started -= StartLeftWallrun;
-        leftWallrun.action.canceled -= CancelLeftWallrun;
-        slide.action.started -= StartSlide;
-        slide.action.canceled -= CancelSlide;
+        sprint.action.started -= OnSprintInput;
+        sprint.action.canceled -= OnSprintInput;
+        jump.action.started -= OnJumpInput;
+        jump.action.canceled -= OnJumpInput;
+        rightWallrun.action.started -= OnRightWallrunInput;
+        rightWallrun.action.canceled -= OnRightWallrunInput;
+        leftWallrun.action.started -= OnLeftWallrunInput;
+        leftWallrun.action.canceled -= OnLeftWallrunInput;
+        slide.action.started -= OnSlideInput;
+        slide.action.canceled -= OnSlideInput;
 
         // Camera
         look.action.performed -= PerformLook;
@@ -97,112 +105,105 @@ public class InputManager : MonoBehaviour
         throwObject.action.performed -= PerformThrowObject;
 
         // UI
-        pause.action.started -= TogglePause;
+        pause.action.started -= OnPauseInput;
     }
 
 
-    void PerformMovement(InputAction.CallbackContext ctx)
+    private void PerformMovement(InputAction.CallbackContext ctx)
     {
         InputMoveDirection = ctx.ReadValue<Vector2>();
     }
 
 
-    void StartSprint(InputAction.CallbackContext ctx)
+    private void StartSprint() { PressedSprint = true; }
+    
+    
+    private void CancelSprint() { PressedSprint = false; }
+
+    
+    private void OnSprintInput(InputAction.CallbackContext ctx)
     {
-        PressedSprint = true;
+        if (ctx.performed) StartSprint();
+        else if (ctx.canceled) CancelSprint();
     }
 
 
-    void CancelSprint(InputAction.CallbackContext ctx)
+    private void StartJump() { PressedJump = true; }
+
+
+    private void CancelJump() { PressedJump = false; }
+
+
+    private void OnJumpInput(InputAction.CallbackContext ctx)
     {
-        PressedSprint = false;
+        if (ctx.performed) StartJump();
+        else if (ctx.canceled) CancelJump();
+    }
+    
+
+    private void StartRightWallrun() { PressedRightWallrun = true; }
+
+
+    private void CancelRightWallrun() { PressedRightWallrun = false; }
+
+
+    private void OnRightWallrunInput(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed) StartRightWallrun();
+        else if (ctx.canceled) CancelRightWallrun();
+    }
+    
+
+    private void StartLeftWallrun() { PressedLeftWallrun = true; }
+
+
+    private void CancelLeftWallrun() { PressedLeftWallrun = false; }
+
+
+    private void OnLeftWallrunInput(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed) StartLeftWallrun();
+        else if (ctx.canceled) CancelLeftWallrun();
+    }
+
+    
+    private void StartSlide() { PressedSlide = true; }
+
+
+    public void CancelSlide() { PressedSlide = false; }
+
+
+    private void OnSlideInput(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed) StartSlide();
+        else if (ctx.canceled) CancelSlide();
     }
 
 
-    void StartJump(InputAction.CallbackContext ctx)
-    {
-        PressedJump = true;
-    }
-
-
-    void CancelJump(InputAction.CallbackContext ctx)
-    {
-        PressedJump = false;
-    }
-
-
-    void StartRightWallrun(InputAction.CallbackContext ctx)
-    {
-        PressedRightWallrun = true;
-    }
-
-
-    void CancelRightWallrun(InputAction.CallbackContext ctx)
-    {
-        PressedRightWallrun = false;
-    }
-
-
-    void StartLeftWallrun(InputAction.CallbackContext ctx)
-    {
-        PressedLeftWallrun = true;
-    }
-
-
-    void CancelLeftWallrun(InputAction.CallbackContext ctx)
-    {
-        PressedLeftWallrun = false;
-    }
-
-
-    void StartSlide(InputAction.CallbackContext ctx)
-    {
-        PressedSlide = true;
-    }
-
-
-    void CancelSlide(InputAction.CallbackContext ctx)
-    {
-        PressedSlide = false;
-    }
-
-
-    public void StopSlide() // only public so that SlideState can use it
-    {
-        PressedSlide = false;
-    }
-
-
-    void PerformLook(InputAction.CallbackContext ctx)
+    private void PerformLook(InputAction.CallbackContext ctx)
     {
         DeltaCameraMovement = ctx.ReadValue<Vector2>();
     }
 
-    void StartPickup(InputAction.CallbackContext ctx)
+    private void StartPickup(InputAction.CallbackContext ctx)
     {
 
     }
 
-    void StartThrowObject(InputAction.CallbackContext ctx)
+    private void StartThrowObject(InputAction.CallbackContext ctx)
     {
         PressedThrowObject = true;
     }
 
 
-    void PerformThrowObject(InputAction.CallbackContext ctx)
+    private void PerformThrowObject(InputAction.CallbackContext ctx)
     {
 
     }
+    
 
+    public void TogglePause() { PressedPause = !PressedPause; } // this way you repress the button to toggle
 
-    void TogglePause(InputAction.CallbackContext ctx)
-    {
-        PressedPause = !PressedPause; // this way you repress the button to toggle
-    }
-
-
-    public void ManualPauseToggle() // for PauseMenuEvents
-    {
-        PressedPause = !PressedPause;
-    }
+    
+    private void OnPauseInput(InputAction.CallbackContext ctx) { TogglePause(); }
 }

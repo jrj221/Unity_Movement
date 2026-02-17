@@ -7,8 +7,8 @@ public class CameraController : MonoBehaviour
 
     public float sensitivity; // 1 works good. Higher values are more sensitive
     public float cameraMovementSmoothingSpeed;
-    private float pitch;
-    private float yaw;
+    private float _pitch;
+    private float _yaw;
     public InputManager inputManager;
 
 
@@ -24,19 +24,19 @@ public class CameraController : MonoBehaviour
         if (controller.cameraSmoothingEnabled) transform.position = Vector3.Lerp(transform.position, player.transform.position + new Vector3(0f, 0.4f, 0f), cameraMovementSmoothingSpeed);
         else transform.position = player.transform.position + new Vector3(0f, 0.4f, 0f);
 
-        // player yaw
-        yaw += inputManager.DeltaCameraMovement.x * sensitivity;
+        // player _yaw
+        _yaw += inputManager.DeltaCameraMovement.x * sensitivity;
         Vector3 currPlayerRotation = player.transform.eulerAngles;
-        player.transform.eulerAngles = new Vector3(currPlayerRotation.x, yaw, currPlayerRotation.z);
+        player.transform.eulerAngles = new Vector3(currPlayerRotation.x, _yaw, currPlayerRotation.z);
 
-        // cam roll and yaw
+        // cam roll and _yaw
         Vector3 currRotation = transform.rotation.eulerAngles;
         transform.rotation = Quaternion.Euler(currRotation.x, player.transform.eulerAngles.y, player.transform.eulerAngles.z);
         
-        // cam pitch
-        float currPitch = pitch;
-        pitch += inputManager.DeltaCameraMovement.y * sensitivity;
-        pitch = Mathf.Clamp(pitch, -90f, 90f);
-        transform.Rotate(currPitch - pitch, 0f, 0f);
+        // cam _pitch
+        float currPitch = _pitch;
+        _pitch += inputManager.DeltaCameraMovement.y * sensitivity;
+        _pitch = Mathf.Clamp(_pitch, -90f, 90f);
+        transform.Rotate(currPitch - _pitch, 0f, 0f);
     }
 }

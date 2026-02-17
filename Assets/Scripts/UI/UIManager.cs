@@ -4,46 +4,46 @@ using UnityEngine.UIElements;
 
 public class UIManager : MonoBehaviour
 {
-    private Label currentTime;
-    private Label bestTime;
-    private float currentTimeFloat = 0;
-    private float bestTimeFloat = 0;
+    private Label _currentTime;
+    private Label _bestTime;
+    private float _currentTimeFloat = 0;
+    private float _bestTimeFloat = 0;
 
 
     private void OnEnable()
     {
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
 
-        currentTime = root.Q<Label>("currentTime");
-        bestTime = root.Q<Label>("bestTime");
+        _currentTime = root.Q<Label>("_currentTime");
+        _bestTime = root.Q<Label>("_bestTime");
     }
 
 
     void Update()
     {
-        currentTimeFloat += Time.deltaTime;
+        _currentTimeFloat += Time.deltaTime;
         SetCurrentTime();
     }
 
 
     public void SetCurrentTime()
     {
-        currentTime.text = Mathf.Round(currentTimeFloat).ToString() + "s";
+        _currentTime.text = Mathf.Round(_currentTimeFloat).ToString() + "s";
     }
 
 
     public void UpdateBestTime()
     {
-        if (currentTimeFloat > bestTimeFloat)
+        if (_currentTimeFloat > _bestTimeFloat)
         {
-            bestTimeFloat = currentTimeFloat;
-            bestTime.text = "Best Time: " + currentTime.text;
+            _bestTimeFloat = _currentTimeFloat;
+            _bestTime.text = "Best Time: " + _currentTime.text;
         }
     }
 
 
     public void RestartTime()
     {
-        currentTimeFloat = 0;
+        _currentTimeFloat = 0;
     }
 }

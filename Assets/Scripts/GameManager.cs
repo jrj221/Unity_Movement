@@ -3,88 +3,54 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     #region States
-    private GameplayState gameplayState;
-    private MainMenuState mainMenuState;
-    private PauseMenuState pauseMenuState;
-    private IState exitingState;
-    private IState currentState;
-    private IState nextState;
-    #endregion
-
-    #region Object References
-    public InputManager inputManager;
-    public StateMachine playerMovement;
-    public CameraController cameraMovement;
-    public MainMenuEvents mainMenuEvents;
-    public PauseMenuEvents pauseMenuEvents;
-    #endregion
-
-    #region Class Variables
-    private bool gameInMenu = true;
+    private GameplayState _gameplayState;
+    private IState _exitingState;
+    private IState _currentState;
+    private IState _nextState;
     #endregion
 
 
     private void Awake()
     {
-        gameplayState = new GameplayState(this);
-        mainMenuState = new MainMenuState();
-        pauseMenuState = new PauseMenuState(pauseMenuEvents);
-
-        playerMovement.enabled = false;
-        cameraMovement.enabled = false;
+        _gameplayState = new GameplayState(this);
     }
 
 
     private void Start()
     {
-        currentState = mainMenuState;
+        _currentState = _gameplayState;
     }
 
 
     private void Update()
     {
-        nextState = DetermineNextState();
-        if (nextState != currentState) ChangeState(nextState);
-        Debug.Log(currentState);
+        _nextState = DetermineNextState();
+        if (_nextState != _currentState) ChangeState();
+        Debug.Log(_currentState);
     }
 
 
     private IState DetermineNextState()
     {
-        switch (currentState)
+        switch (_currentState)
         {
-            case MainMenuState:
-                if (!gameInMenu) return gameplayState;
-                else return mainMenuState;
-            case PauseMenuState:
-                if (!inputManager.PressedPause) return gameplayState;
-                else if (gameInMenu) return mainMenuState;
-                else return pauseMenuState;
             case GameplayState:
-                if (inputManager.PressedPause) return pauseMenuState;
-                return gameplayState;
+                return _gameplayState;
         }
         return null; // won't logically happen but it wanted a return path
     }
 
 
-    private void ChangeState(IState nextState)
+    private void ChangeState()
     {
-        exitingState = currentState;
-        exitingState.OnExit();
-        currentState = nextState;
-        currentState.OnEnter();
+        _exitingState = _currentState;
+        _exitingState.OnExit();
+        _currentState = _nextState;
+        _currentState.OnEnter();
     }
 
 
     public void OnGameStarted()
     {
-        gameInMenu = false;
-    }
-
-
-    public void OnBackToMenu()
-    {
-        gameInMenu = true;
     }
 }
