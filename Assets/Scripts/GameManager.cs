@@ -8,10 +8,17 @@ public class GameManager : MonoBehaviour
     private IState _currentState;
     private IState _nextState;
     #endregion
+    
+    #region Object References
+    [SerializeField] private PauseMenuEvents _pauseMenuEvents;
+    #endregion
+    
+    public static GameManager Instance { get; private set; }
 
 
     private void Awake()
     {
+        Instance = this;
         _gameplayState = new GameplayState(this);
     }
 
@@ -50,7 +57,9 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void OnGameStarted()
+    public void StartGame()
     {
+        _pauseMenuEvents.enabled = true;
+        InputManager.Instance.EnableInput();
     }
 }

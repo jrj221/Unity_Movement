@@ -7,17 +7,16 @@ public class InputManager : MonoBehaviour
     #region Input Actions
 
     [SerializeField] private InputActionAsset _actions;
-    public InputActionAsset Actions { get; private set; }
-    public InputActionReference move;
-    public InputActionReference sprint;
-    public InputActionReference jump;
-    public InputActionReference rightWallrun;
-    public InputActionReference leftWallrun;
-    public InputActionReference slide;
-    public InputActionReference look;
-    public InputActionReference throwObject;
-    public InputActionReference pickup;
-    public InputActionReference pause;
+    [SerializeField] private InputActionReference move;
+    [SerializeField] private InputActionReference sprint;
+    [SerializeField] private InputActionReference jump;
+    [SerializeField] private InputActionReference rightWallrun;
+    [SerializeField] private InputActionReference leftWallrun;
+    [SerializeField] private InputActionReference slide;
+    [SerializeField] private InputActionReference look;
+    [SerializeField] private InputActionReference throwObject;
+    [SerializeField] private InputActionReference pickup;
+    [SerializeField] private InputActionReference pause;
     private List<InputActionReference> _actionReferences;
     #endregion
 
@@ -41,7 +40,6 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        Actions = _actions;
         _actionReferences = new List<InputActionReference> { move, sprint, jump, leftWallrun, rightWallrun, slide, look, pickup, throwObject, pause };
     }
 
@@ -109,10 +107,13 @@ public class InputManager : MonoBehaviour
     }
 
 
-    private void PerformMovement(InputAction.CallbackContext ctx)
-    {
-        InputMoveDirection = ctx.ReadValue<Vector2>();
-    }
+    public void DisableInput() { _actions.Disable(); }
+    
+    
+    public void EnableInput() { _actions.Enable(); }
+
+
+    private void PerformMovement(InputAction.CallbackContext ctx) { InputMoveDirection = ctx.ReadValue<Vector2>(); }
 
 
     private void StartSprint() { PressedSprint = true; }

@@ -31,15 +31,13 @@ public class MainMenuEvents : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Instance is null: " + (InputManager.Instance == null));
-        Debug.Log("Actions is null : " + (InputManager.Instance.Actions == null));
-        InputManager.Instance.Actions.Disable(); // input is disabled by default
+        InputManager.Instance.DisableInput();
     }
 
 
     private void OnStartGameClick(ClickEvent e)
     {
         _document.rootVisualElement.style.display = DisplayStyle.None;
-        InputManager.Instance.Actions.Enable();
+        GameManager.Instance.StartGame();
     }
 }

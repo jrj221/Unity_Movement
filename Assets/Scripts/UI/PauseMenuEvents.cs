@@ -45,11 +45,12 @@ public class PauseMenuEvents : MonoBehaviour
         if (InputManager.Instance.PressedPause)
         {
             _document.rootVisualElement.style.display = DisplayStyle.Flex;
-            
+            InputManager.Instance.DisableInput();
         }
         else
         {
             _document.rootVisualElement.style.display = DisplayStyle.None;
+            InputManager.Instance.EnableInput();
         }
     }
 
