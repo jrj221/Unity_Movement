@@ -24,7 +24,6 @@ public class JumpState : IState
 
     public void Apply()
     {
-        Debug.Log("Jumped");
         switch (_jumpType)
         {
             case JumpType.NormalJump:

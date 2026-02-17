@@ -189,7 +189,7 @@ public class StateMachine : MonoBehaviour
         _rightWallrunStartTriggered = !_wallrunBuffered && !_isRightWallrunningIsBuffered && InputManager.Instance.PressedRightWallrun && _wallToRight;
         if (isRightWallrunning && !(InputManager.Instance.PressedRightWallrun && _wallToRight)) rightWallrunStopTriggered = true;
 
-        Debug.Log("Update: " + _currentState);
+        // Debug.Log("Update: " + _currentState);
         _nextState = DetermineNextState();
         if (_nextState != _currentState) ChangeState(_nextState);
     }
@@ -207,7 +207,7 @@ public class StateMachine : MonoBehaviour
     private void FixedUpdate()
     {
         DrawRaycasts();
-        // Debug.Log("FixedUpdate: " + _currentState);
+        Debug.Log("FixedUpdate: " + _currentState);
         _currentState.Apply();
 
         ApplyPhysicsActions();
