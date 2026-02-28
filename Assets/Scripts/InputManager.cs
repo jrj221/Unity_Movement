@@ -179,7 +179,6 @@ public class InputManager : MonoBehaviour
 
     private void PerformLook(InputAction.CallbackContext ctx)
     {
-        Debug.Log("LOOKING");
         DeltaCameraMovement = ctx.ReadValue<Vector2>();
     }
 
