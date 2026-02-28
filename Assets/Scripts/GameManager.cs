@@ -24,9 +24,9 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        pauseMenuUIManager.ShowUI();
         InputManager.Instance.EnableInput();
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1f;
     }
 }

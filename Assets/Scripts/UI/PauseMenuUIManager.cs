@@ -5,7 +5,6 @@ using Cursor = UnityEngine.Cursor;
 [RequireComponent(typeof(UIDocument))]
 public class PauseMenuUIManager : UIManger
 {
-    private UIDocument _document;
     private Button _resumeButton;
     private Button _settingsButton;
     private Button _quitButton;

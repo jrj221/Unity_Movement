@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -5,7 +6,6 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
     #region Input Actions
-
     [SerializeField] private InputActionAsset _actions;
     [SerializeField] private InputActionReference move;
     [SerializeField] private InputActionReference sprint;
@@ -17,9 +17,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private InputActionReference throwObject;
     [SerializeField] private InputActionReference pickup;
     [SerializeField] private InputActionReference pause;
-    private List<InputActionReference> _actionReferences;
     #endregion
-
 
     #region Input Properties
     public Vector2 InputMoveDirection { get; private set; } // auto-property that allows public getting, but not setting (encapsulation!!)
@@ -40,16 +38,12 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        _actionReferences = new List<InputActionReference> { move, sprint, jump, leftWallrun, rightWallrun, slide, look, pickup, throwObject, pause };
     }
-
+    
 
     private void OnEnable()
     {
-        foreach (InputActionReference actionReference in _actionReferences)
-        {
-            actionReference.action.Enable();
-        }
+        _actions.Enable();
         move.action.performed += PerformMovement;
         sprint.action.started += OnSprintInput;
         sprint.action.canceled += OnSprintInput;
@@ -78,10 +72,7 @@ public class InputManager : MonoBehaviour
 
     private void OnDisable()
     {
-        foreach (InputActionReference actionReference in _actionReferences)
-        {
-            actionReference.action.Disable();
-        }
+        _actions.Disable();
         move.action.performed -= PerformMovement;
         sprint.action.started -= OnSprintInput;
         sprint.action.canceled -= OnSprintInput;
@@ -188,6 +179,7 @@ public class InputManager : MonoBehaviour
 
     private void PerformLook(InputAction.CallbackContext ctx)
     {
+        Debug.Log("LOOKING");
         DeltaCameraMovement = ctx.ReadValue<Vector2>();
     }
 

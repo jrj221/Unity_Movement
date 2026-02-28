@@ -5,7 +5,6 @@ using UnityEngine.UIElements;
 
 public class MainMenuUIManager : UIManger
 {
-    private UIDocument _document;
     private Button _startButton;
 
     protected override void Awake()

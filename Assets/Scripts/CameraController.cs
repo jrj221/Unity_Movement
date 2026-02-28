@@ -12,13 +12,13 @@ public class CameraController : MonoBehaviour
     public InputManager inputManager;
 
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         MoveCamera();
     }
 
 
-    void MoveCamera()
+    private void MoveCamera()
     {
         // cam position
         if (controller.cameraSmoothingEnabled) transform.position = Vector3.Lerp(transform.position, player.transform.position + new Vector3(0f, 0.4f, 0f), cameraMovementSmoothingSpeed);
