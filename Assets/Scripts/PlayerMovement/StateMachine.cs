@@ -7,6 +7,7 @@ public class StateMachine : MonoBehaviour
     [Header("Object References")]
     public Rigidbody rb;
     public Transform feet;
+    [SerializeField] private State[] _states;
     #endregion
 
     #region Movement
@@ -53,8 +54,6 @@ public class StateMachine : MonoBehaviour
     public float jumpForce;
     public float wallVerticalJumpForce;
     public float wallSideJumpForce;
-    public float slideJumpHorizontalForce;
-    public float slideJumpVerticalForce;
     public float jumpBufferTimeLength;
     [NonSerialized] public float jumpBufferTime;
     [NonSerialized] public bool jumpBuffered;
@@ -128,9 +127,9 @@ public class StateMachine : MonoBehaviour
     #endregion
 
     #region States
-    private IState _currentState;
-    public IState exitingState;
-    private IState _nextState;
+    private State _currentState;
+    public State exitingState;
+    private State _nextState;
     private IdleState _idleState;
     public GroundedMovingState groundedMovingState;
     private AirborneState _airborneState;
@@ -143,20 +142,24 @@ public class StateMachine : MonoBehaviour
 
     private void Awake()
     {
+        foreach (State state in _states)
+        {
+            state.Initialize(this);
+        }
         // Create all state instances once, then swap between them
-        _idleState = new IdleState(this);
-        groundedMovingState = new GroundedMovingState(this);
-        _airborneState = new AirborneState(this);
-        _jumpState = new JumpState(this);
-        leftWallrunState = new LeftWallrunState(this);
-        rightWallrunState = new RightWallrunState(this);
-        slideState = new SlideState(this);
+        _idleState = GetComponent<IdleState>();
+        groundedMovingState = GetComponent<GroundedMovingState>();
+        _airborneState = GetComponent<AirborneState>();
+        _jumpState = GetComponent<JumpState>();
+        leftWallrunState = GetComponent<LeftWallrunState>();
+        rightWallrunState = GetComponent<RightWallrunState>();
+        slideState = GetComponent<SlideState>();
     }
 
 
     private void Start()
     {
-        // Time.timeScale = 0.1f;
+        Time.timeScale = 0.1f;
         _currentState = _idleState;
         exitingState = _currentState;
         rb.useGravity = false; // we'll use our false playerGravity instead, toggling it with useCustomGravity
@@ -195,7 +198,7 @@ public class StateMachine : MonoBehaviour
     }
 
 
-    private void ChangeState(IState nextState)
+    private void ChangeState(State nextState)
     {
         exitingState = _currentState;
         exitingState.OnExit();
@@ -207,7 +210,7 @@ public class StateMachine : MonoBehaviour
     private void FixedUpdate()
     {
         DrawRaycasts();
-        Debug.Log("FixedUpdate: " + _currentState);
+        // Debug.Log("FixedUpdate: " + _currentState);
         _currentState.Apply();
 
         ApplyPhysicsActions();
@@ -309,7 +312,7 @@ public class StateMachine : MonoBehaviour
     }
 
 
-    private IState DetermineNextState()
+    private State DetermineNextState()
     {
         // Take the current state, and decide what the next state should be
         switch (_currentState)

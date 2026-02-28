@@ -1,9 +1,8 @@
+using System.Collections;
 using UnityEngine;
 
-public class JumpState : IState
+public class JumpState : State
 {
-    private readonly StateMachine _controller;
-    private readonly Rigidbody _rb;
     private enum JumpType
     {
         NormalJump,
@@ -13,58 +12,63 @@ public class JumpState : IState
         None,
     }
     private JumpType _jumpType = JumpType.None;
-
-
-    public JumpState(StateMachine controller)
-    {
-        _controller = controller;
-        _rb = _controller.rb;
-    }
-
-
-    public void Apply()
+    
+    public override void Apply()
     {
         switch (_jumpType)
         {
             case JumpType.NormalJump:
-                if (_controller.exitingState == _controller.groundedMovingState) _rb.position += Vector3.up * 0.1f;
-                _rb.AddForce(Vector3.up * _controller.jumpForce, ForceMode.Impulse);
+                if (Controller.exitingState == Controller.groundedMovingState || Controller.slideState) Rb.position += Vector3.up * 0.1f;
+                Rb.AddForce(Vector3.up * Controller.jumpForce, ForceMode.Impulse);
                 break;
             case JumpType.LeftWallrunJump:
-                _rb.AddForce(Vector3.up * _controller.wallVerticalJumpForce + _controller.leftWallHit.normal * _controller.wallSideJumpForce, ForceMode.Impulse);
-                _controller.moveLeftInputLockTime = _controller.moveLeftInputLockLength;
-                _controller.useWallJumpGravity = true;
+                Rb.AddForce(Vector3.up * Controller.wallVerticalJumpForce + Controller.leftWallHit.normal * Controller.wallSideJumpForce, ForceMode.Impulse);
+                Controller.moveLeftInputLockTime = Controller.moveLeftInputLockLength;
+                Controller.useWallJumpGravity = true;
                 break;
             case JumpType.RightWallrunJump:
-                _rb.AddForce(Vector3.up * _controller.wallVerticalJumpForce + _controller.rightWallHit.normal * _controller.wallSideJumpForce, ForceMode.Impulse);
-                _controller.moveRightInputLockTime = _controller.moveRightInputLockLength;
-                _controller.useWallJumpGravity = true;
+                Rb.AddForce(Vector3.up * Controller.wallVerticalJumpForce + Controller.rightWallHit.normal * Controller.wallSideJumpForce, ForceMode.Impulse);
+                Controller.moveRightInputLockTime = Controller.moveRightInputLockLength;
+                Controller.useWallJumpGravity = true;
                 break;
             case JumpType.SlideJump:
-                _rb.AddForce(Vector3.up * _controller.slideJumpVerticalForce + _controller.moveDirection * _controller.slideJumpHorizontalForce, ForceMode.Impulse);
-                break;
+                SimulateMomentum(6f, 2f);
+                goto case JumpType.NormalJump; // Apply normal jump, but moving with "momentum"
         }
-        _controller.jumpApplied = true;
+        Controller.jumpApplied = true;
     }
 
-    public void OnEnter()
+    public override void OnEnter()
     {
         InputManager.Instance.CancelJump();
         // NOTE: Be aware that exitingState is something different in OnEnter vs OnExit, so we assign to bools to keep it consistent
-        if (_controller.exitingState == _controller.leftWallrunState) _jumpType = JumpType.LeftWallrunJump;
-        else if (_controller.exitingState == _controller.rightWallrunState) _jumpType = JumpType.RightWallrunJump;
-        else if (_controller.exitingState == _controller.slideState) _jumpType = JumpType.SlideJump;
+        if (Controller.exitingState == Controller.leftWallrunState) _jumpType = JumpType.LeftWallrunJump;
+        else if (Controller.exitingState == Controller.rightWallrunState) _jumpType = JumpType.RightWallrunJump;
+        else if (Controller.exitingState == Controller.slideState) _jumpType = JumpType.SlideJump;
         else _jumpType = JumpType.NormalJump;
     }
 
-    public void OnExit()
+    public override void OnExit()
     {
-        _controller.jumpBuffered = false;
-        _controller.jumpBufferTime = 0;
+        Controller.jumpBuffered = false;
+        Controller.jumpBufferTime = 0;
 
-        if (_jumpType == JumpType.LeftWallrunJump) _controller.isLeftWallrunningBufferTime = _controller.isLeftWallrunningBufferLength;
-        else if (_jumpType == JumpType.RightWallrunJump) _controller.isRightWallrunningBufferTime = _controller.isRightWallrunningBufferLength;
+        if (_jumpType == JumpType.LeftWallrunJump) Controller.isLeftWallrunningBufferTime = Controller.isLeftWallrunningBufferLength;
+        else if (_jumpType == JumpType.RightWallrunJump) Controller.isRightWallrunningBufferTime = Controller.isRightWallrunningBufferLength;
         _jumpType = JumpType.None; // reset
-        _controller.jumpApplied = false;
+        Controller.jumpApplied = false;
+    }
+
+    private void SimulateMomentum(float speedFactor, float momentumDuration)
+    {
+        Controller.airMovementMultiplier = speedFactor;
+        StartCoroutine(SimulateMomentumRoutine(speedFactor, momentumDuration));
+    }
+
+    private IEnumerator SimulateMomentumRoutine(float speedFactor, float momentumDuration)
+    {
+        Controller.airMovementMultiplier = speedFactor;
+        yield return new WaitForSeconds(momentumDuration);
+        Controller.airMovementMultiplier = 1;
     }
 }

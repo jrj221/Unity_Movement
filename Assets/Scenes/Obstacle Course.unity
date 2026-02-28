@@ -131,6 +131,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Checkpoint (After First Jumps)
       objectReference: {fileID: 0}
+    - target: {fileID: 1765235136477257449, guid: 2b7519116dd704bc782018b0ba01c079, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8037953300478767107, guid: 2b7519116dd704bc782018b0ba01c079, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.82993
@@ -656,6 +660,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Final Checkpoint
       objectReference: {fileID: 0}
+    - target: {fileID: 1765235136477257449, guid: 2b7519116dd704bc782018b0ba01c079, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8037953300478767107, guid: 2b7519116dd704bc782018b0ba01c079, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.5
@@ -726,6 +734,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4232524787309858257, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
+      propertyPath: wallrunRotationSpeed
+      value: 70
+      objectReference: {fileID: 0}
     - target: {fileID: 5679348373883442163, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
       propertyPath: inputManager
       value: 
@@ -785,7 +797,7 @@ GameObject:
   m_Component:
   - component: {fileID: 556144414}
   - component: {fileID: 556144413}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CheckpointManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5660,6 +5672,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Checkpoint (After First Wallrun)
       objectReference: {fileID: 0}
+    - target: {fileID: 1765235136477257449, guid: 2b7519116dd704bc782018b0ba01c079, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8037953300478767107, guid: 2b7519116dd704bc782018b0ba01c079, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.82993
@@ -7848,7 +7864,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1227070538}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Checkpoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8419,6 +8435,10 @@ PrefabInstance:
     - target: {fileID: 1765235136477257449, guid: 2b7519116dd704bc782018b0ba01c079, type: 3}
       propertyPath: m_Name
       value: Checkpoint (Second Platform)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1765235136477257449, guid: 2b7519116dd704bc782018b0ba01c079, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8037953300478767107, guid: 2b7519116dd704bc782018b0ba01c079, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15586,6 +15606,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Checkpoint (After Wallrun Hopping)
       objectReference: {fileID: 0}
+    - target: {fileID: 1765235136477257449, guid: 2b7519116dd704bc782018b0ba01c079, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8037953300478767107, guid: 2b7519116dd704bc782018b0ba01c079, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.82993
@@ -15942,6 +15966,10 @@ PrefabInstance:
     - target: {fileID: 1765235136477257449, guid: 2b7519116dd704bc782018b0ba01c079, type: 3}
       propertyPath: m_Name
       value: Checkpoint (First Platform)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1765235136477257449, guid: 2b7519116dd704bc782018b0ba01c079, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8037953300478767107, guid: 2b7519116dd704bc782018b0ba01c079, type: 3}
       propertyPath: m_LocalPosition.x

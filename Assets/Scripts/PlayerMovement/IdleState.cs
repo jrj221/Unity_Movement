@@ -1,28 +1,19 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class IdleState : IState
+public class IdleState : State
 {
-    private readonly StateMachine _controller;
-
-
-    public IdleState(StateMachine _controller)
-    {
-        this._controller = _controller;
-    }
-
-
-    public void Apply()
+    public override void Apply()
     {
         
     }
 
-    public void OnEnter()
+    public override void OnEnter()
     {
         
     }
 
-    public void OnExit()
+    public override void OnExit()
     {
         
     }

@@ -1,35 +1,24 @@
 using UnityEngine;
 
-public class SlideState : IState
+public class SlideState : State
 {
-    private readonly StateMachine _controller;
-    private readonly Rigidbody _rb;
-
-
-    public SlideState(StateMachine controller)
+    public override void Apply()
     {
-        _controller = controller;
-        _rb = _controller.rb;
+        Rb.AddForce(10f * Controller.slideSpeed * Controller.moveDirection);
     }
 
 
-    public void Apply()
+    public override void OnEnter()
     {
-        _rb.AddForce(10f * _controller.slideSpeed * _controller.moveDirection);
+        Controller.slideTime = Controller.maxSlideTime;
+        Controller.isSliding = true;
     }
 
 
-    public void OnEnter()
+    public override void OnExit()
     {
-        _controller.slideTime = _controller.maxSlideTime;
-        _controller.isSliding = true;
-    }
-
-
-    public void OnExit()
-    {
-        _controller.slideStopTriggered = false;
+        Controller.slideStopTriggered = false;
         InputManager.Instance.CancelSlide(); // means you must repress the button to initiate a new slide
-        _controller.isSliding = false;
+        Controller.isSliding = false;
     }
 }
