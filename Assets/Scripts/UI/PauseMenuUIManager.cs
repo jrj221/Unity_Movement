@@ -1,10 +1,9 @@
-using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
 
 [RequireComponent(typeof(UIDocument))]
-public class PauseMenuEvents : MonoBehaviour
+public class PauseMenuUIManager : UIManger
 {
     private UIDocument _document;
     private Button _resumeButton;
@@ -12,18 +11,18 @@ public class PauseMenuEvents : MonoBehaviour
     private Button _quitButton;
 
 
-    private void Awake()
+    protected override void Awake()
     {
-        _document = GetComponent<UIDocument>();
-        _resumeButton = _document.rootVisualElement.Q("Buttons").Q("ResumeButton") as Button; // type casts into a Button
-        _settingsButton = _document.rootVisualElement.Q("Buttons").Q("SettingsButton") as Button;
-        _quitButton = _document.rootVisualElement.Q("Buttons").Q("QuitButton") as Button;
+        base.Awake();
+        _resumeButton = GetElement<Button>("ResumeButton");
+        _settingsButton = GetElement<Button>("SettingsButton");
+        _quitButton = GetElement<Button>("QuitButton");
 
         Helpers.CheckNull(_resumeButton, "resumeButton");
         Helpers.CheckNull(_settingsButton, "settingsButton");
         Helpers.CheckNull(_quitButton, "quitButton");
         
-        _document.rootVisualElement.style.display = DisplayStyle.None; // by default
+        HideUI(); // by default
     }
 
     private void OnEnable()
@@ -45,14 +44,14 @@ public class PauseMenuEvents : MonoBehaviour
     {
         if (InputManager.Instance.PressedPause)
         {
-            _document.rootVisualElement.style.display = DisplayStyle.Flex;
+            ShowUI();
             InputManager.Instance.DisableInput();
             Cursor.visible = true;
             Time.timeScale = 0f;
         }
         else
         {
-            _document.rootVisualElement.style.display = DisplayStyle.None;
+            HideUI();
             InputManager.Instance.EnableInput();
             Cursor.visible = false;
             Time.timeScale = 1f;

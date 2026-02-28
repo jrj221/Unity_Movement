@@ -2,15 +2,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    #region States
-    private GameplayState _gameplayState;
-    private IState _exitingState;
-    private IState _currentState;
-    private IState _nextState;
-    #endregion
-    
     #region Object References
-    [SerializeField] private PauseMenuEvents _pauseMenuEvents;
+    // Should UI managers be singletons or references here?
+    [SerializeField] private PauseMenuUIManager pauseMenuUIManager;
     #endregion
     
     public static GameManager Instance { get; private set; }
@@ -19,48 +13,18 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        _gameplayState = new GameplayState(this);
     }
-
-
+    
+    
     private void Start()
     {
-        _currentState = _gameplayState;
         Time.timeScale = 0f;
     }
-
-
-    private void Update()
-    {
-        _nextState = DetermineNextState();
-        if (_nextState != _currentState) ChangeState();
-        // Debug.Log(_currentState);
-    }
-
-
-    private IState DetermineNextState()
-    {
-        switch (_currentState)
-        {
-            case GameplayState:
-                return _gameplayState;
-        }
-        return null; // won't logically happen but it wanted a return path
-    }
-
-
-    private void ChangeState()
-    {
-        _exitingState = _currentState;
-        _exitingState.OnExit();
-        _currentState = _nextState;
-        _currentState.OnEnter();
-    }
-
+    
 
     public void StartGame()
     {
-        _pauseMenuEvents.enabled = true;
+        pauseMenuUIManager.ShowUI();
         InputManager.Instance.EnableInput();
         Cursor.visible = false;
         Time.timeScale = 1f;

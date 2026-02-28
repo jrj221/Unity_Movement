@@ -4,7 +4,7 @@ public class PlayerInfoManger : MonoBehaviour
 {
     // References
     public CheckpointManager checkpointManager;
-    public UIManager uiManager;
+    public GameplayUIManager gameplayUIManager;
 
 
     private void OnTriggerEnter(Collider other)
@@ -16,7 +16,7 @@ public class PlayerInfoManger : MonoBehaviour
             if (other.name == "Final Checkpoint")
             {
                 checkpointManager.finishedCourse = true;
-                uiManager.UpdateBestTime();
+                gameplayUIManager.UpdateBestTime();
             }
         }
         else if (other.CompareTag("Death"))

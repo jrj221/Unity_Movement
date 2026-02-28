@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CheckpointManager : MonoBehaviour
 {
-    public UIManager uiManager;
+    public GameplayUIManager gameplayUIManager;
     public GameObject firstCheckpoint;
     private Transform _latestCheckpoint;
     public bool finishedCourse;
@@ -28,7 +28,7 @@ public class CheckpointManager : MonoBehaviour
         {
             _latestCheckpoint = firstCheckpoint.transform;
             finishedCourse = false;
-            uiManager.RestartTime();
+            gameplayUIManager.RestartTime();
         }
         // player.transform.SetPositionAndRotation(_latestCheckpoint.position, _latestCheckpoint.rotation);
         player.transform.position = _latestCheckpoint.position;

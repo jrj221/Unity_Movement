@@ -3,16 +3,15 @@ using UnityEngine.UIElements;
 
 [RequireComponent(typeof(UIDocument))]
 
-public class MainMenuEvents : MonoBehaviour
+public class MainMenuUIManager : UIManger
 {
     private UIDocument _document;
     private Button _startButton;
 
-    private void Awake()
+    protected override void Awake()
     {
-        _document = GetComponent<UIDocument>();
-        _startButton = _document.rootVisualElement.Q("StartGame") as Button; // type casts into a Button
-        
+        base.Awake();
+        _startButton = GetElement<Button>("StartGameButton");
         Helpers.CheckNull(_startButton, "_startButton");
     }
     
@@ -37,7 +36,7 @@ public class MainMenuEvents : MonoBehaviour
 
     private void OnStartGameClick(ClickEvent e)
     {
-        _document.rootVisualElement.style.display = DisplayStyle.None;
+        HideUI();
         GameManager.Instance.StartGame();
     }
 }
