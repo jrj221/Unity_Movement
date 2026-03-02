@@ -7,9 +7,8 @@ public class FrictionlessManager : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        int playerLayer = LayerMask.NameToLayer("Checkpoint");
-        int checkpointMask = ~(1 << playerLayer);  // invert mask
-        Physics.Raycast(rb.transform.position, Vector3.down, out RaycastHit groundHit, 2f, checkpointMask);
+        int ignoreRaycastLayerMask = ~LayerMask.GetMask("Ignore Raycast"); // selects everything EXCEPT IgnoreRaycast layer, thus ignoring those objects
+        Physics.Raycast(rb.transform.position, Vector3.down, out RaycastHit groundHit, 2f, ignoreRaycastLayerMask);
 
         if (groundHit.collider == collision.collider) return; // don't apply to ground
         

@@ -115,8 +115,9 @@ public class StateMachine : MonoBehaviour
     #endregion
 
     #region Raycast Info
-    public readonly float verticalRaycastDist = 1.1f;
-    public readonly float horizontalRaycastDist = .51f;
+    private const float VerticalRaycastDist = 1.1f;
+    private const float HorizontalRaycastDist = .51f;
+    [NonSerialized] public int ignoreRaycastLayerMask; // selects everything EXCEPT IgnoreRaycast layer, thus ignoring those objects
     private bool _grounded;
     private bool _wallToLeft;
     private bool _wallToRight;
@@ -154,12 +155,13 @@ public class StateMachine : MonoBehaviour
         leftWallrunState = GetComponent<LeftWallrunState>();
         rightWallrunState = GetComponent<RightWallrunState>();
         slideState = GetComponent<SlideState>();
+        
+        ignoreRaycastLayerMask = ~LayerMask.GetMask("Ignore Raycast");
     }
 
 
     private void Start()
     {
-        Time.timeScale = 0.1f;
         _currentState = _idleState;
         exitingState = _currentState;
         rb.useGravity = false; // we'll use our false playerGravity instead, toggling it with useCustomGravity
@@ -170,6 +172,7 @@ public class StateMachine : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        // Time.timeScale = 0.1f;
         ApplyGeneralActions();
 
         // Moving
@@ -306,7 +309,7 @@ public class StateMachine : MonoBehaviour
     private void CapSpeed()
     {
         float speed = isSprinting ? sprintSpeed : normalSpeed;
-        // if (inAir) speed *= airMovementMultiplier;
+        if (inAir) speed *= airMovementMultiplier;
         Vector3 flatVelocity = new(rb.linearVelocity.x, 0, rb.linearVelocity.z);
         if (flatVelocity.magnitude > speed) rb.linearVelocity = flatVelocity.normalized * speed + new Vector3(0, rb.linearVelocity.y, 0);
     }
@@ -357,8 +360,7 @@ public class StateMachine : MonoBehaviour
     private void DrawRaycasts()
     {
         // actual raycasts (not debug ones)
-        int layerMask = ~LayerMask.GetMask("IgnoreRaycast"); // selects everything EXCEPT IgnoreRaycast layer, thus ignoring those objects
-        _grounded = Physics.Raycast(rb.transform.position, Vector3.down, out groundHit, verticalRaycastDist);
+        _grounded = Physics.Raycast(rb.transform.position, Vector3.down, out groundHit, VerticalRaycastDist);
 
         // Radial raycast search for walls in any direction, with a threshold for a valid leftwards or rightwards wall
         float rays = 16;
@@ -373,7 +375,7 @@ public class StateMachine : MonoBehaviour
             Vector3 dir = new(Mathf.Cos(angle), 0, Mathf.Sin(angle));
             Vector3 playerDir = transform.TransformDirection(dir); // dir follows player rotation
             Ray ray = new(feet.position, playerDir);
-            if (Physics.Raycast(ray, out RaycastHit wallHit, horizontalRaycastDist, layerMask, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(ray, out RaycastHit wallHit, HorizontalRaycastDist, ignoreRaycastLayerMask, QueryTriggerInteraction.Ignore))
             {
                 wallInSomeDirection = true;
                 wallDirection = Vector3.ProjectOnPlane(-wallHit.normal, Vector3.up).normalized;
@@ -400,11 +402,11 @@ public class StateMachine : MonoBehaviour
         inAir = !_grounded;
         if (_grounded)
         {
-            Debug.DrawRay(rb.transform.position, Vector3.down * verticalRaycastDist, Color.green);
+            Debug.DrawRay(rb.transform.position, Vector3.down * VerticalRaycastDist, Color.green);
         }
         else
         {
-            Debug.DrawRay(rb.transform.position, Vector3.down * verticalRaycastDist, Color.red);
+            Debug.DrawRay(rb.transform.position, Vector3.down * VerticalRaycastDist, Color.red);
         }
 
         // left wall raycasts

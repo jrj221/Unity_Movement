@@ -3,9 +3,9 @@ using UnityEngine;
 public class GroundedMovingState : State
 {
     private Vector3 _stairUpPosition;
-    private readonly float _forwardNudge = 0.01f; // when you movePosition up a stair, Unity pushes back since you slightly collide 
-                                        // with the corner of the stair this allows you to counter that push, staying put
-                                        // on the edge of the stair
+    private const float ForwardNudge = 0.01f; // when you movePosition up a stair, Unity pushes back since you slightly collide 
+                                                // with the corner of the stair this allows you to counter that push, staying put
+                                                // on the edge of the stair
 
                                         
     public override void Apply()
@@ -57,7 +57,7 @@ public class GroundedMovingState : State
         // Success! You can go up the step
         Physics.Raycast(Controller.feet.position, Controller.transform.forward, out RaycastHit wallHit);
         float distToStep = Vector3.ProjectOnPlane(wallHit.point - Controller.feet.position, Vector3.up).magnitude;
-        Vector3 amountToMoveHorizontally = Controller.moveDirection * _forwardNudge;
+        Vector3 amountToMoveHorizontally = Controller.moveDirection * ForwardNudge;
         Vector3 amountToMoveVertically = Vector3.up * stepHeight;
         _stairUpPosition = Controller.transform.position + amountToMoveVertically + amountToMoveHorizontally;
         return true;

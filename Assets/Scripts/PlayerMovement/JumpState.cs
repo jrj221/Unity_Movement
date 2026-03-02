@@ -18,7 +18,7 @@ public class JumpState : State
         switch (_jumpType)
         {
             case JumpType.NormalJump:
-                if (Controller.exitingState == Controller.groundedMovingState || Controller.slideState) Rb.position += Vector3.up * 0.1f;
+                if (Controller.exitingState == Controller.groundedMovingState || Controller.exitingState == Controller.slideState) Rb.position += Vector3.up * 0.1f; // Same principle as with moving and jumping--player sinks into ground, sometimes negating effect of jump. This pushes them out a bit
                 Rb.AddForce(Vector3.up * Controller.jumpForce, ForceMode.Impulse);
                 break;
             case JumpType.LeftWallrunJump:

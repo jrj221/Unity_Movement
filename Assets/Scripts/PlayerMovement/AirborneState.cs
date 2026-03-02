@@ -8,6 +8,7 @@ public class AirborneState : State
 
     public override void Apply()
     {
+        Debug.Log("stepDownScheduled: " + _stepDownScheduled);
         if (Controller.isMoving)
         {
             if (_stepDownScheduled)
@@ -41,7 +42,7 @@ public class AirborneState : State
     private bool ValidDownwardStep(out RaycastHit downHit)
     {
         // feet are slightly elevated above capsule, so this is slightly off of maxStepHeight
-        return Physics.Raycast(Controller.feet.position, Vector3.down, out downHit, Controller.maxStepHeight);
+        return Physics.Raycast(Controller.feet.position, Vector3.down, out downHit, Controller.maxStepHeight, Controller.ignoreRaycastLayerMask);
     }
 
     
