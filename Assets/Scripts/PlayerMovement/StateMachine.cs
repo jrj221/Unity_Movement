@@ -352,7 +352,8 @@ public class StateMachine : MonoBehaviour
     {
         // actual raycasts (not debug ones)
         _grounded = Physics.Raycast(rb.transform.position, Vector3.down, out groundHit, VerticalRaycastDist);
-
+        if (_currentState == leftWallrunState || _currentState == rightWallrunState) _grounded = true; // Override 
+        
         // Radial raycast search for walls in any direction, with a threshold for a valid leftwards or rightwards wall
         float rays = 16;
         _wallToLeft = false;
