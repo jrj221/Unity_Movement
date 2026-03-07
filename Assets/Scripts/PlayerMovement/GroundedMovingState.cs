@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class GroundedMovingState : State
 {
+    #region Slopes
+    [Header("Slopes")]
+    public float maxSlopeAngle;
+    public float stickToSlopeForce;
+    #endregion
+    
     private Vector3 _stairUpPosition;
     private const float ForwardNudge = 0.01f; // when you movePosition up a stair, Unity pushes back since you slightly collide 
                                                 // with the corner of the stair this allows you to counter that push, staying put
@@ -23,7 +29,7 @@ public class GroundedMovingState : State
         {
             Controller.moveDirection = Vector3.ProjectOnPlane(Controller.moveDirection, Controller.groundHit.normal);
             // Controller.usePlayerGravity = false; // why did the tutorial want this?
-            if (Rb.linearVelocity.y > 0) Rb.AddForce(Vector3.down * Controller.stickToSlopeForce); // if going up slopes
+            if (Rb.linearVelocity.y > 0) Rb.AddForce(Vector3.down * stickToSlopeForce); // if going up slopes
         }
 
         Debug.DrawRay(Controller.transform.position, Controller.moveDirection, Color.blue);
@@ -35,7 +41,7 @@ public class GroundedMovingState : State
     {
         Physics.Raycast(Controller.feet.position, Vector3.down, out RaycastHit groundHit, 0.1f);
         float slopeAngle = Vector3.Angle(Vector3.up, groundHit.normal);
-        return slopeAngle <= Controller.maxSlopeAngle && slopeAngle != 0; // what happens if it's greater?
+        return slopeAngle <= maxSlopeAngle && slopeAngle != 0; // what happens if it's greater?
     }
 
 
@@ -44,10 +50,10 @@ public class GroundedMovingState : State
         if (!Controller.wallInSomeDirection) return false;
         if (!IsMovingTowardsStair()) return false; // (otherwise it might trigger when going down stairs)
         // Get information about the height of the step
-        Vector3 horizontalStepOffset = Controller.wallDirection * (Controller.minStepLength + Controller.playerRadius); // how far from player to check
-        Vector3 verticalStepOffset = new(0, Controller.maxStepHeight + Controller.playerHeight, 0); // how far to check above step, making sure there's room for the capsule after snapping
-        Debug.DrawRay(Controller.feet.position + horizontalStepOffset + verticalStepOffset, Vector3.down * (Controller.playerHeight + Controller.maxStepHeight), Color.purple);
-        Physics.Raycast(Controller.feet.position + horizontalStepOffset + verticalStepOffset, Vector3.down, out RaycastHit heightHit, Controller.playerHeight + Controller.maxStepHeight);
+        Vector3 horizontalStepOffset = Controller.wallDirection * (Controller.minStepLength + StateMachine.PlayerRadius); // how far from player to check
+        Vector3 verticalStepOffset = new(0, Controller.maxStepHeight + StateMachine.PlayerHeight, 0); // how far to check above step, making sure there's room for the capsule after snapping
+        Debug.DrawRay(Controller.feet.position + horizontalStepOffset + verticalStepOffset, Vector3.down * (StateMachine.PlayerHeight + Controller.maxStepHeight), Color.purple);
+        Physics.Raycast(Controller.feet.position + horizontalStepOffset + verticalStepOffset, Vector3.down, out RaycastHit heightHit, StateMachine.PlayerHeight + Controller.maxStepHeight);
         
         if (!ValidStepSlopeClearance(heightHit)) return false;
         float stepHeight = heightHit.point.y - Controller.feet.position.y;

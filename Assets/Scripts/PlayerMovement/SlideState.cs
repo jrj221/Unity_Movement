@@ -2,15 +2,18 @@ using UnityEngine;
 
 public class SlideState : State
 {
+    public float slideSpeed;
+    public float maxSlideTime;
+    
     public override void Apply()
     {
-        Rb.AddForce(10f * Controller.slideSpeed * Controller.moveDirection);
+        Rb.AddForce(10f * slideSpeed * Controller.moveDirection);
     }
 
 
     public override void OnEnter()
     {
-        Controller.slideTime = Controller.maxSlideTime;
+        Controller.slideTime = maxSlideTime;
         Controller.isSliding = true;
     }
 

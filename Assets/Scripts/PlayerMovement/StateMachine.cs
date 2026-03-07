@@ -51,9 +51,6 @@ public class StateMachine : MonoBehaviour
 
     #region Jumping
     [Header("Jumping")]
-    public float jumpForce;
-    public float wallVerticalJumpForce;
-    public float wallSideJumpForce;
     public float jumpBufferTimeLength;
     [NonSerialized] public float jumpBufferTime;
     [NonSerialized] public bool jumpBuffered;
@@ -70,8 +67,6 @@ public class StateMachine : MonoBehaviour
     [Header("Sliding")]
     public float slideRotationSpeed;
     public float slideAngle;
-    public float slideSpeed;
-    public float maxSlideTime;
     [NonSerialized] public float slideTime;
     [NonSerialized] private bool _slideTimerOngoing;
     [NonSerialized] public bool slideStopTriggered;
@@ -84,12 +79,6 @@ public class StateMachine : MonoBehaviour
     public float maxStepHeight;
     public float maxStepSlope;
     [NonSerialized] public bool justSteppedUp;
-    #endregion
-
-    #region Slopes
-    [Header("Slopes")]
-    public float maxSlopeAngle;
-    public float stickToSlopeForce;
     #endregion
 
     #region Gravity
@@ -110,8 +99,8 @@ public class StateMachine : MonoBehaviour
 
     #region Misc.
     [NonSerialized] public Vector3 wallDirection;
-    [NonSerialized] public readonly float playerRadius = 0.5f;
-    [NonSerialized] public readonly float playerHeight = 2f;
+    [NonSerialized] public const float PlayerRadius = 0.5f;
+    [NonSerialized] public const float PlayerHeight = 2f;
     #endregion
 
     #region Raycast Info

@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class JumpState : State
 {
+    public float jumpForce;
+    public float wallVerticalJumpForce;
+    public float wallSideJumpForce;
     private enum JumpType
     {
         NormalJump,
@@ -19,20 +22,20 @@ public class JumpState : State
         {
             case JumpType.NormalJump:
                 if (Controller.exitingState == Controller.groundedMovingState || Controller.exitingState == Controller.slideState) Rb.position += Vector3.up * 0.1f; // Same principle as with moving and jumping--player sinks into ground, sometimes negating effect of jump. This pushes them out a bit
-                Rb.AddForce(Vector3.up * Controller.jumpForce, ForceMode.Impulse);
+                Rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 break;
             case JumpType.LeftWallrunJump:
-                Rb.AddForce(Vector3.up * Controller.wallVerticalJumpForce + Controller.leftWallHit.normal * Controller.wallSideJumpForce, ForceMode.Impulse);
+                Rb.AddForce(Vector3.up * wallVerticalJumpForce + Controller.leftWallHit.normal * wallSideJumpForce, ForceMode.Impulse);
                 Controller.moveLeftInputLockTime = Controller.moveLeftInputLockLength;
                 Controller.useWallJumpGravity = true;
                 break;
             case JumpType.RightWallrunJump:
-                Rb.AddForce(Vector3.up * Controller.wallVerticalJumpForce + Controller.rightWallHit.normal * Controller.wallSideJumpForce, ForceMode.Impulse);
+                Rb.AddForce(Vector3.up * wallVerticalJumpForce + Controller.rightWallHit.normal * wallSideJumpForce, ForceMode.Impulse);
                 Controller.moveRightInputLockTime = Controller.moveRightInputLockLength;
                 Controller.useWallJumpGravity = true;
                 break;
             case JumpType.SlideJump:
-                SimulateMomentum(6f, 2f);
+                SimulateMomentum(2f, 2f);
                 goto case JumpType.NormalJump; // Apply normal jump, but moving with "momentum"
         }
         Controller.jumpApplied = true;

@@ -8695,6 +8695,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee0529fee4bbbc488d642c329f38921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GroundedMovingState
+  maxSlopeAngle: 45
+  stickToSlopeForce: 5
 --- !u!114 &1512567247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8719,6 +8721,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67bf7d33efb19476b86b0cca5a257bc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlideState
+  slideSpeed: 50
+  maxSlideTime: 0.5
 --- !u!114 &1512567249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8731,6 +8735,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7afd42c0161a4408a387e54a29e24e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JumpState
+  jumpForce: 12
+  wallVerticalJumpForce: 7
+  wallSideJumpForce: 7
 --- !u!114 &1512567250
 MonoBehaviour:
   m_ObjectHideFlags: 0
