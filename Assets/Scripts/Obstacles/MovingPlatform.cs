@@ -14,7 +14,7 @@ public class MovingPlatform : MonoBehaviour
         _pointTwo = new Vector3(transform.position.x + _movingRadius, transform.position.y, transform.position.z);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         float t = Mathf.PingPong(Time.time * _moveSpeed + 0.5f, 1f);
         transform.position = Vector3.Lerp(_pointOne,  _pointTwo, t);
