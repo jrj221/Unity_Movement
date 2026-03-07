@@ -165,11 +165,13 @@ public class StateMachine : MonoBehaviour
         ApplyGeneralActions();
 
         // Moving
-        moveDirection = Vector3.ProjectOnPlane(InputManager.Instance.InputMoveDirection.x * transform.right + InputManager.Instance.InputMoveDirection.y * transform.forward, Vector3.up).normalized;
+        Vector3 inputMoveDirection = InputManager.Instance.InputMoveDirection;
+        if (_moveRightLocked && inputMoveDirection.x > 0) inputMoveDirection.x = 0; // Zero out rightwards movement
+        if (_moveLeftLocked && inputMoveDirection.x < 0) inputMoveDirection.x = 0; // Zero out leftwards movement
+        moveDirection = Vector3.ProjectOnPlane(inputMoveDirection.x * transform.right + inputMoveDirection.y * transform.forward, Vector3.up).normalized;
         isMoving = InputManager.Instance.InputMoveDirection != Vector2.zero;
         if (InputManager.Instance.PressedSprint && _grounded) isSprinting = true;
         if (!InputManager.Instance.PressedSprint) isSprinting = false;
-        // rbCollider.material = _grounded ? null : frictionless;
 
         // Sliding
         if (isSliding && (!_slideTimerOngoing || !InputManager.Instance.PressedSlide)) slideStopTriggered = true;
