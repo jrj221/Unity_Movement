@@ -1,8 +1,8 @@
-using System;
 using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
+    // NOTE: Script could be improved to serialize a selection of x or z to see which axis a platform should move in. 
     private Vector3 _pointOne;
     private Vector3 _pointTwo;
     [SerializeField] private float _movingRadius;
