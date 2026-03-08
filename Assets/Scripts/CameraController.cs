@@ -50,7 +50,6 @@ public class CameraController : MonoBehaviour
     {
         for (var i = 0; i < 180f; i++)
         {
-            Debug.Log("in loop");
             transform.Rotate(0.5f, 0, 0, Space.World);
             yield return new WaitForSeconds(duration / 180f);
         }

@@ -12,7 +12,6 @@ public class FrictionlessManager : MonoBehaviour
 
         if (groundHit.collider == collision.collider) return; // don't apply to ground
         
-        Debug.Log("Frictionless");
         collision.collider.material = frictionless;
     }
 

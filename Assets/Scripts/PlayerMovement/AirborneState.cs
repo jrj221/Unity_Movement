@@ -8,7 +8,6 @@ public class AirborneState : State
 
     public override void Apply()
     {
-        Debug.Log("stepDownScheduled: " + _stepDownScheduled);
         if (Controller.isMoving)
         {
             if (_stepDownScheduled)
@@ -21,7 +20,6 @@ public class AirborneState : State
 
             float speed = Controller.isSprinting ? Controller.sprintSpeed : Controller.normalSpeed;
             speed *= Controller.airMovementMultiplier;
-            Debug.Log("Speed: " + Math.Round(speed));
             Rb.AddForce(10f * speed * Controller.moveDirection);
         }
     }

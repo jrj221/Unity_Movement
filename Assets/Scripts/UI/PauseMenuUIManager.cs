@@ -6,16 +6,12 @@ using Cursor = UnityEngine.Cursor;
 public class PauseMenuUIManager : UIManger
 {
     private Button _resumeButton;
-    private Button _settingsButton;
-    private Button _quitButton;
 
 
     protected override void Awake()
     {
         base.Awake();
         _resumeButton = GetElement<Button>("ResumeButton");
-        _settingsButton = GetElement<Button>("SettingsButton");
-        _quitButton = GetElement<Button>("QuitButton");
         
         HideUI(); // by default
     }
@@ -23,16 +19,12 @@ public class PauseMenuUIManager : UIManger
     private void OnEnable()
     {
         _resumeButton.RegisterCallback<ClickEvent>(ResumeGame);
-        _settingsButton.RegisterCallback<ClickEvent>(OpenSettings);
-        _quitButton.RegisterCallback<ClickEvent>(QuitToMenu);
     }
 
 
     private void OnDisable()
     {
         _resumeButton.UnregisterCallback<ClickEvent>(ResumeGame);
-        _settingsButton.UnregisterCallback<ClickEvent>(OpenSettings);
-        _quitButton.UnregisterCallback<ClickEvent>(QuitToMenu);
     }
 
     
@@ -58,17 +50,5 @@ public class PauseMenuUIManager : UIManger
     private void ResumeGame(ClickEvent e)
     {
         InputManager.Instance.TogglePause(); // manually switch pause off if you press the button instead
-    }
-
-
-    private void OpenSettings(ClickEvent e)
-    {
-        return;
-    }
-    
-    
-    private void QuitToMenu(ClickEvent e)
-    {
-        return;
     }
 }
