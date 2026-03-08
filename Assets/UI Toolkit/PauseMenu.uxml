@@ -1,10 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI%20Toolkit/PauseMenuStylesheet.uss?fileID=7433441132597879392&amp;guid=6dcf53cb87aae44bdba350cf13694826&amp;type=3#PauseMenuStylesheet" />
+    <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/MainMenuStyles.uss?fileID=7433441132597879392&amp;guid=a1cf6bbb309554583a8c69b7d096ece8&amp;type=3#MainMenuStyles"/>
     <ui:VisualElement name="Container" style="flex-grow: 1;">
-        <ui:VisualElement name="Buttons" style="flex-grow: 1; margin-top: 180px;">
-            <ui:Button text="Resume Game" name="ResumeButton" class="button" />
-            <ui:Button text="Settings" name="SettingsButton" class="button" />
-            <ui:Button text="Quit to Menu" name="QuitButton" class="button" />
-        </ui:VisualElement>
+        <ui:Button text="Resume" name="ResumeButton" class="startButton" style="width: 25%; font-size: 55px; background-color: rgb(236, 117, 58); -unity-font-style: bold; border-top-left-radius: 40px; border-top-right-radius: 40px; border-bottom-right-radius: 40px; border-bottom-left-radius: 40px;"/>
     </ui:VisualElement>
 </ui:UXML>

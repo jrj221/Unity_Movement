@@ -11,11 +11,32 @@
 }
 
 .startButton {
-    font-size: 40px;
-    -unity-font-style: normal;
-    width: 20%;
+    font-size: 55px;
+    -unity-font-style: bold;
+    width: 25%;
     align-self: center;
     align-content: auto;
-    margin-top: 134px;
-    color: rgb(0, 0, 0);
+    margin-top: 25%;
+    color: rgb(105, 47, 46);
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    border-top-right-radius: 40px;
+    border-right-color: rgb(215, 63, 36);
+    border-bottom-color: rgb(215, 63, 36);
+    border-left-color: rgb(215, 63, 36);
+    border-top-color: rgb(215, 63, 36);
+    border-left-width: 5px;
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    background-color: rgb(236, 117, 58);
+}
+
+.startButton:hover {
+    background-color: rgb(215, 63, 36);
+    border-left-color: rgb(236, 117, 58);
+    border-top-color: rgb(236, 117, 58);
+    border-bottom-color: rgb(236, 117, 58);
+    border-right-color: rgb(236, 117, 58);
 }
