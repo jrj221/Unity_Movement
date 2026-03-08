@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PauseMenuUIManager _pauseMenuUIManager;
     [SerializeField] private CameraController _cameraController;
     #endregion
+    public bool GameStarted { get; private set; }
     
     public static GameManager Instance { get; private set; }
 
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
         Helpers.Instance.Delay(5f, () =>
         {
             InputManager.Instance.EnableInput();
+            GameStarted = true;
         });
     }
 }

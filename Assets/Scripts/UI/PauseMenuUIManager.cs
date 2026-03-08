@@ -30,11 +30,14 @@ public class PauseMenuUIManager : UIManger
     
     private void Update()
     {
+        if (!GameManager.Instance.GameStarted) return;
+        
         if (InputManager.Instance.PressedPause)
         {
             ShowUI();
             InputManager.Instance.DisableInput();
             Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             Time.timeScale = 0f;
         }
         else
@@ -42,6 +45,7 @@ public class PauseMenuUIManager : UIManger
             HideUI();
             InputManager.Instance.EnableInput();
             Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
             Time.timeScale = 1f;
         }
     }

@@ -197,9 +197,12 @@ public class InputManager : MonoBehaviour
     {
 
     }
-    
 
-    public void TogglePause() { PressedPause = !PressedPause; } // this way you repress the button to toggle
+
+    public void TogglePause()
+    {
+        PressedPause = !PressedPause;
+    } // this way you repress the button to toggle
 
     
     private void OnPauseInput(InputAction.CallbackContext ctx) { TogglePause(); }
