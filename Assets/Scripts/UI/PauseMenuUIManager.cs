@@ -16,10 +16,6 @@ public class PauseMenuUIManager : UIManger
         _resumeButton = GetElement<Button>("ResumeButton");
         _settingsButton = GetElement<Button>("SettingsButton");
         _quitButton = GetElement<Button>("QuitButton");
-
-        Helpers.CheckNull(_resumeButton, "resumeButton");
-        Helpers.CheckNull(_settingsButton, "settingsButton");
-        Helpers.CheckNull(_quitButton, "quitButton");
         
         HideUI(); // by default
     }
@@ -39,6 +35,7 @@ public class PauseMenuUIManager : UIManger
         _quitButton.UnregisterCallback<ClickEvent>(QuitToMenu);
     }
 
+    
     private void Update()
     {
         if (InputManager.Instance.PressedPause)

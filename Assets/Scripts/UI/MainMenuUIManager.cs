@@ -11,28 +11,28 @@ public class MainMenuUIManager : UIManger
     {
         base.Awake();
         _startButton = GetElement<Button>("StartGameButton");
-        Helpers.CheckNull(_startButton, "_startButton");
     }
-    
 
+    
     private void OnEnable()
     {
         _startButton.RegisterCallback<ClickEvent>(OnStartGameClick);
     }
-    
 
+    
     private void OnDisable()
     {
         // good practice to unregister callbacks
         _startButton.UnregisterCallback<ClickEvent>(OnStartGameClick);
     }
 
+    
     private void Start()
     {
-        InputManager.Instance.DisableInput();
+        ShowUI();
     }
 
-
+    
     private void OnStartGameClick(ClickEvent e)
     {
         HideUI();

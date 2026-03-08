@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -38,5 +39,20 @@ public class CameraController : MonoBehaviour
         _pitch += inputManager.DeltaCameraMovement.y * sensitivity;
         _pitch = Mathf.Clamp(_pitch, -90f, 90f);
         transform.Rotate(currPitch - _pitch, 0f, 0f);
+    }
+
+    public void StartGameCameraAnimation(float duration)
+    {
+        StartCoroutine(StartGameCameraAnimationRoutine(duration));
+    }
+
+    private IEnumerator StartGameCameraAnimationRoutine(float duration)
+    {
+        for (var i = 0; i < 180f; i++)
+        {
+            Debug.Log("in loop");
+            transform.Rotate(0.5f, 0, 0, Space.World);
+            yield return new WaitForSeconds(duration / 180f);
+        }
     }
 }
