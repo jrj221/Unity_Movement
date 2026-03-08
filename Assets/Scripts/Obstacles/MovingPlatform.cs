@@ -7,6 +7,7 @@ public class MovingPlatform : MonoBehaviour
     private Vector3 _pointTwo;
     [SerializeField] private float _movingRadius;
     [SerializeField] private float _moveSpeed;
+    [SerializeField] private bool _goOtherDirection;
 
     private void Awake()
     {
@@ -17,6 +18,7 @@ public class MovingPlatform : MonoBehaviour
     private void FixedUpdate()
     {
         float t = Mathf.PingPong(Time.time * _moveSpeed + 0.5f, 1f);
+        if (_goOtherDirection) t = 1f - t;
         transform.position = Vector3.Lerp(_pointOne,  _pointTwo, t);
     }
 }
