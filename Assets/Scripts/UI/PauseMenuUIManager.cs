@@ -6,11 +6,13 @@ using Cursor = UnityEngine.Cursor;
 public class PauseMenuUIManager : UIManger
 {
     private Button _resumeButton;
+    public static PauseMenuUIManager Instance { get; private set; }
 
 
     protected override void Awake()
     {
         base.Awake();
+        Instance = this;
         _resumeButton = GetElement<Button>("ResumeButton");
         
         HideUI(); // by default

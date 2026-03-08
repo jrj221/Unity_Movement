@@ -4,7 +4,6 @@ public class GameManager : MonoBehaviour
 {
     #region Object References
     // Should UI managers be singletons or references here?
-    [SerializeField] private PauseMenuUIManager _pauseMenuUIManager;
     [SerializeField] private CameraController _cameraController;
     #endregion
     public bool GameStarted { get; private set; }
@@ -33,6 +32,7 @@ public class GameManager : MonoBehaviour
         {
             InputManager.Instance.EnableInput();
             GameStarted = true;
+            GameplayUIManager.Instance.ShowUI();
         });
     }
 }

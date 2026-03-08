@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -8,17 +9,24 @@ public class GameplayUIManager : UIManger
     private float _currentTimeFloat = 0;
     private float _bestTimeFloat = 0;
 
-
+    public static GameplayUIManager Instance { get; private set; }
+    
     protected override void Awake()
     {
         base.Awake();
+        Instance = this;
         _currentTime = GetElement<Label>("CurrentTime");
         _bestTime = GetElement<Label>("BestTime");
+        
+        HideUI(); // by default
+        HideElement(_bestTime);
     }
 
 
     private void Update()
     {
+        if (!GameManager.Instance.GameStarted) return; 
+        
         _currentTimeFloat += Time.deltaTime;
         SetCurrentTime();
     }
@@ -26,7 +34,7 @@ public class GameplayUIManager : UIManger
 
     private void SetCurrentTime()
     {
-        _currentTime.text = Mathf.Round(_currentTimeFloat) + "s";
+        _currentTime.text = Math.Round(_currentTimeFloat, 2) + "s";
     }
 
 

@@ -6,10 +6,12 @@ using UnityEngine.UIElements;
 public class MainMenuUIManager : UIManger
 {
     private Button _startButton;
+    public static MainMenuUIManager Instance { get; private set; }
 
     protected override void Awake()
     {
         base.Awake();
+        Instance = this;
         _startButton = GetElement<Button>("StartGameButton");
     }
 
