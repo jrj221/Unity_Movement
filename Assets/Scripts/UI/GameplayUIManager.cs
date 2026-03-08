@@ -25,7 +25,7 @@ public class GameplayUIManager : UIManger
 
     private void Update()
     {
-        if (!GameManager.Instance.GameStarted) return; 
+        if (!GameManager.Instance.GameStarted || CheckpointManager.Instance.finishedCourse) return; 
         
         _currentTimeFloat += Time.deltaTime;
         SetCurrentTime();
@@ -34,7 +34,7 @@ public class GameplayUIManager : UIManger
 
     private void SetCurrentTime()
     {
-        _currentTime.text = Math.Round(_currentTimeFloat, 2) + "s";
+        _currentTime.text = _currentTimeFloat.ToString("F2") + "s";
     }
 
 
@@ -43,7 +43,8 @@ public class GameplayUIManager : UIManger
         if (_currentTimeFloat < _bestTimeFloat) return; // Failed to get better time
         
         _bestTimeFloat = _currentTimeFloat;
-        _bestTime.text = "Best Time: " + _currentTime.text;
+        _bestTime.text = "Best: " + _currentTime.text;
+        ShowElement(_bestTime);
     }
 
 

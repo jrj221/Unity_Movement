@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class CheckpointManager : MonoBehaviour
 {
-    public GameplayUIManager gameplayUIManager;
     public GameObject firstCheckpoint;
     private Transform _latestCheckpoint;
     public bool finishedCourse;
     public GameObject player;
-
+    public static CheckpointManager Instance {get ; private set;}
 
     private void Awake()
     {
+        Instance = this;
         _latestCheckpoint = firstCheckpoint.transform;
     }
 
@@ -28,7 +28,7 @@ public class CheckpointManager : MonoBehaviour
         {
             _latestCheckpoint = firstCheckpoint.transform;
             finishedCourse = false;
-            gameplayUIManager.RestartTime();
+            GameplayUIManager.Instance.RestartTime();
         }
         // player.transform.SetPositionAndRotation(_latestCheckpoint.position, _latestCheckpoint.rotation);
         player.transform.position = _latestCheckpoint.position;
