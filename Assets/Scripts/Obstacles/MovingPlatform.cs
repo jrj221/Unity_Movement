@@ -11,8 +11,8 @@ public class MovingPlatform : MonoBehaviour
 
     private void Awake()
     {
-        _pointOne = new Vector3(transform.position.x - _movingRadius, transform.position.y, transform.position.z);
-        _pointTwo = new Vector3(transform.position.x + _movingRadius, transform.position.y, transform.position.z);
+        _pointOne = transform.position + transform.right * _movingRadius;
+        _pointTwo = transform.position + -transform.right * _movingRadius;
     }
 
     private void FixedUpdate()
