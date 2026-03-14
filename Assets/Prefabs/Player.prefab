@@ -16,9 +16,16 @@ GameObject:
   - component: {fileID: 4232524787309858257}
   - component: {fileID: 7743997182805635385}
   - component: {fileID: 1686417457951178677}
+  - component: {fileID: 1120082729234207681}
+  - component: {fileID: 9211738880425627549}
+  - component: {fileID: 7356803281918823042}
+  - component: {fileID: 1725584113180996767}
+  - component: {fileID: 7125641595612904579}
+  - component: {fileID: 2611137435584829117}
+  - component: {fileID: 3689402364033819686}
   m_Layer: 2
   m_Name: PlayerRoot
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -149,36 +156,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 8460623831748945863}
   feet: {fileID: 2070198670756366778}
+  _states:
+  - {fileID: 9211738880425627549}
+  - {fileID: 1120082729234207681}
+  - {fileID: 7356803281918823042}
+  - {fileID: 1725584113180996767}
+  - {fileID: 7125641595612904579}
+  - {fileID: 2611137435584829117}
+  - {fileID: 3689402364033819686}
   sprintSpeed: 10
   normalSpeed: 7
   groundDrag: 5
   airMovementMultiplier: 1
-  wallrunRotationSpeed: 50
+  wallrunRotationSpeed: 70
   wallrunAngle: 20
   pushIntoWallForce: 50
-  moveLeftInputLockLength: 1
-  moveRightInputLockLength: 1
+  moveLeftInputLockLength: 0.3
+  moveRightInputLockLength: 0.3
   isLeftWallrunningBufferLength: 0.2
   isRightWallrunningBufferLength: 0.2
   wallrunBufferLength: 0.2
-  jumpForce: 12
-  wallVerticalJumpForce: 7
-  wallSideJumpForce: 7
-  slideJumpHorizontalForce: 100
-  slideJumpVerticalForce: 15
   jumpBufferTimeLength: 0.2
   slideRotationSpeed: 200
   slideAngle: 60
-  slideSpeed: 50
-  maxSlideTime: 0.5
   minStepLength: 0.2
   maxStepHeight: 0.5
   maxStepSlope: 0.95
-  maxSlopeAngle: 45
-  stickToSlopeForce: 5
   playerGravity: 30
   wallJumpGravity: 14
   cameraSmoothingEnableTimeLength: 0.2
+  exitingState: {fileID: 0}
+  groundedMovingState: {fileID: 0}
+  leftWallrunState: {fileID: 0}
+  rightWallrunState: {fileID: 0}
+  slideState: {fileID: 0}
 --- !u!114 &7743997182805635385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,6 +218,97 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkpointManager: {fileID: 0}
   gameplayUIManager: {fileID: 0}
+--- !u!114 &1120082729234207681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111231114327906224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a121f99bb00348249bcecb051e2ae358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AirborneState
+--- !u!114 &9211738880425627549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111231114327906224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef7afd42c0161a4408a387e54a29e24e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JumpState
+  jumpForce: 12
+  wallVerticalJumpForce: 7
+  wallSideJumpForce: 7
+--- !u!114 &7356803281918823042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111231114327906224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67bf7d33efb19476b86b0cca5a257bc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SlideState
+  slideSpeed: 50
+  maxSlideTime: 0.5
+--- !u!114 &1725584113180996767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111231114327906224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9484c9a26887dd4c8ea3233479994bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IdleState
+--- !u!114 &7125641595612904579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111231114327906224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee0529fee4bbbc488d642c329f38921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GroundedMovingState
+  maxSlopeAngle: 45
+  stickToSlopeForce: 5
+--- !u!114 &2611137435584829117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111231114327906224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 051eb20841ed18f4ab9fe9ca49908540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LeftWallrunState
+--- !u!114 &3689402364033819686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111231114327906224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd9974766b1d18741b2af0f50f8fa520, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RightWallrunState
 --- !u!1 &1146860641482361583
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,14 +337,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1146860641482361583}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2573275737727029096}
   m_Father: {fileID: 8615947065561016798}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!20 &7020686934086773473
 Camera:
   m_ObjectHideFlags: 0
@@ -571,7 +673,7 @@ GameObject:
   - component: {fileID: 8615947065561016798}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -10,8 +10,6 @@ public class CameraController : MonoBehaviour
     public float cameraMovementSmoothingSpeed;
     private float _pitch;
     private float _yaw;
-    public InputManager inputManager;
-
 
     private void LateUpdate()
     {
@@ -26,7 +24,7 @@ public class CameraController : MonoBehaviour
         else transform.position = player.transform.position + new Vector3(0f, 0.4f, 0f);
 
         // player _yaw
-        _yaw += inputManager.DeltaCameraMovement.x * sensitivity;
+        _yaw += InputManager.Instance.DeltaCameraMovement.x * sensitivity;
         Vector3 currPlayerRotation = player.transform.eulerAngles;
         player.transform.eulerAngles = new Vector3(currPlayerRotation.x, _yaw, currPlayerRotation.z);
 
@@ -36,7 +34,7 @@ public class CameraController : MonoBehaviour
         
         // cam _pitch
         float currPitch = _pitch;
-        _pitch += inputManager.DeltaCameraMovement.y * sensitivity;
+        _pitch += InputManager.Instance.DeltaCameraMovement.y * sensitivity;
         _pitch = Mathf.Clamp(_pitch, -90f, 90f);
         transform.Rotate(currPitch - _pitch, 0f, 0f);
     }

@@ -118,15 +118,15 @@ public class StateMachine : MonoBehaviour
 
     #region States
     private State _currentState;
-    public State exitingState;
+    [NonSerialized] public State exitingState;
     private State _nextState;
     private IdleState _idleState;
-    public GroundedMovingState groundedMovingState;
+    [NonSerialized] public GroundedMovingState groundedMovingState;
     private AirborneState _airborneState;
     private JumpState _jumpState;
-    public LeftWallrunState leftWallrunState;
-    public RightWallrunState rightWallrunState;
-    public SlideState slideState;
+    [NonSerialized] public LeftWallrunState leftWallrunState;
+    [NonSerialized] public RightWallrunState rightWallrunState;
+    [NonSerialized] public SlideState slideState;
     #endregion
 
 
