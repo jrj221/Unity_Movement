@@ -21,6 +21,11 @@ public class CheckpointManager : MonoBehaviour
         _latestCheckpoint = checkpoint;
     }
 
+    private void Update()
+    {
+        Debug.Log("location: " + _latestCheckpoint.position);
+    }
+
 
     public void Death()
     {

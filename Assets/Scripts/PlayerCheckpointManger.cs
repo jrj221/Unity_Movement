@@ -7,21 +7,25 @@ public class PlayerInfoManger : MonoBehaviour
     public GameplayUIManager gameplayUIManager;
 
 
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Death"))
+        {
+            checkpointManager.Death();
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Checkpoint"))
+        if (other.gameObject.CompareTag("Checkpoint"))
         {
             checkpointManager.UpdateCheckpoint(other.transform);
 
-            if (other.name == "Final Checkpoint")
+            if (other.gameObject.name == "Final Checkpoint")
             {
                 checkpointManager.finishedCourse = true;
                 gameplayUIManager.UpdateBestTime();
             }
-        }
-        else if (other.CompareTag("Death"))
-        {
-            checkpointManager.Death();
         }
     }
 }
