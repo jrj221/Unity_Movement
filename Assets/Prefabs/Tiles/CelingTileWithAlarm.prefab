@@ -330,7 +330,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7416277337374687959}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -432,8 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 653f3bb6b3dba452c9f5a716fe8ab13e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AlarmSiren
-  _player: {fileID: 2592554401233128678, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
-  _minDistanceToPlay: 15
+  _minDistanceToPlay: 13
 --- !u!1 &8879209786767483083
 GameObject:
   m_ObjectHideFlags: 0

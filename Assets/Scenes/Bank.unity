@@ -313,6 +313,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4213,7 +4217,7 @@ GameObject:
   - component: {fileID: 183676554}
   m_Layer: 0
   m_Name: LaserGrid (4)
-  m_TagString: Untagged
+  m_TagString: Death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4485,6 +4489,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6584,6 +6592,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7033,6 +7045,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7049,7 +7065,7 @@ GameObject:
   - component: {fileID: 223001323}
   m_Layer: 0
   m_Name: LaserGrid (2)
-  m_TagString: Untagged
+  m_TagString: Death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7901,7 +7917,7 @@ GameObject:
   - component: {fileID: 264679164}
   m_Layer: 0
   m_Name: LaserGrid (5)
-  m_TagString: Untagged
+  m_TagString: Death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8432,6 +8448,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8697,6 +8717,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9058,6 +9082,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9276,6 +9304,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12701,6 +12733,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13273,6 +13309,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14031,7 +14071,7 @@ GameObject:
   - component: {fileID: 429320489}
   m_Layer: 0
   m_Name: LaserGrid (3)
-  m_TagString: Untagged
+  m_TagString: Death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14854,6 +14894,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15165,6 +15209,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17216,6 +17264,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -17494,6 +17546,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -17618,6 +17674,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18099,6 +18159,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18806,6 +18870,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19817,6 +19885,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -19939,6 +20011,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20277,7 +20353,7 @@ GameObject:
   - component: {fileID: 698406152}
   m_Layer: 0
   m_Name: LaserGrid (1)
-  m_TagString: Untagged
+  m_TagString: Death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20487,6 +20563,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21037,6 +21117,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -21508,6 +21592,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -21714,6 +21802,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -23446,6 +23538,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -23564,6 +23660,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -27051,6 +27151,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -27346,6 +27450,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -29248,6 +29356,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29850,6 +29962,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29906,6 +30022,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -30526,6 +30646,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -30896,6 +31020,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -32607,7 +32735,7 @@ GameObject:
   - component: {fileID: 1211815907}
   m_Layer: 0
   m_Name: LaserGrid
-  m_TagString: Untagged
+  m_TagString: Death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34139,6 +34267,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -34271,6 +34403,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -35413,6 +35549,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -36763,6 +36903,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -37348,7 +37492,7 @@ GameObject:
   - component: {fileID: 1467617086}
   m_Layer: 0
   m_Name: LaserGrid (6)
-  m_TagString: Untagged
+  m_TagString: Death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37483,6 +37627,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -37673,6 +37821,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -38094,6 +38246,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -42073,6 +42229,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -44018,6 +44178,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -44503,6 +44667,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -46483,6 +46651,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -46866,6 +47038,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -50735,6 +50911,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -51545,6 +51725,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -51933,6 +52117,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -59153,6 +59341,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -59348,6 +59540,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2109055896}
   - component: {fileID: 2109055897}
+  - component: {fileID: 2109055898}
   m_Layer: 0
   m_Name: BackgroundMusicManager
   m_TagString: Untagged
@@ -59384,6 +59577,103 @@ AudioSource:
   m_Resource: {fileID: 8300000, guid: b5f6b8faaa9914d4e9d1f5289f76f98b, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.7
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &2109055898
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109055895}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: c9242ed8489764fe7ada3149b845369c, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.418
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -59803,6 +60093,10 @@ PrefabInstance:
     - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
       propertyPath: m_Name
       value: Laser (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460660034581827374, guid: 757c1ef47adf7495f88b67820ebb9d57, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

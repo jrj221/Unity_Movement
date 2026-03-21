@@ -21,11 +21,6 @@ public class CheckpointManager : MonoBehaviour
         _latestCheckpoint = checkpoint;
     }
 
-    private void Update()
-    {
-        Debug.Log("location: " + _latestCheckpoint.position);
-    }
-
 
     public void Death()
     {
@@ -35,8 +30,6 @@ public class CheckpointManager : MonoBehaviour
             finishedCourse = false;
             GameplayUIManager.Instance.RestartTime();
         }
-        // player.transform.SetPositionAndRotation(_latestCheckpoint.position, _latestCheckpoint.rotation);
-        player.transform.position = _latestCheckpoint.position;
-        player.transform.rotation = _latestCheckpoint.rotation;
+        player.transform.SetPositionAndRotation(_latestCheckpoint.position, _latestCheckpoint.rotation);
     }
 }
