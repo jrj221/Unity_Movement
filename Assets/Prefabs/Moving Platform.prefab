@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7788417283076153177}
-  - component: {fileID: 4479647896004407091}
   m_Layer: 0
   m_Name: Moving Platform
   m_TagString: Untagged
@@ -34,21 +33,6 @@ Transform:
   - {fileID: 5030620299845150652}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4479647896004407091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3966853101852286861}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86496ede89a2c4a08beb549a3eb595b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MovingPlatform
-  _movingRadius: 5
-  _moveSpeed: 0.6
-  _goOtherDirection: 0
 --- !u!1 &5088848365160279567
 GameObject:
   m_ObjectHideFlags: 0
@@ -62,6 +46,7 @@ GameObject:
   - component: {fileID: 6835963782557161242}
   - component: {fileID: 5368559032578828683}
   - component: {fileID: 2568441906743413415}
+  - component: {fileID: 6913777253631210610}
   m_Layer: 0
   m_Name: Visible Platform
   m_TagString: Untagged
@@ -174,9 +159,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86496ede89a2c4a08beb549a3eb595b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovingPlatform
-  _movingRadius: 5
-  _moveSpeed: 0.6
+  _movingRadius: 6
+  _moveSpeed: 0.4
   _goOtherDirection: 0
+--- !u!54 &6913777253631210610
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5088848365160279567}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &6603389996459355606
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,4 +256,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   _platform: {fileID: 7788417283076153177}
-  _player: {fileID: 0}

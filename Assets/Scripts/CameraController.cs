@@ -18,6 +18,8 @@ public class CameraController : MonoBehaviour
 
     public void Reset()
     {
+        _pitch = 0;
+        _yaw = 0;
         transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
     }
     

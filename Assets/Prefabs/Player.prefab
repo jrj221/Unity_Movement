@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 3689402364033819686}
   m_Layer: 2
   m_Name: PlayerRoot
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -185,11 +185,6 @@ MonoBehaviour:
   playerGravity: 30
   wallJumpGravity: 14
   cameraSmoothingEnableTimeLength: 0.2
-  exitingState: {fileID: 0}
-  groundedMovingState: {fileID: 0}
-  leftWallrunState: {fileID: 0}
-  rightWallrunState: {fileID: 0}
-  slideState: {fileID: 0}
 --- !u!114 &7743997182805635385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,7 +459,6 @@ MonoBehaviour:
   controller: {fileID: 4232524787309858257}
   sensitivity: 1
   cameraMovementSmoothingSpeed: 0.15
-  inputManager: {fileID: 0}
 --- !u!1 &2083833903843995060
 GameObject:
   m_ObjectHideFlags: 0

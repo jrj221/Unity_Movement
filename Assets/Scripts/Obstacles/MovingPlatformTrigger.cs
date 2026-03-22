@@ -3,7 +3,12 @@ using UnityEngine;
 public class MovingPlatformTrigger : MonoBehaviour
 {
     [SerializeField] private Transform _platform;
-    [SerializeField] private Transform _player;
+    private Transform _player;
+
+    private void Awake()
+    {
+        _player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     private void OnTriggerEnter(Collider other)
     {

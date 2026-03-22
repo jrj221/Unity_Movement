@@ -18861,6 +18861,10 @@ PrefabInstance:
       propertyPath: _movingRadius
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4479647896004407091, guid: 0bd478f07e5284f239111fcc459751cc, type: 3}
+      propertyPath: _goOtherDirection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7788417283076153177, guid: 0bd478f07e5284f239111fcc459751cc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 48
@@ -20961,6 +20965,7 @@ MonoBehaviour:
   throwObject: {fileID: -8190209284706820010, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
   pickup: {fileID: 3547766997971438085, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
   pause: {fileID: 7984296390971067837, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
+  restart: {fileID: 7670859091640482697, guid: 08c7983dca91d414a9237d6794dbf97b, type: 3}
 --- !u!1 &1126265109
 GameObject:
   m_ObjectHideFlags: 0
@@ -35017,9 +35022,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3107685160724163094, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8615947065561016798, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0000071525565
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8615947065561016798, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
       propertyPath: m_LocalPosition.y
@@ -35027,7 +35036,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8615947065561016798, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 60
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8615947065561016798, guid: f5d941aad4412463faef5536c2bf3686, type: 3}
       propertyPath: m_LocalRotation.w
@@ -38553,7 +38562,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4479647896004407091, guid: 0bd478f07e5284f239111fcc459751cc, type: 3}
       propertyPath: _goOtherDirection
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7788417283076153177, guid: 0bd478f07e5284f239111fcc459751cc, type: 3}
       propertyPath: m_LocalPosition.x

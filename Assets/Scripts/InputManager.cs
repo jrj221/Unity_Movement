@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,6 +15,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private InputActionReference throwObject;
     [SerializeField] private InputActionReference pickup;
     [SerializeField] private InputActionReference pause;
+    [SerializeField] private InputActionReference restart;
     #endregion
 
     #region Input Properties
@@ -67,6 +66,9 @@ public class InputManager : MonoBehaviour
 
         // UI
         pause.action.started += OnPauseInput;
+        
+        // Misc
+        restart.action.started += RestartGame;
     }
 
 
@@ -95,6 +97,9 @@ public class InputManager : MonoBehaviour
 
         // UI
         pause.action.started -= OnPauseInput;
+        
+        // Misc
+        restart.action.started -= RestartGame;
     }
 
 
@@ -206,4 +211,7 @@ public class InputManager : MonoBehaviour
 
     
     private void OnPauseInput(InputAction.CallbackContext ctx) { TogglePause(); }
+
+
+    private void RestartGame(InputAction.CallbackContext ctx) { GameManager.Instance.RestartGame(); }
 }

@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
     #region Object References
     // Should UI managers be singletons or references here?
     [SerializeField] private CameraController _cameraController;
+    private GameObject _player;
     #endregion
     public bool GameStarted { get; private set; }
     
@@ -14,6 +15,15 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        _player = GameObject.Find("PlayerRoot");
+    }
+
+    private void ResetPlayer()
+    {
+        // Teleports the player back to the start, and rotates them and the camera into starting positions
+        CheckpointManager.Instance.ResetCheckpoints();
+        _cameraController.Reset();
+        _player.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
     }
     
     
@@ -25,13 +35,15 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        CheckpointManager.Instance.ResetCheckpoints();
-        _cameraController.Reset();
+        GameStarted = false;
+        InputManager.Instance.DisableInput();
+        GameplayUIManager.Instance.HideUI();
+        ResetPlayer();
         GameplayUIManager.Instance.Reset();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         _cameraController.StartGameCameraAnimation(2f);
-        Helpers.Instance.Delay(3f, () =>
+        Helpers.Instance.Delay(2.5f, () =>
         {
             InputManager.Instance.EnableInput();
             GameStarted = true;
