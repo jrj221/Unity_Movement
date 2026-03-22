@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         _player = GameObject.Find("PlayerRoot");
+        GameObject.Find("PlayerMesh").GetComponent<MeshRenderer>().enabled = false;
     }
 
     private void ResetPlayer()

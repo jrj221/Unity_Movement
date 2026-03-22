@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class AlarmFlash : MonoBehaviour
@@ -13,6 +14,8 @@ public class AlarmFlash : MonoBehaviour
     private void Update()
     {
         Color result =  Color.Lerp(_color1, _color2, Mathf.PingPong(Time.time, .5f));
+        float intensity = Mathf.Lerp(50,100, Mathf.PingPong(Time.time, 5));
         _light.color = result;
+        _light.intensity = intensity;
     }
 }
