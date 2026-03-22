@@ -12,7 +12,12 @@ public class CheckpointManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        _latestCheckpoint = firstCheckpoint.transform;
+    }
+
+    public void ResetCheckpoints()
+    {
+        finishedCourse = false;
+        player.transform.SetPositionAndRotation(firstCheckpoint.transform.position, firstCheckpoint.transform.rotation);
     }
 
 

@@ -16,7 +16,11 @@ public class CameraController : MonoBehaviour
         MoveCamera();
     }
 
-
+    public void Reset()
+    {
+        transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
+    }
+    
     private void MoveCamera()
     {
         // cam position

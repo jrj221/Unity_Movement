@@ -24,6 +24,11 @@ public class GameplayUIManager : UIManger
         HideElement(_best);
     }
 
+    public void Reset()
+    {
+        _currentTimeFloat = 0;
+    }
+
 
     private void Update()
     {

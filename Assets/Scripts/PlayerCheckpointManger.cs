@@ -26,6 +26,7 @@ public class PlayerInfoManger : MonoBehaviour
             {
                 checkpointManager.finishedCourse = true;
                 gameplayUIManager.UpdateBestTime();
+                GameManager.Instance.EndGame();
             }
         }
     }

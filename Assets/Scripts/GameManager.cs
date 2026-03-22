@@ -23,16 +23,29 @@ public class GameManager : MonoBehaviour
     }
     
 
-    public void StartGame()
+    public void RestartGame()
     {
+        CheckpointManager.Instance.ResetCheckpoints();
+        _cameraController.Reset();
+        GameplayUIManager.Instance.Reset();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        _cameraController.StartGameCameraAnimation(3f);
-        Helpers.Instance.Delay(5f, () =>
+        _cameraController.StartGameCameraAnimation(2f);
+        Helpers.Instance.Delay(3f, () =>
         {
             InputManager.Instance.EnableInput();
             GameStarted = true;
             GameplayUIManager.Instance.ShowUI();
         });
+    }
+
+    
+    public void EndGame()
+    {
+        InputManager.Instance.DisableInput();
+        GameStarted = false;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        EndMenuManager.Instance.ShowEndMenu();
     }
 }

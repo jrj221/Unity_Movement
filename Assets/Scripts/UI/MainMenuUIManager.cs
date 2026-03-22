@@ -38,6 +38,6 @@ public class MainMenuUIManager : UIManger
     private void OnStartGameClick(ClickEvent e)
     {
         HideUI();
-        GameManager.Instance.StartGame();
+        GameManager.Instance.RestartGame();
     }
 }
