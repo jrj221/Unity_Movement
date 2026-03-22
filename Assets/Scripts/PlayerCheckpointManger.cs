@@ -12,6 +12,7 @@ public class PlayerInfoManger : MonoBehaviour
         if (other.gameObject.CompareTag("Death"))
         {
             checkpointManager.Death();
+            SFXManager.Instance.PlayLaserDeath();
         }
     }
 
