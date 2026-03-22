@@ -6,8 +6,9 @@ public class GameplayUIManager : UIManger
 {
     private Label _currentTime;
     private Label _bestTime;
-    private float _currentTimeFloat = 0;
-    private float _bestTimeFloat = 0;
+    private VisualElement _best;
+    private float _currentTimeFloat;
+    private float _bestTimeFloat;
 
     public static GameplayUIManager Instance { get; private set; }
     
@@ -17,9 +18,10 @@ public class GameplayUIManager : UIManger
         Instance = this;
         _currentTime = GetElement<Label>("CurrentTime");
         _bestTime = GetElement<Label>("BestTime");
+        _best = GetElement<VisualElement>("Best");
         
         HideUI(); // by default
-        HideElement(_bestTime);
+        HideElement(_best);
     }
 
 
@@ -34,7 +36,7 @@ public class GameplayUIManager : UIManger
 
     private void SetCurrentTime()
     {
-        _currentTime.text = _currentTimeFloat.ToString("F2") + "s";
+        _currentTime.text = (100_000 - (200 * _currentTimeFloat)).ToString("N0");
     }
 
 
@@ -43,8 +45,8 @@ public class GameplayUIManager : UIManger
         if (_currentTimeFloat < _bestTimeFloat) return; // Failed to get better time
         
         _bestTimeFloat = _currentTimeFloat;
-        _bestTime.text = "Best: " + _currentTime.text;
-        ShowElement(_bestTime);
+        _bestTime.text = _currentTime.text;
+        ShowElement(_best);
     }
 
 
