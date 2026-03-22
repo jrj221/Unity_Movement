@@ -1,7 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/MainMenuStyles.uss?fileID=7433441132597879392&amp;guid=a1cf6bbb309554583a8c69b7d096ece8&amp;type=3#MainMenuStyles"/>
     <ui:VisualElement name="Container" style="flex-grow: 1;">
-        <ui:Label text="Rigidbody Controller 3D!" name="Title" class="title" style="-unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/RacingSansOne-Regular.ttf?fileID=12800000&amp;guid=4aeaecc8733cc4ea2916feb0441c8cac&amp;type=3#RacingSansOne-Regular&quot;); color: rgb(236, 117, 58); font-size: 100px; text-shadow: 30px 30px 0 rgb(215, 63, 36);"/>
-        <ui:Button text="Start" name="StartGameButton" class="startButton" style="bottom: 30%;"/>
+        <ui:Label text="Bank Escape!" name="Title" class="title"/>
+        <ui:Button text="Start" name="StartGameButton" class="startButton" style="bottom: 30%; letter-spacing: 5px;"/>
     </ui:VisualElement>
 </ui:UXML>
