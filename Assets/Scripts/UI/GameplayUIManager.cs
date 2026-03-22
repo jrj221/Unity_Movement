@@ -6,9 +6,11 @@ public class GameplayUIManager : UIManger
 {
     private Label _currentTime;
     private Label _bestTime;
+    private Label _deathCount;
     private VisualElement _best;
     private float _currentTimeFloat;
     private float _bestTimeFloat;
+    private float _deathCountFloat;
 
     public static GameplayUIManager Instance { get; private set; }
     
@@ -19,6 +21,7 @@ public class GameplayUIManager : UIManger
         _currentTime = GetElement<Label>("CurrentTime");
         _bestTime = GetElement<Label>("BestTime");
         _best = GetElement<VisualElement>("Best");
+        _deathCount = GetElement<Label>("DeathCount");
         
         HideUI(); // by default
         HideElement(_best);
@@ -27,6 +30,8 @@ public class GameplayUIManager : UIManger
     public void Reset()
     {
         _currentTimeFloat = 0;
+        _deathCountFloat = 0;
+        _deathCount.text = _deathCountFloat.ToString("F0");
     }
 
 
@@ -36,6 +41,12 @@ public class GameplayUIManager : UIManger
         
         _currentTimeFloat += Time.deltaTime;
         SetCurrentTime();
+    }
+
+    public void IncrementDeathCount()
+    {
+        _deathCountFloat++;
+        _deathCount.text = _deathCountFloat.ToString("F0");
     }
 
 

@@ -36,5 +36,6 @@ public class CheckpointManager : MonoBehaviour
             GameplayUIManager.Instance.RestartTime();
         }
         player.transform.SetPositionAndRotation(_latestCheckpoint.position, _latestCheckpoint.rotation);
+        GameplayUIManager.Instance.IncrementDeathCount();
     }
 }

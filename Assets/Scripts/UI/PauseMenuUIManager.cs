@@ -37,6 +37,7 @@ public class PauseMenuUIManager : UIManger
         if (InputManager.Instance.PressedPause)
         {
             ShowUI();
+            GameplayUIManager.Instance.HideUI();
             InputManager.Instance.DisableInput();
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -45,6 +46,7 @@ public class PauseMenuUIManager : UIManger
         else
         {
             HideUI();
+            GameplayUIManager.Instance.ShowUI();
             InputManager.Instance.EnableInput();
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
