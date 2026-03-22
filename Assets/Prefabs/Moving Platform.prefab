@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovingPlatform
   _movingRadius: 6
-  _moveSpeed: 0.4
+  _moveSpeed: 0.2
   _goOtherDirection: 0
 --- !u!54 &6913777253631210610
 Rigidbody:
