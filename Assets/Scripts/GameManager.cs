@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Application.targetFrameRate = 90;
         Instance = this;
         _player = GameObject.Find("PlayerRoot");
         GameObject.Find("PlayerMesh").GetComponent<MeshRenderer>().enabled = false;

@@ -59,7 +59,8 @@ public class GameplayUIManager : UIManger
     public void UpdateBestTime()
     {
         if (_currentTimeFloat < _bestTimeFloat) return; // Failed to get better time
-        
+        Debug.Log("Current: "  + _currentTimeFloat.ToString("F2"));
+        Debug.Log("Best: "  + _bestTimeFloat.ToString("F2"));
         _bestTimeFloat = _currentTimeFloat;
         _bestTime.text = _currentTime.text;
         ShowElement(_best);
